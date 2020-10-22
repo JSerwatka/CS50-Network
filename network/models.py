@@ -1,8 +1,19 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from django_countries.fields import CountryField
+# django countries from https://pypi.org/project/django-countries/
+
 class User(AbstractUser):
     pass
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    date_of_birth = models.DateField(blank=True, null=True)
+    about = models.TextField(blank=True, null=True)
+    country = CountryField()
+
 
 class Post(models.Model):
     # Model fields
