@@ -14,6 +14,9 @@ class UserProfile(models.Model):
     about = models.TextField(blank=True, null=True)
     country = CountryField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.user.username}"
+
 class Post(models.Model):
     # Model fields
     # auto: post-id

@@ -1,10 +1,17 @@
 from django.contrib import admin
-from .models import User, Post, Comment, Like
+from .models import User, Post, Comment, Like, UserProfile
 
 # Register your models here.
+class UserProfileAdmin(admin.TabularInline):
+    """Creates an inline for UserProfile to hook it to User admin page"""
+    model = UserProfile
+
 class UserAdmin(admin.ModelAdmin):
-    """Contains User model admin page config"""
+    """Contains User model admin page config + UserProfile hooked"""
     list_display = ("id", "username", "email", "password")
+    # Hook UserProfile to User admin page
+    inlines = [UserProfileAdmin]
+
 
 class PostAdmin(admin.ModelAdmin):
     """Contains Post model admin page config"""
