@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
 class User(AbstractUser):
     pass
 
@@ -18,7 +17,7 @@ class Post(models.Model):
         verbose_name_plural = "posts"
     
     def __str__(self):
-        return f"Post {self.id} made by {self.user} on {self.date}"
+        return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
 class Comment(models.Model):
     # Model fields
@@ -34,7 +33,7 @@ class Comment(models.Model):
         verbose_name_plural = "comments"
     
     def __str__(self):
-        return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date}"
+        return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
 class Like(models.Model):
     # Model fields
@@ -50,5 +49,5 @@ class Like(models.Model):
 
     def __str__(self):
         element = self.post if (self.post is not None) else self.comment
-
+        
         return f"Like {self.id} by {self.user} on object {element}"
