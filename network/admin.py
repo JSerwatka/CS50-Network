@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Post, Comment
+from .models import User, Post, Comment, Like
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
@@ -12,9 +12,14 @@ class PostAdmin(admin.ModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
     """Contains Comment model admin page config"""
-    list_display = ("id", "user", "post_id", "content", "date")
+    list_display = ("id", "user", "post", "content", "date")
+
+class LikeAdmin(admin.ModelAdmin):
+    """Contains Like model admin page config"""
+    list_display = ("id", "user", "post", "comment")
 
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Like, LikeAdmin)

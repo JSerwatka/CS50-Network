@@ -35,3 +35,20 @@ class Comment(models.Model):
     
     def __str__(self):
         return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date}"
+
+class Like(models.Model):
+    # Model fields
+    # auto: like id
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="liked by")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
+
+    # Model naming
+    class Meta:
+        verbose_name = "like"
+        verbose_name_plural = "likes"
+
+    def __str__(self):
+        element = self.post if (self.post is not None) else self.comment
+
+        return f"Like {self.id} by {self.user} on object {element}"
