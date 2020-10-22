@@ -19,3 +19,19 @@ class Post(models.Model):
     
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date}"
+
+class Comment(models.Model):
+    # Model fields
+    # auto: comment-id
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="posted by")
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    content = models.TextField(blank=False)
+    date = models.DateTimeField(auto_now_add=True, null=True, verbose_name="posted on")
+
+    # Model naming
+    class Meta:
+        verbose_name = "comment"
+        verbose_name_plural = "comments"
+    
+    def __str__(self):
+        return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date}"
