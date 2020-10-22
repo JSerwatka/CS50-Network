@@ -9,11 +9,10 @@ class User(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     about = models.TextField(blank=True, null=True)
-    country = CountryField()
-
+    country = CountryField(blank=True, null=True)
 
 class Post(models.Model):
     # Model fields
