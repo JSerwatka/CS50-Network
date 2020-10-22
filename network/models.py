@@ -49,5 +49,19 @@ class Like(models.Model):
 
     def __str__(self):
         element = self.post if (self.post is not None) else self.comment
-        
         return f"Like {self.id} by {self.user} on object {element}"
+
+
+class Following(models.Model):
+    # Model fields
+    # auto: following id
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
+    user_following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers" )
+
+
+    class Meta:
+        verbose_name = "following"
+        verbose_name_plural = "followings"
+
+    def __str__(self):
+        return f"{self.user} is followed by {self.user_following}"
