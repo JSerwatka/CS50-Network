@@ -8,11 +8,12 @@ class User(AbstractUser):
     pass
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     name = models.CharField(max_length=100, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     about = models.TextField(blank=True, null=True)
     country = CountryField(blank=True, null=True)
+    image = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics", blank=True)
 
     def __str__(self):
         return f"{self.user.username}"
@@ -32,6 +33,8 @@ class Post(models.Model):
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
+    #TODO: give only part of contant followed by ... method (czytaj dalej option, which shows more content)
+
 class Comment(models.Model):
     # Model fields
     # auto: comment-id
@@ -48,12 +51,16 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
+    #TODO: give only part of contant followed by ... method (czytaj dalej option, which shows more content)
+
+
 class Like(models.Model):
     # Model fields
     # auto: like id
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="liked by")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
+    # emoji from options field
 
     # Model naming
     class Meta:

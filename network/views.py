@@ -8,6 +8,15 @@ from .models import User, Post, Comment, Like
 
 
 def index(request):
+    # user = User.objects.get(id=1)
+    # img = user.profile.image.url
+    # print(f"{img}")
+    # print("----------")
+    # print("----------")
+    # print("----------")
+    # print("----------")
+    # print("----------")
+
     return render(request, "network/index.html")
 
 
