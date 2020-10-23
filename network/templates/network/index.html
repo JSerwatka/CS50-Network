@@ -1,7 +1,7 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and add_post_available %}
     <form action="{% url 'network:index' %}" method="post">
         {% csrf_token %}
         <div class="form-group">

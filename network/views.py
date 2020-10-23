@@ -40,7 +40,8 @@ def index(request):
 
     return render(request, "network/index.html", {
         "form": CreatePostForm(),
-        "posts": all_posts
+        "posts": all_posts,
+        "add_post_available": True
     })
 
 def user_profile(request, user_id):
