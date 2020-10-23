@@ -22,6 +22,19 @@ class CreatePostForm(forms.ModelForm):
 
 
 def index(request):
+    if request.method == "POST":
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            # Get all data from the form
+            content = form.cleaned_data["content"]
+
+            # Save the record
+            post = Post(
+                user = User.objects.get(pk=request.user.id),
+                content = content
+            )
+            post.save()
+
     return render(request, "network/index.html", {
         "form": CreatePostForm(),
     })

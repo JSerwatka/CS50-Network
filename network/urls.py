@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from . import views
 
+app_name = "network"
+
 urlpatterns = [
     path("", views.index, name="index"),
     path("login", views.login_view, name="login"),

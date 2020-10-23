@@ -2,7 +2,7 @@
 
 {% block body %}
     {% if user.is_authenticated %}
-    <form action="" method="post">
+    <form action="{% url 'network:index' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             {{ form.content}}

@@ -23,7 +23,7 @@ class Post(models.Model):
     # auto: post-id
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="posted by", related_name="posts")
     content = models.TextField(blank=False)
-    date = models.DateTimeField(auto_now_add=True, null=True, verbose_name="posted on")
+    date = models.DateTimeField(auto_now_add=True, null=False, blank=True, verbose_name="posted on")
 
     # Model naming
     class Meta:
@@ -41,7 +41,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="commented by")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     content = models.TextField(blank=False)
-    date = models.DateTimeField(auto_now_add=True, null=True, verbose_name="commented on")
+    date = models.DateTimeField(auto_now_add=True, null=False, blank=True, verbose_name="commented on")
 
     # Model naming
     class Meta:
