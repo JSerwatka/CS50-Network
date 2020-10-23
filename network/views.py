@@ -3,21 +3,28 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django import forms
 
-from .models import User, Post, Comment, Like
+from .models import User, Post, Comment, Like, Following
+
+class CreatePostForm(forms.ModelForm):
+    content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
+                                    'placeholder': "What are you thinking about?",
+                                    'autofocus': 'autofocus',
+                                    'rows': '3',
+                                    'class': 'form-control',
+                                    'aria-label': "post content"
+                             }))
+
+    class Meta:
+        model = Post
+        fields = ["content"]
 
 
 def index(request):
-    # user = User.objects.get(id=1)
-    # img = user.profile.image.url
-    # print(f"{img}")
-    # print("----------")
-    # print("----------")
-    # print("----------")
-    # print("----------")
-    # print("----------")
-
-    return render(request, "network/index.html")
+    return render(request, "network/index.html", {
+        "form": CreatePostForm(),
+    })
 
 
 def login_view(request):

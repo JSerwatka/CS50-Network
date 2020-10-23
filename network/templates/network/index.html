@@ -5,7 +5,7 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <textarea autofocus class="form-control" name="post-content" rows=3 placeholder="What are you thinking about?"></textarea>
+            {{ form.content}}
         </div>
         <input class="btn btn-primary" type="submit" value="Post">
     </form>
