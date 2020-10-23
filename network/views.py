@@ -35,8 +35,12 @@ def index(request):
             )
             post.save()
 
+    # Get all posts
+    all_posts = Post.objects.order_by("-date").all()
+
     return render(request, "network/index.html", {
         "form": CreatePostForm(),
+        "all_posts": all_posts
     })
 
 

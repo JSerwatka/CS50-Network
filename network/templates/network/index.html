@@ -10,4 +10,20 @@
         <input class="btn btn-primary" type="submit" value="Post">
     </form>
     {% endif %}
+    {% for post in all_posts %}
+        <div class="post">
+            {{ post.user}}
+            {{ post.content}}
+            {{ post.date}}
+            {% for emoji in post.likes.all %}
+                {% autoescape off %}
+                    {{ emoji.get_emoji_type_display }}
+                {% endautoescape %}
+                {% empty %}
+                nothing here
+            {% endfor %}
+        </div>
+    {% empty %}
+        No posts yet
+    {% endfor %}
 {% endblock %}
