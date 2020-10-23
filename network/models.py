@@ -100,4 +100,4 @@ class Following(models.Model):
         verbose_name_plural = "followings"
 
     def __str__(self):
-        return f"{self.user} is followed by {self.user_following}"
+        return f"{self.user} is following {self.user_following}"
