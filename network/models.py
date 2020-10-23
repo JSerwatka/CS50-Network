@@ -33,7 +33,7 @@ class Post(models.Model):
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-    #TODO: give only part of contant followed by ... method (czytaj dalej option, which shows more content)
+    #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content)
 
 class Comment(models.Model):
     # Model fields
@@ -51,16 +51,31 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-    #TODO: give only part of contant followed by ... method (czytaj dalej option, which shows more content)
+    #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content)
 
 
 class Like(models.Model):
+
+    # Emojis - choices
+    LIKE = "like"
+    DISLIKE = "dislike"
+    SMILE = "smile"
+    HEART = "heart"
+    THANKS = "thanks"
+    LIKE_TYPE_CHOICES = [
+        (LIKE, '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>'),
+        (DISLIKE, '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>'),
+        (SMILE, '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>'),
+        (HEART, '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>'),
+        (THANKS, '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>')
+    ]
+
     # Model fields
     # auto: like id
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="liked by")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
-    # emoji from options field
+    emoji_type = models.CharField(max_length=10, choices=LIKE_TYPE_CHOICES, default=LIKE)
 
     # Model naming
     class Meta:
