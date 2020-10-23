@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Post, Comment, Like, UserProfile
+from .models import User, Post, Comment, Like, UserProfile, Following
 
 # Register your models here.
 class UserProfileAdmin(admin.TabularInline):
@@ -30,3 +30,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Like, LikeAdmin)
+admin.site.register(Following)

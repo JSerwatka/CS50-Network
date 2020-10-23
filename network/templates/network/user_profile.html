@@ -1,0 +1,45 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="profile-username">
+        {{ user.username }}
+    </div>
+    <div class="profile-following">
+        <ul>
+            <li>Followers {{ user.followers.all }}</li>
+            <li>Following {{ user.following.all }}</li>
+        </ul>
+    </div>
+    <div class="profile-name">
+        {{ user.profile.name }}
+    </div>
+    <div class="profile-birth">
+        {{ user.profile.date_of_birth }}
+    </div>
+    <div class="profile-about">
+        {{ user.profile.about }}
+    </div>
+    <div class="profile-country">
+        {{ user.profile.country.name }}
+    </div>
+    <div class="profile-picture">
+        <img src="{{ user.profile.image.url }}" }}>
+    </div>
+
+    {% for post in user.posts.all %}
+        <div class="post">
+            {{ post.user}}
+            {{ post.content}}
+            {{ post.date}}
+            {% for emoji in post.likes.all %}
+                {% autoescape off %}
+                    {{ emoji.get_emoji_type_display }}
+                {% endautoescape %}
+                {% empty %}
+                nothing here
+            {% endfor %}
+        </div>
+    {% empty %}
+        No posts yet
+    {% endfor %}
+{% endblock %}

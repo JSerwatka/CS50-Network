@@ -40,9 +40,22 @@ def index(request):
 
     return render(request, "network/index.html", {
         "form": CreatePostForm(),
-        "all_posts": all_posts
+        "posts": all_posts
     })
 
+def user_profile(request, user_id):
+    user_data = User.objects.get(pk=user_id)
+
+    return render(request, "network/user_profile.html", {
+        "user_data": user_data
+    })
+
+# def following(request):
+#     user_data = User.objects.get(pk=user_id)
+
+#     return render(request, "network/following.html", {
+#         "user_data": user_data
+#     })
 
 def login_view(request):
     if request.method == "POST":
