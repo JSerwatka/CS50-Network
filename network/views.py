@@ -23,7 +23,7 @@ class CreatePostForm(forms.ModelForm):
         model = Post
         fields = ["content"]
 
-
+# TODO: page greater than page count handle
 def index(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST)
@@ -60,6 +60,7 @@ def user_profile(request, user_id):
     })
 
 # TODO: @logedin
+# TODO: page greater than page count handle
 def following(request):
     current_user = User.objects.get(pk=request.user.id)
 

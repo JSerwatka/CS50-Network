@@ -22,11 +22,11 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'network:index' %}">All Posts</a>
+                  <a class="nav-link" href="{% url 'network:index'%}">All Posts</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'network:following' %}">Following</a>
+                        <a class="nav-link" href="{% url 'network:following'%}">Following</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network:logout' %}">Log Out</a>
