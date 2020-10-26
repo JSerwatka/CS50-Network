@@ -22,6 +22,9 @@
                 {% empty %}
                 nothing here
             {% endfor %}
+            {% if user.id == post.user.id %}
+                <button><a href="">Edit</a></button>
+            {% endif %}
         </div>
     {% empty %}
         No posts yet
