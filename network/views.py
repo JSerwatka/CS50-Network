@@ -7,6 +7,8 @@ from django import forms
 
 from .models import User, Post, Comment, Like, Following
 
+import numpy as np
+
 class CreatePostForm(forms.ModelForm):
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
                                     'placeholder': "What are you thinking about?",
@@ -51,12 +53,20 @@ def user_profile(request, user_id):
         "user_data": user_data
     })
 
-# def following(request):
-#     user_data = User.objects.get(pk=user_id)
+# TODO: @logedin
+def following(request):
+    current_user = User.objects.get(pk=request.user.id)
 
-#     return render(request, "network/following.html", {
-#         "user_data": user_data
-#     })
+    # Get all posts from users that current user follows
+    posts = [users.get_user_followed_posts() for users in current_user.following.all()]
+    # Flatten 2d array to 1d array
+    posts = np.array(posts).flatten()
+
+    return render(request, "network/index.html", {
+        "form": None,
+        "posts": posts,
+        "add_post_available": False
+    })
 
 def login_view(request):
     if request.method == "POST":
@@ -77,7 +87,7 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
-
+# TODO: @logedin
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("network:index"))

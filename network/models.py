@@ -92,12 +92,17 @@ class Following(models.Model):
     # Model fields
     # auto: following id
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
-    user_following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers" )
-
+    user_followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers" )
 
     class Meta:
         verbose_name = "following"
         verbose_name_plural = "followings"
+        unique_together = ('user', 'user_followed')
 
     def __str__(self):
-        return f"{self.user} is following {self.user_following}"
+        return f"{self.user} is following {self.user_followed}"
+
+    # Get all posts from users that current user follows
+    def get_user_followed_posts(self):
+        return self.user_followed.posts.all()
+    
