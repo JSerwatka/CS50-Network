@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
+    editPostControl();
+
+})
+
+
+function editPostControl() {
     let editButtons = document.querySelectorAll("div.post .edit-button")
 
     editButtons.forEach((button) => {
@@ -29,13 +35,40 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             document.querySelector("button.save").addEventListener("click", () => {
+                // Update post's content
                 const submittedContent = document.querySelector("textarea.new-content").value.trim();
-                console.log(submittedContent)
                 contentNode.innerHTML = submittedContent;
+
+                let csrftoken = getCookie('csrftoken');
+                // Send PUT request
+                fetch("", {
+                    method: "PUT",
+                    body: submittedContent,
+                    headers: {"X-CSRFToken": csrftoken}
+                })
+                // .then(response => response.json())
+                // .then(result => {
+                //     console.log("here we are")
+                // })
 
                 // show edit button
                 event.target.classList.toggle("hidden");
             });
         });
     });
-})
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

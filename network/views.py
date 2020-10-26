@@ -38,6 +38,10 @@ def index(request):
             )
             post.save()
 
+    if request.method == "PUT":
+        print(request.body)
+
+
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()
 
