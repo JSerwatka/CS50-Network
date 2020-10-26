@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
+from django.core.paginator import Paginator
 
 from .models import User, Post, Comment, Like, Following
 
@@ -40,9 +41,14 @@ def index(request):
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()
 
+    # Create page controll
+    paginator = Paginator(all_posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
         "form": CreatePostForm(),
-        "posts": all_posts,
+        "page_obj": page_obj,
         "add_post_available": True
     })
 
@@ -62,9 +68,14 @@ def following(request):
     # Flatten 2d array to 1d array
     posts = np.array(posts).flatten()
 
+    # Create page controll
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "network/index.html", {
         "form": None,
-        "posts": posts,
+        "page_obj": page_obj,
         "add_post_available": False
     })
 
