@@ -1,4 +1,5 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
     {% if user.is_authenticated and add_post_available %}
@@ -12,19 +13,28 @@
     {% endif %}
     {% for post in page_obj.object_list %}
         <div class="post">
-            {{ post.user}}
-            {{ post.content}}
-            {{ post.date}}
-            {% for emoji in post.likes.all %}
+            <div class="post-user">
+                {{ post.user}}
+            </div>
+            <div class="post-content">
+                {{ post.content}}
+            </div>
+            {% if user.id == post.user.id %}
+                <button class="edit-button">Edit</button>
+            {% endif %}
+            <div class="post-date">
+                {{ post.date}}
+            </div>
+            <div class="post-emoji">
+                {% for emoji in post.likes.all %}
                 {% autoescape off %}
                     {{ emoji.get_emoji_type_display }}
                 {% endautoescape %}
                 {% empty %}
-                nothing here
-            {% endfor %}
-            {% if user.id == post.user.id %}
-                <button><a href="">Edit</a></button>
-            {% endif %}
+                    nothing here
+                {% endfor %}
+            </div>
+
         </div>
     {% empty %}
         No posts yet
@@ -47,4 +57,8 @@
             {% endif %}
         </span>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/posts.js' %}"></script>
 {% endblock %}

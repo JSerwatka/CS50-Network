@@ -4,3 +4,7 @@
     max-width: 60%;
     padding: 25px 10px;
 }
+
+.edit-button.hidden {
+    display: none;
+}
