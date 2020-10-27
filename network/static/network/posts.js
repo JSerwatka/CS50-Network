@@ -40,13 +40,12 @@ function editPostControl() {
 
             // After save - update
             document.querySelector("button.save").addEventListener("click", () => {
-                // Update post's content
+                // Get content to submit
                 const submittedContent = document.querySelector("textarea.new-content").value.trim();
-                contentNode.innerHTML = submittedContent;
-
+                
                 let csrftoken = getCookie('csrftoken');
+
                 // Send PUT request
-                //TODO: test if it's correct user who is editing
                 fetch("", {
                     method: "PUT",
                     body: JSON.stringify({
@@ -56,18 +55,25 @@ function editPostControl() {
                     headers: {"X-CSRFToken": csrftoken}
                 })
                 .then(response => {
+                    // if success - update post's content
                     if (response.status === 204) {
+                        
+                        contentNode.innerHTML = submittedContent;
+
                         console.log(`post id: ${postID} edited successfully`)
                     }
+                    // if error -  restore original post's content and throw an error
                     else {
-                        throw new Error("Post doesn't exist or user is invalid")
+                        contentNode.innerHTML = contentInnerText;
+
+                        throw new Error("Post doesn't exist or user is invalid")                        
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    alert(error)
                 })
 
-                // show edit button
+                // Show edit button
                 event.target.classList.toggle("hidden");
             });
         });
