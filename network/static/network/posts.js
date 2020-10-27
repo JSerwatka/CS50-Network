@@ -12,9 +12,12 @@ function editPostControl() {
             // hide edit button
             event.target.classList.toggle("hidden");
 
+            // Get post node and post id
+            const postNode = event.target.parentElement
+            const postID = postNode.id
 
-            // Get content of post to be edit
-            let contentNode = event.target.previousElementSibling;
+            // Get content of post to be edited
+            let contentNode = postNode.querySelector("div.post-content")
             const contentInnerText = contentNode.textContent.trim();
             
             // Populate content with form to fill
@@ -27,6 +30,7 @@ function editPostControl() {
                     <button class="btn btn-primary save">Save</button>
                 </div>`;
 
+            // After cancel - restore orginal post content
             document.querySelector("button.cancel").addEventListener("click", () => {
                 contentNode.innerHTML = contentInnerText;
 
@@ -34,6 +38,7 @@ function editPostControl() {
                 event.target.classList.toggle("hidden");
             });
 
+            // After save - update
             document.querySelector("button.save").addEventListener("click", () => {
                 // Update post's content
                 const submittedContent = document.querySelector("textarea.new-content").value.trim();
@@ -41,15 +46,26 @@ function editPostControl() {
 
                 let csrftoken = getCookie('csrftoken');
                 // Send PUT request
+                //TODO: test if it's correct user who is editing
                 fetch("", {
                     method: "PUT",
-                    body: submittedContent,
+                    body: JSON.stringify({
+                        id: postID,
+                        content: submittedContent,
+                    }),
                     headers: {"X-CSRFToken": csrftoken}
                 })
-                // .then(response => response.json())
-                // .then(result => {
-                //     console.log("here we are")
-                // })
+                .then(response => {
+                    if (response.status === 204) {
+                        console.log(`post id: ${postID} edited successfully`)
+                    }
+                    else {
+                        throw new Error("Post doesn't exist or user is invalid")
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
 
                 // show edit button
                 event.target.classList.toggle("hidden");

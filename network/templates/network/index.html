@@ -12,7 +12,7 @@
     </form>
     {% endif %}
     {% for post in page_obj.object_list %}
-        <div class="post">
+        <div class="post" id={{ post.id }}>
             <div class="post-user">
                 {{ post.user}}
             </div>
@@ -34,7 +34,6 @@
                     nothing here
                 {% endfor %}
             </div>
-
         </div>
     {% empty %}
         No posts yet

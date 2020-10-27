@@ -1,3 +1,6 @@
+import json
+import numpy as np
+
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -5,10 +8,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 from .models import User, Post, Comment, Like, Following
 
-import numpy as np
 
 class CreatePostForm(forms.ModelForm):
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
@@ -39,8 +42,20 @@ def index(request):
             post.save()
 
     if request.method == "PUT":
-        print(request.body)
+        body = json.loads(request.body)
+        # Query for requested post - make sure
+        # that current user is the author
+        try:
+            post_to_edit = Post.objects.get(pk=body.get('id'), user=request.user)
+        except Post.DoesNotExist: 
+            return HttpResponse(status=404)
 
+        # Update post's content
+        post_to_edit.content = body.get('content')
+        post_to_edit.save()
+
+        # Return positive response
+        return HttpResponse(status=204)
 
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()
