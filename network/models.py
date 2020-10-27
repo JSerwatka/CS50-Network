@@ -57,17 +57,12 @@ class Comment(models.Model):
 class Like(models.Model):
 
     # Emojis - choices
-    LIKE = "like"
-    DISLIKE = "dislike"
-    SMILE = "smile"
-    HEART = "heart"
-    THANKS = "thanks"
     LIKE_TYPE_CHOICES = [
-        (LIKE, '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>'),
-        (DISLIKE, '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>'),
-        (SMILE, '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>'),
-        (HEART, '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>'),
-        (THANKS, '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>')
+        (1, "like"),
+        (2, "dislike"),
+        (3, "smile"),
+        (4, "heart"),
+        (5, "thanks")
     ]
 
     # Model fields
@@ -75,13 +70,16 @@ class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="liked by")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
-    emoji_type = models.CharField(max_length=10, choices=LIKE_TYPE_CHOICES, default=LIKE)
+    emoji_type = models.CharField(max_length=10, choices=LIKE_TYPE_CHOICES, default=1)
     # TODO: zastanów się czy nie lepszą opcją byłby JS sterujący kodem html
 
     # Model naming
     class Meta:
         verbose_name = "like"
         verbose_name_plural = "likes"
+        # TODO: post/user unique
+        # TODO: comment/user unique
+        ordering = ["emoji_type"]
 
     def __str__(self):
         element = self.post if (self.post is not None) else self.comment
