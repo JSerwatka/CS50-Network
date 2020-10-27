@@ -46,7 +46,7 @@ function editPostControl() {
                 let csrftoken = getCookie('csrftoken');
 
                 // Send PUT request
-                fetch("", {
+                fetch("/", {
                     method: "PUT",
                     body: JSON.stringify({
                         id: postID,
