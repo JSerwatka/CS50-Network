@@ -25,38 +25,29 @@
             <div class="post-date">
                 {{ post.date}}
             </div>
-            <div class="post-emoji">
-                {% for emoji in post.likes.all %}
-                    {% ifchanged emoji.emoji_type%}
-                        {% if emoji.emoji_type == "like" %}
-                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
-                        {% elif emoji.emoji_type == "dislike" %}
-                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
-                        {% elif emoji.emoji_type == "smile" %}
-                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>
-                        {% elif emoji.emoji_type == "heart" %}
-                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>
-                        {% elif emoji.emoji_type == "thanks" %}
-                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>
-                        {% endif  %}
-
-                    {% endifchanged %}
-                    
-                    <!-- like: '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>'
-                    dislike: '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>'
-                    smile: '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>'
-                    heart: '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>'
-                    thanks: '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>' -->
-                {% empty %}
-                    nothing here
-                {% endfor %}
-                {{ post.likes.all.count }}
-            </div>
             <div class="like-comment-data">
-
+                <ul class="emoji-list">
+                    {% for emoji in post.likes.all %}     
+                        {% ifchanged emoji.get_emoji_type_display%}              
+                            {% if emoji.get_emoji_type_display == "like" %}
+                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
+                            {% elif emoji.get_emoji_type_display == "dislike" %}
+                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
+                            {% elif emoji.get_emoji_type_display == "smile" %}
+                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>
+                            {% elif emoji.get_emoji_type_display == "heart" %}
+                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>
+                            {% elif emoji.get_emoji_type_display == "thanks" %}
+                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>
+                            {% endif  %}  
+                        {% endifchanged %}                
+                    {% endfor %}
+                </ul>
+                <span class="like-counter">{{ post.likes.all.count }}</span>
             </div>
             <div class="like-comment-buttons">
-
+                <button>like</button>
+                <button>comment</button>
             </div>
         </div>
     {% empty %}

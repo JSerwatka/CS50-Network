@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     editPostControl();
+    updateLikeCounter();
 
 })
 
@@ -80,6 +81,19 @@ function editPostControl() {
     });
 }
 
+function updateLikeCounter() {
+    document.querySelectorAll("div.post").forEach((post) => {
+        // Get emoji count and current likes count
+        const emojiCount = post.querySelector("ul.emoji-list").childElementCount
+        const oldLikesCount = parseInt(post.querySelector("span.like-counter").textContent)
+        
+        if (oldLikesCount > 0) {
+            // Update likes count
+            post.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount}`
+        }
+    })
+}
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -94,3 +108,4 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
