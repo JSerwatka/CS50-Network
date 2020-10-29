@@ -78,6 +78,34 @@ def user_profile(request, user_id):
         "user_data": user_data
     })
 
+#TODO: @logedin
+def like(request):
+    if request.method == "POST":
+        body = json.loads(request.body)
+        emoji_type = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == body['emojiType']][0]
+
+        if  (body['post'] != "") and (body['comment'] != ""):
+            HttpResponse(status=404)
+            #TODO: corrent response
+        elif body['post'] != "":
+            # TODO: add try exept
+            post = Post.objects.get(pk=body['post'])
+            like = Like(user=request.user, post=post, emoji_type=emoji_type)
+        elif body['comment'] != "":
+            # TODO: add try exept
+            comment = Comment.objects.get(pk=body["comment"])
+            like = Like(user=request.user, comment=comment, emoji_type=emoji_type)
+        else: 
+            HttpResponse(status=404)
+            #TODO: corrent response 
+
+        like.save()
+        #TODO: corrent respons
+        return HttpResponse(status=204)
+
+        
+
+
 # TODO: @logedin
 # TODO: page greater than page count handle
 def following(request):

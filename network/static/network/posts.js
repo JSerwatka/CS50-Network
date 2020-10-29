@@ -5,19 +5,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll(".like-panel").forEach((element) => {
         element.addEventListener('click', (event) => {
-            let likeType;
+            let emojiType;
+            let postNode = event.target;
+            let csrftoken = getCookie('csrftoken');
 
             if (event.target.name === "like") {
-                likeType = event.target.name;
+                emojiType = event.target.name;
+
             }
             else if (typeof event.target.firstChild.name === "string"){
-                likeType = event.target.firstChild.name;
+                emojiType = event.target.firstChild.name;
             }  
             else {
                 return false;
             }
 
-            console.log(likeType)
+            // Get post node regarding of what triggered it
+            while (postNode.className !== "post") { 
+                postNode = postNode.parentElement;
+            }
+
+            fetch("/like", {
+                method: "POST",
+                body: JSON.stringify({
+                    post: postNode.id,
+                    comment: "",
+                    emojiType: emojiType
+                }),
+                headers: {"X-CSRFToken": csrftoken}
+            })
+            .then(response => {
+                if (response.status === 204) {
+                    console.log(`post id: ${postNode.id} liked successfully`)
+                }
+                else {
+                    throw new Error("Post doesn't exist or user is invalid")                        
+                }
+            })
+            .catch(error => {
+                alert(error)
+            })
         })
     })
 

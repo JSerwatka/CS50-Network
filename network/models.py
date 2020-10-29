@@ -77,8 +77,8 @@ class Like(models.Model):
     class Meta:
         verbose_name = "like"
         verbose_name_plural = "likes"
-        # TODO: post/user unique
-        # TODO: comment/user unique
+        unique_together = ("user", "post")
+        unique_together = ("user", "comment")
         ordering = ["emoji_type"]
 
     def __str__(self):
