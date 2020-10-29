@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const emojiPanel = element.querySelector(".emoji-choice");
         let timeoutVar;
 
+        // On hover show
         element.addEventListener("mouseover", () => {
             clearTimeout(timeoutVar)
-            // emojiPanel.classList.remove("like-panel-out", "hidden");
             emojiPanel.classList.remove("hidden");
             emojiPanel.classList.add("like-panel-in");
         })
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             timeoutVar = setTimeout(() => {
                 emojiPanel.classList.remove("like-panel-in");
                 emojiPanel.classList.add("hidden");
-            }, 3000)
+            }, 1000)
         })
     })
 
