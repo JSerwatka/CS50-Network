@@ -2,6 +2,27 @@ document.addEventListener('DOMContentLoaded', function() {
     editPostControl();
     updateLikeCounter();
 
+    document.querySelectorAll(".like-panel").forEach((element) => {
+        const emojiPanel = element.querySelector(".emoji-choice");
+
+        emojiPanel.addEventListener("animationend", () => {
+            if (emojiPanel.classList.contains("like-panel-out")) {
+                emojiPanel.classList.add("hidden");
+            }
+        });
+
+        element.addEventListener("mouseover", () => {
+            emojiPanel.classList.remove("like-panel-out", "hidden");
+            emojiPanel.classList.add("like-panel-in");
+        })
+
+        element.addEventListener("mouseout", () => {
+            const emojiPanel = element.querySelector(".emoji-choice");
+            emojiPanel.classList.remove("like-panel-in");
+            emojiPanel.classList.add("like-panel-out");
+        })
+    })
+
 })
 
 

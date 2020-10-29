@@ -45,9 +45,20 @@
                 </ul>
                 <span class="like-counter">{{ post.likes.all.count }}</span>
             </div>
-            <div class="like-comment-buttons">
-                <button>like</button>
-                <button>comment</button>
+            <div class="like-comment-control">
+                <div class="like-panel">
+                    <button class="like-button">like</button>
+                    <div class="emoji-choice hidden">
+                        <ul>
+                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
+                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
+                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>
+                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>
+                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>
+                        </ul>
+                    </div>
+                </div>
+                <button class="comment-button">comment</button>
             </div>
         </div>
     {% empty %}
