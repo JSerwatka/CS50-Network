@@ -5,17 +5,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll(".like-panel").forEach((element) => {
         const postNode = element.parentElement.parentElement;
+        console.log(`/like/post/${postNode.id}`)
 
-        // fetch("/like", {
-        //     method: "GET",
-        //     body: JSON.stringify({
-        //         post: postNode.id
-        //     })
-        // })
-        // .then(response => response.json())
-        // .then(result => {
-        //     console.log(result)
-        // })
+        fetch(`/like/post/${postNode.id}`)
+        .then(response => response.json())
+        .then(result => {
+            if (result.like === "True"){
+                const likeButton = postNode.querySelector(".like-button");
+                likeButton.classList.add("liked");
+                
+                // Add emoji of user's like type to like button
+                switch (result.emojiType) {
+                    case "like":
+                        likeButton.innerHTML = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>like';
+                        break;
+                    case "dislike":
+                        likeButton.innerHTML = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>like';
+                        break;
+                    case "smile":
+                        likeButton.innerHTML = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>like';
+                        break;
+                    case "heart":
+                        likeButton.innerHTML = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>like';
+                        break;
+                    case "thanks":
+                        likeButton.innerHTML = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" ></i>like';
+                        break;
+                    default:
+                        likeButton.innerHTML = 'like';
+                }
+            }
+        })
 
         element.addEventListener('click', (event) => {
             let emojiType;

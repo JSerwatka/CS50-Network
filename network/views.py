@@ -80,21 +80,22 @@ def user_profile(request, user_id):
 
 #TODO: @logedin
 def like(request, action, action_id):
-    # if request.method == "GET":
-    #     body = json.loads(request)
-    #     # Check if like exists and send back info
-    #     try:
-    #         post = Post.objects.get(pk=body['post'])
-    #         like = Like(user=request.user, post=post)
-    #     except Like.DoesNotExist:
-    #         return JsonResponse({
-    #             "like": "False"
-    #         })
-    #     else:
-    #         return JsonResponse({
-    #             "like": "True"
-    #         })
-    if request.method == "POST":
+    if request.method == "GET":
+        # Check if like exists and send back info
+        try:
+            post = Post.objects.get(pk=action_id)
+            like = Like.objects.get(user=request.user, post=post)
+        except Like.DoesNotExist:
+            return JsonResponse({
+                "like": "False"
+            })
+        # if like exists send emojiType text
+        else:
+            return JsonResponse({
+                "like": "True",
+                "emojiType": [emoji_tuple[1] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[0] == like.emoji_type][0]
+            })
+    elif request.method == "POST":
         body = json.loads(request.body)
         emoji_type = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == body['emojiType']][0]
 
