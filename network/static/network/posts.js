@@ -4,14 +4,27 @@ document.addEventListener('DOMContentLoaded', function() {
     likePanelAnimationControl();
 
     document.querySelectorAll(".like-panel").forEach((element) => {
+        const postNode = element.parentElement.parentElement;
+
+        // fetch("/like", {
+        //     method: "GET",
+        //     body: JSON.stringify({
+        //         post: postNode.id
+        //     })
+        // })
+        // .then(response => response.json())
+        // .then(result => {
+        //     console.log(result)
+        // })
+
         element.addEventListener('click', (event) => {
             let emojiType;
+            // let likeButtonNode;
             let postNode = event.target;
             let csrftoken = getCookie('csrftoken');
 
             if (event.target.name === "like") {
                 emojiType = event.target.name;
-
             }
             else if (typeof event.target.firstChild.name === "string"){
                 emojiType = event.target.firstChild.name;
@@ -25,11 +38,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 postNode = postNode.parentElement;
             }
 
-            fetch("/like", {
+            // Get like button
+            // likeButtonNode = postNode.querySelector(".like-button")
+                
+
+            fetch(`/like/post/${postNode.id}`, {
                 method: "POST",
                 body: JSON.stringify({
-                    post: postNode.id,
-                    comment: "",
                     emojiType: emojiType
                 }),
                 headers: {"X-CSRFToken": csrftoken}
