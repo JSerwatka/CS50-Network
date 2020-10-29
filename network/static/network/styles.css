@@ -43,6 +43,7 @@ i.em:hover {
     transition: transform 0.4s;
 }
 
+/* Animations */
  @keyframes like-panel-in {
      0% {
         background: transparent;
