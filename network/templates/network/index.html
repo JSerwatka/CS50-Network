@@ -30,15 +30,15 @@
                     {% for emoji in post.likes.all %}     
                         {% ifchanged emoji.get_emoji_type_display%}              
                             {% if emoji.get_emoji_type_display == "like" %}
-                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" name="like"></i>
+                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
                             {% elif emoji.get_emoji_type_display == "dislike" %}
-                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" dislike="name"></i>
+                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
                             {% elif emoji.get_emoji_type_display == "smile" %}
-                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" name="smile"></i>
+                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>
                             {% elif emoji.get_emoji_type_display == "heart" %}
-                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" name="heart"></i>
+                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>
                             {% elif emoji.get_emoji_type_display == "thanks" %}
-                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" name="thanks"></i>
+                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" ></i>
                             {% endif  %}  
                         {% endifchanged %}                
                     {% endfor %}
@@ -47,14 +47,14 @@
             </div>
             <div class="like-comment-control">
                 <div class="like-panel">
-                    <button class="like-button">like</button>
+                    <button class="like-button" name="like">like</button>
                     <div class="emoji-choice hidden">
                         <ul>
-                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
-                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
-                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>
-                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>
-                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"></i>
+                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"><a name="like"></a></i>
+                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"><a name="dislike"></a></i>
+                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"><a name="smile"></a></i>
+                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"><a name="heart"></a></i>
+                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"><a name="thanks"></a></i>
                         </ul>
                     </div>
                 </div>

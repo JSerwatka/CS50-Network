@@ -1,26 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
     editPostControl();
     updateLikeCounter();
+    likePanelAnimationControl();
 
     document.querySelectorAll(".like-panel").forEach((element) => {
-        const emojiPanel = element.querySelector(".emoji-choice");
-        let timeoutVar;
+        element.addEventListener('click', (event) => {
+            let likeType;
 
-        // On hover show
-        element.addEventListener("mouseover", () => {
-            clearTimeout(timeoutVar)
-            emojiPanel.classList.remove("hidden");
-            emojiPanel.classList.add("like-panel-in");
-        })
+            if (event.target.name === "like") {
+                likeType = event.target.name;
+            }
+            else if (typeof event.target.firstChild.name === "string"){
+                likeType = event.target.firstChild.name;
+            }  
+            else {
+                return false;
+            }
 
-        element.addEventListener("mouseout", () => {
-            timeoutVar = setTimeout(() => {
-                emojiPanel.classList.remove("like-panel-in");
-                emojiPanel.classList.add("hidden");
-            }, 1000)
+            console.log(likeType)
         })
     })
-
 
 
 })
@@ -111,6 +110,29 @@ function updateLikeCounter() {
             // Update likes count
             post.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount}`
         }
+    })
+}
+
+
+function likePanelAnimationControl() {
+    document.querySelectorAll(".like-panel").forEach((element) => {
+        const emojiPanel = element.querySelector(".emoji-choice");
+        let timeoutVar;
+
+        // On hover show like-panel
+        element.addEventListener("mouseover", () => {
+            clearTimeout(timeoutVar)
+            emojiPanel.classList.remove("hidden");
+            emojiPanel.classList.add("like-panel-in");
+        })
+
+        // On hover out hide like-panel after 1s
+        element.addEventListener("mouseout", () => {
+            timeoutVar = setTimeout(() => {
+                emojiPanel.classList.remove("like-panel-in");
+                emojiPanel.classList.add("hidden");
+            }, 1000)
+        })
     })
 }
 
