@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(`post id: ${postNode.id} liked successfully`)
                 }
                 else {
-                    throw new Error("Post doesn't exist or user is invalid")                        
+                    throw new Error("Post doesn't exist or u already liked this post")                        
                 }
             })
             .catch(error => {

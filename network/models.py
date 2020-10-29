@@ -77,8 +77,7 @@ class Like(models.Model):
     class Meta:
         verbose_name = "like"
         verbose_name_plural = "likes"
-        unique_together = ("user", "post")
-        unique_together = ("user", "comment")
+        unique_together = [["user", "post"], ["user", "comment"]]
         ordering = ["emoji_type"]
 
     def __str__(self):
@@ -95,7 +94,7 @@ class Following(models.Model):
     class Meta:
         verbose_name = "following"
         verbose_name_plural = "followings"
-        unique_together = ('user', 'user_followed')
+        unique_together = ['user', 'user_followed']
 
     def __str__(self):
         return f"{self.user} is following {self.user_followed}"
