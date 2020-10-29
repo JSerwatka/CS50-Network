@@ -35,11 +35,6 @@
     
 }
 
-.like-panel-out {
-    -webkit-transform-origin: 100% 50%;
-    animation: like-panel-out 1s linear forwards;
-}
-
  @keyframes like-panel-in {
      0% {
         background: transparent;
@@ -53,21 +48,5 @@
         opacity: 1;
         /* top: -40px; */
         -webkit-transform: translateY(-70px);
-     }
- }
-
- @keyframes like-panel-out {
-     0% {
-        background: rgba(128, 128, 128, 0.671);
-        opacity: 1;
-        /* top: -40px; */
-        -webkit-transform: translateY(-70px);
-     }
-
-     100% {
-        background: transparent;
-        opacity: 0;
-        /* top: 0px; */
-        -webkit-transform: translateY(-30px);
      }
  }

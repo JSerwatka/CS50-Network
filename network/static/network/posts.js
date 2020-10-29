@@ -4,27 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll(".like-panel").forEach((element) => {
         const emojiPanel = element.querySelector(".emoji-choice");
-
-        emojiPanel.addEventListener("animationend", () => {
-            if (emojiPanel.classList.contains("like-panel-out")) {
-                emojiPanel.classList.add("hidden");
-            }
-        });
+        let timeoutVar;
 
         element.addEventListener("mouseover", () => {
-            emojiPanel.classList.remove("like-panel-out", "hidden");
+            clearTimeout(timeoutVar)
+            // emojiPanel.classList.remove("like-panel-out", "hidden");
+            emojiPanel.classList.remove("hidden");
             emojiPanel.classList.add("like-panel-in");
         })
 
         element.addEventListener("mouseout", () => {
-            const emojiPanel = element.querySelector(".emoji-choice");
-            emojiPanel.classList.remove("like-panel-in");
-            emojiPanel.classList.add("like-panel-out");
+            timeoutVar = setTimeout(() => {
+                emojiPanel.classList.remove("like-panel-in");
+                emojiPanel.classList.add("hidden");
+            }, 3000)
         })
     })
 
-})
 
+
+})
 
 function editPostControl() {
     let editButtons = document.querySelectorAll("div.post .edit-button")
