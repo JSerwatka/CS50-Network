@@ -88,5 +88,10 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'network/posts.js' %}"></script>
+    <script src="{% static 'network/functions.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'network/authenticated.js' %}"></script>
+    {% else %}
+        <script src="{% static 'network/not_authenticated.js' %}"></script>
+    {% endif %}  
 {% endblock %}
