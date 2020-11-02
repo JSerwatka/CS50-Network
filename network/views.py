@@ -88,13 +88,18 @@ def like(request, action, action_id):
         except Like.DoesNotExist:
             return JsonResponse({
                 "like": "False"
-            })
+            }, status=201)  #TODO: update status code
+        except Post.DoesNotExist:
+             return HttpResponse(status=404) #TODO: redirect to error page
         # if like exists send emojiType text
         else:
             return JsonResponse({
                 "like": "True",
                 "emojiType": [emoji_tuple[1] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[0] == like.emoji_type][0]
-            })
+            }, status=201)  #TODO: update status code
+        # Something went wrong
+        return HttpResponse(status=400) #TODO: update status code
+
     elif request.method == "POST":
         body = json.loads(request.body)
         emoji_type = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == body['emojiType']][0]

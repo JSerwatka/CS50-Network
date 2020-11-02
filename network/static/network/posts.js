@@ -8,7 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Show user's like type on like button
         fetch(`/like/post/${postNode.id}`)
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 201) {
+                return response.json();
+            }
+            else {
+                throw new Error("Something went wrong"); //TODO: update message
+            }
+        })
         .then(result => {
             if (result.like === "True"){
                 const likeButton = postNode.querySelector(".like-button");
@@ -35,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         likeButton.innerHTML = 'like';
                 }
             }
+        })
+        .catch(error => {
+            alert(error);
         })
 
         // Handle like post/comment
@@ -168,14 +178,14 @@ function editPostControl() {
 }
 
 function updateLikeCounter() {
-    document.querySelectorAll("div.post").forEach((post) => {
+    document.querySelectorAll("div.post").forEach((postNode) => {
         // Get emoji count and current likes count
-        const emojiCount = post.querySelector("ul.emoji-list").childElementCount
-        const oldLikesCount = parseInt(post.querySelector("span.like-counter").textContent)
+        const emojiCount = postNode.querySelector("ul.emoji-list").childElementCount
+        const oldLikesCount = parseInt(postNode.querySelector("span.like-counter").textContent)
         
         if (oldLikesCount > 0) {
             // Update likes count
-            post.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount}`
+            postNode.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount}`
         }
     })
 }
