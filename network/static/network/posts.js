@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.querySelectorAll(".like-panel").forEach((element) => {
         const postNode = element.parentElement.parentElement;
-        console.log(`/like/post/${postNode.id}`)
 
+        // Show user's like type on like button
         fetch(`/like/post/${postNode.id}`)
         .then(response => response.json())
         .then(result => {
@@ -37,12 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
 
+        // Handle like post/comment
         element.addEventListener('click', (event) => {
             let emojiType;
             // let likeButtonNode;
             let postNode = event.target;
             let csrftoken = getCookie('csrftoken');
 
+            // Look for event's emoji type
             if (event.target.name === "like") {
                 emojiType = event.target.name;
             }
@@ -61,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get like button
             // likeButtonNode = postNode.querySelector(".like-button")
                 
-
             fetch(`/like/post/${postNode.id}`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -70,8 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {"X-CSRFToken": csrftoken}
             })
             .then(response => {
+                // Successful like -> update post view
                 if (response.status === 204) {
                     console.log(`post id: ${postNode.id} liked successfully`)
+                    // TODO: update like button emoji
+                    // TODO: update like button class
+                    // TODO: update like counter and emoji list
                 }
                 else {
                     throw new Error("Post doesn't exist or u already liked this post")                        
