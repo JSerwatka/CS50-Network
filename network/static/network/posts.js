@@ -131,25 +131,20 @@ function editPostControl() {
     });
 }
 
-function updateEmojiList() {
-    let postNode = document.querySelector("[id='55']")
-    // let emojiList = Array.from(postNode.querySelector(".emoji-list").children);
-    // let emojiAlreadyInList = false;
+function updateEmojiList(postNode, emojiType) {
+    let emojiList = postNode.querySelector("ul.emoji-list")
 
-    console.log(postNode.querySelector("a[name='test']"))
-    if (postNode.querySelector("a[name='heart']")){
+    // Check if emoji already in emoji list
+    // If yes - just update the counter
+    if (emojiList.querySelector(`a[name=${emojiType}]`)){
         console.log("yes")
     }
+    // If no - add emoji to emoji list
     else {
-        console.log("no")
+        let wrapper = document.createElement("div");
+        wrapper.innerHTML = emojiNameToHtml(emojiType)
+        emojiList.appendChild(wrapper.firstChild)
     }
-    // emojiList.forEach(emoji => {
-    //     if (emoji.firstElementChild.name === "heart") {
-    //         emojiAlreadyInList = true;
-    //     }
-    // })
-
-
 }
 
 
