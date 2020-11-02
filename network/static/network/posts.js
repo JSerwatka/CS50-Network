@@ -1,56 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     editPostControl();
+    updateAllLikeIcons();
     updateLikeCounter();
     likePanelAnimationControl();
 
     document.querySelectorAll(".like-panel").forEach((element) => {
-        const postNode = element.parentElement.parentElement;
-
-        // Show user's like type on like button
-        fetch(`/like/post/${postNode.id}`)
-        .then(response => {
-            if (response.status === 201) {
-                return response.json();
-            }
-            else {
-                throw new Error("Something went wrong"); //TODO: update message
-            }
-        })
-        .then(result => {
-            if (result.like === "True"){
-                const likeButton = postNode.querySelector(".like-button");
-                likeButton.classList.add("liked");
-                
-                // Add emoji of user's like type to like button
-                switch (result.emojiType) {
-                    case "like":
-                        likeButton.innerHTML = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>like';
-                        break;
-                    case "dislike":
-                        likeButton.innerHTML = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>like';
-                        break;
-                    case "smile":
-                        likeButton.innerHTML = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>like';
-                        break;
-                    case "heart":
-                        likeButton.innerHTML = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>like';
-                        break;
-                    case "thanks":
-                        likeButton.innerHTML = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" ></i>like';
-                        break;
-                    default:
-                        likeButton.innerHTML = 'like';
-                }
-            }
-        })
-        .catch(error => {
-            alert(error);
-        })
-
         // Handle like post/comment
         element.addEventListener('click', (event) => {
             let emojiType;
-            // let likeButtonNode;
             let postNode = event.target;
             let csrftoken = getCookie('csrftoken');
 
@@ -69,9 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
             while (postNode.className !== "post") { 
                 postNode = postNode.parentElement;
             }
-
-            // Get like button
-            // likeButtonNode = postNode.querySelector(".like-button")
                 
             fetch(`/like/post/${postNode.id}`, {
                 method: "POST",
@@ -84,9 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Successful like -> update post view
                 if (response.status === 204) {
                     console.log(`post id: ${postNode.id} liked successfully`)
-                    // TODO: update like button emoji
-                    // TODO: update like button class
+                    // Update like button emoji and class
+                    updateLikeIcon(postNode);
                     // TODO: update like counter and emoji list
+
+
                 }
                 else {
                     throw new Error("Post doesn't exist or u already liked this post")                        
@@ -101,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
+// Controls asynchronous editing of a post
 function editPostControl() {
     let editButtons = document.querySelectorAll("div.post .edit-button")
 
@@ -154,15 +111,12 @@ function editPostControl() {
                 .then(response => {
                     // if success - update post's content
                     if (response.status === 204) {
-                        
                         contentNode.innerHTML = submittedContent;
-
                         console.log(`post id: ${postID} edited successfully`)
                     }
                     // if error -  restore original post's content and throw an error
                     else {
                         contentNode.innerHTML = contentInnerText;
-
                         throw new Error("Post doesn't exist or user is invalid")                        
                     }
                 })
@@ -177,11 +131,33 @@ function editPostControl() {
     });
 }
 
+function updateEmojiList() {
+    let postNode = document.querySelector("[id='55']")
+    // let emojiList = Array.from(postNode.querySelector(".emoji-list").children);
+    // let emojiAlreadyInList = false;
+
+    console.log(postNode.querySelector("a[name='test']"))
+    if (postNode.querySelector("a[name='heart']")){
+        console.log("yes")
+    }
+    else {
+        console.log("no")
+    }
+    // emojiList.forEach(emoji => {
+    //     if (emoji.firstElementChild.name === "heart") {
+    //         emojiAlreadyInList = true;
+    //     }
+    // })
+
+
+}
+
+
 function updateLikeCounter() {
     document.querySelectorAll("div.post").forEach((postNode) => {
         // Get emoji count and current likes count
-        const emojiCount = postNode.querySelector("ul.emoji-list").childElementCount
-        const oldLikesCount = parseInt(postNode.querySelector("span.like-counter").textContent)
+        let emojiCount = postNode.querySelector("ul.emoji-list").childElementCount
+        let oldLikesCount = parseInt(postNode.querySelector("span.like-counter").textContent)
         
         if (oldLikesCount > 0) {
             // Update likes count
@@ -190,6 +166,64 @@ function updateLikeCounter() {
     })
 }
 
+
+
+function updateLikeIcon(postNode){
+    // Show user's like type on like button
+    fetch(`/like/post/${postNode.id}`)
+    .then(response => {
+        if (response.status === 201) {
+            return response.json();
+        }
+        else {
+            throw new Error("Something went wrong"); //TODO: update message
+        }
+    })
+    .then(result => {
+        if (result.like === "True"){
+            const likeButton = postNode.querySelector(".like-button");
+            likeButton.classList.add("liked");
+            // Add emoji of user's like type to like button
+            likeButton.innerHTML = emojiNameToHtml(result.emojiType);
+        }
+    })
+    .catch(error => {
+        alert(error);
+    })
+}
+
+function emojiNameToHtml(emojiType) {
+    let emojiHtml;
+
+    switch (emojiType) {
+        case "like":
+            emojiHtml = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"><a name="like"></a></i>like';
+            break;
+        case "dislike":
+            emojiHtml = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"><a name="dislike"></a></i>like';
+            break;
+        case "smile":
+            emojiHtml = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"><a name="smile"></a></i>like';
+            break;
+        case "heart":
+            emojiHtml = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"><a name="heart"></a></i>like';
+            break;
+        case "thanks":
+            emojiHtml = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"><a name="thanks"></a></i>like';
+            break;
+        default:
+            emojiHtml = '';
+    }
+
+    return emojiHtml;
+}
+
+function updateAllLikeIcons() {
+    document.querySelectorAll(".like-panel").forEach((element) => {
+        let postNode = element.parentElement.parentElement;
+        updateLikeIcon(postNode);
+    })
+}
 
 function likePanelAnimationControl() {
     document.querySelectorAll(".like-panel").forEach((element) => {

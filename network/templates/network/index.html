@@ -28,17 +28,18 @@
             <div class="like-comment-data">
                 <ul class="emoji-list">
                     {% for emoji in post.likes.all %}     
-                        {% ifchanged emoji.get_emoji_type_display%}              
+                        {% ifchanged emoji.get_emoji_type_display%}   
+                            <!-- TODO: add data-* attribute to count all likes of every type            -->
                             {% if emoji.get_emoji_type_display == "like" %}
-                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"></i>
+                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"><a name="like"></a></i>
                             {% elif emoji.get_emoji_type_display == "dislike" %}
-                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"></i>
+                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"><a name="dislike"></a></i>
                             {% elif emoji.get_emoji_type_display == "smile" %}
-                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"></i>
+                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"><a name="smile"></a></i>
                             {% elif emoji.get_emoji_type_display == "heart" %}
-                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"></i>
+                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"><a name="heart"></a></i>
                             {% elif emoji.get_emoji_type_display == "thanks" %}
-                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" ></i>
+                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"><a name="thanks"></a></i>
                             {% endif  %}  
                         {% endifchanged %}                
                     {% endfor %}
