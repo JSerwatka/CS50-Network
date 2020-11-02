@@ -45,6 +45,7 @@
                 </ul>
                 <span class="like-counter">{{ post.likes.all.count }}</span>
             </div>
+            {% if user.is_authenticated %}
             <div class="like-comment-control">
                 <div class="like-panel">
                     <button class="like-button" name="like">like</button>
@@ -60,6 +61,7 @@
                 </div>
                 <button class="comment-button">comment</button>
             </div>
+            {% endif %}
         </div>
     {% empty %}
         No posts yet
