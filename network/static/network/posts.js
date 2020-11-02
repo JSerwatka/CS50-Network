@@ -1,9 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     editPostControl();
-    updateAllLikeIcons();
-    updateLikeCounter();
     likePanelAnimationControl();
+    likeHandling()
 
+    // Update all like counters and icons 
+    document.querySelectorAll("div.post").forEach((postNode) => {
+        updateLikeCounter(postNode, 0)
+        updateLikeIcon(postNode);
+    })
+
+
+})
+
+// Handles POST request and single post appearance after like
+function likeHandling() {
     document.querySelectorAll(".like-panel").forEach((element) => {
         // Handle like post/comment
         element.addEventListener('click', (event) => {
@@ -40,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(`post id: ${postNode.id} liked successfully`)
                     // Update like button emoji and class
                     updateLikeIcon(postNode);
-                    // TODO: update like counter and emoji list
-
+                    // Update like counter and emoji list
+                    updateEmojiList(postNode, emojiType);
 
                 }
                 else {
@@ -52,10 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert(error)
             })
         })
-    })
-
-
-})
+    })  
+}
 
 // Controls asynchronous editing of a post
 function editPostControl() {
@@ -131,13 +139,14 @@ function editPostControl() {
     });
 }
 
+// Adds emoji to like/comment data panel
 function updateEmojiList(postNode, emojiType) {
     let emojiList = postNode.querySelector("ul.emoji-list")
 
     // Check if emoji already in emoji list
-    // If yes - just update the counter
-    if (emojiList.querySelector(`a[name=${emojiType}]`)){
-        console.log("yes")
+    // If yes - just increment the counter
+    if (emojiList.querySelector(`a[name=${emojiType}]`)) {
+        updateLikeCounter(postNode, 1)
     }
     // If no - add emoji to emoji list
     else {
@@ -147,21 +156,16 @@ function updateEmojiList(postNode, emojiType) {
     }
 }
 
+function updateLikeCounter(postNode, change=0) {
+    // Get emoji count and current likes count
+    let emojiCount = postNode.querySelector("ul.emoji-list").childElementCount
+    let oldLikesCount = parseInt(postNode.querySelector("span.like-counter").textContent)
 
-function updateLikeCounter() {
-    document.querySelectorAll("div.post").forEach((postNode) => {
-        // Get emoji count and current likes count
-        let emojiCount = postNode.querySelector("ul.emoji-list").childElementCount
-        let oldLikesCount = parseInt(postNode.querySelector("span.like-counter").textContent)
-        
-        if (oldLikesCount > 0) {
-            // Update likes count
-            postNode.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount}`
-        }
-    })
+    if (oldLikesCount > 0) {
+        // Update likes count
+        postNode.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount + change}`
+    }
 }
-
-
 
 function updateLikeIcon(postNode){
     // Show user's like type on like button
@@ -211,13 +215,6 @@ function emojiNameToHtml(emojiType) {
     }
 
     return emojiHtml;
-}
-
-function updateAllLikeIcons() {
-    document.querySelectorAll(".like-panel").forEach((element) => {
-        let postNode = element.parentElement.parentElement;
-        updateLikeIcon(postNode);
-    })
 }
 
 function likePanelAnimationControl() {
