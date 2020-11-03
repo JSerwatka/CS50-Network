@@ -177,14 +177,14 @@ function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
         }
     }   
     
-    const emojiList = postNode.querySelector("ul.emoji-list");
-    const emojiTag = emojiList.querySelector(`i[data-name=${newEmojiType}]`);
+    // PUT or POST request -> add new emoji node or update its counter
+    let emojiList = postNode.querySelector("ul.emoji-list");
+    let newEmojiNode = emojiList.querySelector(`i[data-name=${newEmojiType}]`);
 
     // Check if emoji already in emoji list
     // If yes - just increment the counter and refresh it
-    if (emojiTag) {
-        emojiTag.dataset.count = parseInt(emojiTag.dataset.count) + 1;
-        updateLikeCounter(postNode)
+    if (newEmojiNode) {
+        newEmojiNode.dataset.count = parseInt(newEmojiNode.dataset.count) + 1;
     }
     // If no - add emoji to emoji list
     else {
@@ -192,6 +192,9 @@ function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
         wrapper.innerHTML = emojiNameToHtml(newEmojiType)
         emojiList.appendChild(wrapper.firstChild)
     }
+
+    // Make sure that like counter has correct value
+    updateLikeCounter(postNode)
 }
 
 function updateLikeCounter(postNode) {
