@@ -44,8 +44,7 @@
                         {% endifchanged %}                
                     {% endfor %}
                 </ul>
-                <!-- TODO: suma wszystki data-emoji - ilość emoji tagów -->
-                <span class="like-counter">{{ post.likes.all.count }}</span>
+                <span class="like-counter"></span>
             </div>
             {% if user.is_authenticated %}
             <div class="like-comment-control">
