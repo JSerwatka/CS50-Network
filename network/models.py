@@ -33,10 +33,6 @@ class Post(models.Model):
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-    # def get_emoji_count(self):
-    #     emoji_number = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == "like"][0]
-    #     return self.likes.filter(emoji_type=emoji_number).count()
-
     #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content)
 
 class Comment(models.Model):

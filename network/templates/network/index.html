@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load custom_tags %}
 
 {% block body %}
     {% if user.is_authenticated and add_post_available %}
@@ -32,15 +33,15 @@
                         {% ifchanged emoji.get_emoji_type_display%}   
                             <!-- TODO: add data-* attribute to count all likes of every type            -->
                             {% if emoji.get_emoji_type_display == "like" %}
-                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"><a name="like"></a></i>
+                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count={% get_emoji_count post 'like' %}><a name="like"></a></i>
                             {% elif emoji.get_emoji_type_display == "dislike" %}
-                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"><a name="dislike"></a></i>
+                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count={% get_emoji_count post 'dislike' %}><a name="dislike"></a></i>
                             {% elif emoji.get_emoji_type_display == "smile" %}
-                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"><a name="smile"></a></i>
+                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count={% get_emoji_count post 'smile' %}><a name="smile"></a></i>
                             {% elif emoji.get_emoji_type_display == "heart" %}
-                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"><a name="heart"></a></i>
+                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count={% get_emoji_count post 'heart' %}><a name="heart"></a></i>
                             {% elif emoji.get_emoji_type_display == "thanks" %}
-                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"><a name="thanks"></a></i>
+                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count={% get_emoji_count post 'thanks' %}><a name="thanks"></a></i>
                             {% endif  %}  
                         {% endifchanged %}                
                     {% endfor %}
