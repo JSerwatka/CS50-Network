@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Update all like counters and icons 
     document.querySelectorAll("div.post").forEach((postNode) => {
-        updateLikeCounter(postNode, 0)
+        updateLikeCounter(postNode)
     })
 
 

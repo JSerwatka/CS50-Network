@@ -161,12 +161,13 @@ function editPostControl() {
 
 // Adds emoji to like/comment data panel
 function updateEmojiList(postNode, emojiType, previousEmojiType=null) {
-    let emojiList = postNode.querySelector("ul.emoji-list")
+    const emojiList = postNode.querySelector("ul.emoji-list");
+    const emojiATag = emojiList.querySelector(`a[name=${emojiType}]`);
 
     // Check if emoji already in emoji list
-    // If yes - just increment the counter
-    if (emojiList.querySelector(`a[name=${emojiType}]`)) {
-        updateLikeCounter(postNode, 1)
+    // If yes - just increment the counter and refresh it
+    if (emojiATag) {
+        updateLikeCounter(postNode)
     }
     // If no - add emoji to emoji list
     else {
@@ -176,7 +177,7 @@ function updateEmojiList(postNode, emojiType, previousEmojiType=null) {
     }
 }
 
-function updateLikeCounter(postNode, change=0) {
+function updateLikeCounter(postNode) {
     let additionalLikes = 0;
 
     // Emoji tags counter
