@@ -119,7 +119,29 @@ def like(request, action, action_id):
         #TODO: corrent respons
         return HttpResponse(status=204)
 
-        
+    elif request.method == "PUT":
+        body = json.loads(request.body)
+        emoji_number = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == body['emojiType']][0]
+
+        if action == "post":
+            post = Post.objects.get(pk=action_id)
+            old_like = Like.objects.get(user=request.user, post=post)
+        elif action == "comment":
+            comment = Comment.objects.get(pk=action_id)
+            old_like = Like.objects.get(user=request.user, comment=comment)
+        else:
+            return HttpResponse(status=404)
+            #TODO: corrent response 
+
+        try:
+            # Update emoji only if it's different
+            if (old_like.emoji_type != emoji_number):
+                old_like.emoji_type = emoji_number
+                old_like.save()
+        except:
+            return HttpResponse(status=404) #TODO: corrent response 
+        else:
+            return HttpResponse(status=204) #TODO: corrent respons
 
 
 # TODO: @logedin

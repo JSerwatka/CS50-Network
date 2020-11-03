@@ -29,6 +29,7 @@
 
     {% for post in user.posts.all %}
         <div class="post">
+            <!-- TODO: add template for post showing and use it for every view with posts -->
             {{ post.user}}
             {{ post.content}}
             {{ post.date}}

@@ -1,3 +1,5 @@
+// TODO: hide like-comment panel when editing
+
 // Handles POST request and single post appearance after like
 function likeHandling() {
     document.querySelectorAll(".like-panel").forEach((element) => {
@@ -22,31 +24,63 @@ function likeHandling() {
             while (postNode.className !== "post") { 
                 postNode = postNode.parentElement;
             }
-                
-            fetch(`/like/post/${postNode.id}`, {
-                method: "POST",
-                body: JSON.stringify({
-                    emojiType: emojiType
-                }),
-                headers: {"X-CSRFToken": csrftoken}
-            })
-            .then(response => {
-                // Successful like -> update post view
-                if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} liked successfully`)
-                    // Update like button emoji and class
-                    updateLikeIcon(postNode);
-                    // Update like counter and emoji list
-                    updateEmojiList(postNode, emojiType);
 
-                }
-                else {
-                    throw new Error("Post doesn't exist or u already liked this post")                        
-                }
-            })
-            .catch(error => {
-                alert(error)
-            })
+            // Already liked button - update like's emoji type
+            if (postNode.querySelector(".like-button").classList.contains("liked")) {
+                fetch(`/like/post/${postNode.id}`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        emojiType: emojiType
+                    }),
+                    headers: {"X-CSRFToken": csrftoken}
+                })
+                .then(response => {
+                    // Successful like -> update post view
+                    if (response.status === 204) {
+                        console.log(`post id: ${postNode.id} like updated successfully`)
+                        // Update like button emoji and class
+                        updateLikeIcon(postNode);
+                        // Update like counter and emoji list
+                        // TODO: każda zmiana lika spowoduje dodanie nowego emoji, jeśli go nie ma - naprawić
+                        updateEmojiList(postNode, emojiType);
+    
+                    }
+                    else {
+                        throw new Error("Unexpected error")  //TODO: Change message                      
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                })
+            }
+            // No liked yet - save liked
+            else {
+                fetch(`/like/post/${postNode.id}`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        emojiType: emojiType
+                    }),
+                    headers: {"X-CSRFToken": csrftoken}
+                })
+                .then(response => {
+                    // Successful like -> update post view
+                    if (response.status === 204) {
+                        console.log(`post id: ${postNode.id} liked successfully`)
+                        // Update like button emoji and class
+                        updateLikeIcon(postNode);
+                        // Update like counter and emoji list
+                        updateEmojiList(postNode, emojiType);
+    
+                    }
+                    else {
+                        throw new Error("Post doesn't exist or u already liked this post")                        
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                })
+            }
+                
         })
     })  
 }
@@ -142,6 +176,7 @@ function updateEmojiList(postNode, emojiType) {
     }
 }
 
+// TODO: this counter doesn't work - fix it
 function updateLikeCounter(postNode, change=0) {
     // Get emoji count and current likes count
     let emojiCount = postNode.querySelector("ul.emoji-list").childElementCount

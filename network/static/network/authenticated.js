@@ -8,6 +8,4 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLikeCounter(postNode, 0)
         updateLikeIcon(postNode);
     })
-
-
 })
