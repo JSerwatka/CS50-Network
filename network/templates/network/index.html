@@ -14,7 +14,6 @@
     {% endif %}
     {% for post in page_obj.object_list %}
         <div class="post" id={{ post.id }}>
-            <!-- <h1>{{ post.get_emoji_count }}</h1> -->
             <div class="post-user">
                 {{ post.user}}
             </div>
@@ -31,7 +30,6 @@
                 <ul class="emoji-list">
                     {% for emoji in post.likes.all %}     
                         {% ifchanged emoji.get_emoji_type_display%}   
-                            <!-- TODO: add data-* attribute to count all likes of every type            -->
                             {% if emoji.get_emoji_type_display == "like" %}
                                 <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count={% get_emoji_count post 'like' %}><a name="like"></a></i>
                             {% elif emoji.get_emoji_type_display == "dislike" %}
@@ -46,6 +44,7 @@
                         {% endifchanged %}                
                     {% endfor %}
                 </ul>
+                <!-- TODO: suma wszystki data-emoji - ilość emoji tagów -->
                 <span class="like-counter">{{ post.likes.all.count }}</span>
             </div>
             {% if user.is_authenticated %}

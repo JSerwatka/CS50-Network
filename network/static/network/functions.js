@@ -160,7 +160,7 @@ function editPostControl() {
 }
 
 // Adds emoji to like/comment data panel
-function updateEmojiList(postNode, emojiType) {
+function updateEmojiList(postNode, emojiType, previousEmojiType=null) {
     let emojiList = postNode.querySelector("ul.emoji-list")
 
     // Check if emoji already in emoji list
@@ -176,15 +176,31 @@ function updateEmojiList(postNode, emojiType) {
     }
 }
 
-// TODO: this counter doesn't work - fix it
 function updateLikeCounter(postNode, change=0) {
-    // Get emoji count and current likes count
-    let emojiCount = postNode.querySelector("ul.emoji-list").childElementCount
-    let oldLikesCount = parseInt(postNode.querySelector("span.like-counter").textContent)
+    let additionalLikes = 0;
 
-    if (oldLikesCount > 0) {
-        // Update likes count
-        postNode.querySelector("span.like-counter").textContent = `+${oldLikesCount - emojiCount + change}`
+    // Emoji tags counter
+    let emojiTagCount = 0;
+    // All emoji types likes counter
+    let emojiTypeCount = 0;
+
+    // Get list of emoji tags
+    let emojiTagArray = Array.from(postNode.querySelector("ul.emoji-list").children)
+
+    // Get sum of emoji tags and data-count values
+    for (const key in emojiTagArray) {
+        emojiTagCount += 1;
+        emojiTypeCount += parseInt(emojiTagArray[key].dataset.count);
+    }
+
+    // Get count of additional likes
+    additionalLikes = emojiTypeCount - emojiTagCount;
+
+    if (additionalLikes > 0) {
+        postNode.querySelector("span.like-counter").textContent = `+${additionalLikes}`;
+    }
+    else {
+        postNode.querySelector("span.like-counter").textContent = "0"
     }
 }
 
@@ -217,19 +233,19 @@ function emojiNameToHtml(emojiType) {
 
     switch (emojiType) {
         case "like":
-            emojiHtml = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"><a name="like"></a></i>like';
+            emojiHtml = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count=1><a name="like"></a></i>like';
             break;
         case "dislike":
-            emojiHtml = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"><a name="dislike"></a></i>like';
+            emojiHtml = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count=1><a name="dislike"></a></i>like';
             break;
         case "smile":
-            emojiHtml = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"><a name="smile"></a></i>like';
+            emojiHtml = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count=1><a name="smile"></a></i>like';
             break;
         case "heart":
-            emojiHtml = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"><a name="heart"></a></i>like';
+            emojiHtml = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count=1><a name="heart"></a></i>like';
             break;
         case "thanks":
-            emojiHtml = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"><a name="thanks"></a></i>like';
+            emojiHtml = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count=1><a name="thanks"></a></i>like';
             break;
         default:
             emojiHtml = '';
