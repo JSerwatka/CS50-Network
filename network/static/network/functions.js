@@ -44,8 +44,8 @@ function likeHandling() {
                         // Update like button emoji and class
                         updateLikeIcon(postNode);
                         // Update like counter and emoji list
-                        // TODO: każda zmiana lika spowoduje dodanie nowego emoji, jeśli go nie ma - naprawić
-                        updateEmojiList(postNode, emojiType);
+                        let previousEmojiType = postNode.querySelector(".like-button > i").dataset.name;
+                        updateEmojiList(postNode, emojiType, previousEmojiType);
     
                     }
                     else {
@@ -163,9 +163,22 @@ function editPostControl() {
 }
 
 // Adds emoji to like/comment data panel
-function updateEmojiList(postNode, emojiType, previousEmojiType=null) {
+function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
+    // PUT request -> update previous emoji count and visibility
+    if (previousEmojiType !== null) {
+        // Grab node of previous emoji
+        let previousEmojiNode = postNode.querySelector(`.emoji-list > i[data-name=${previousEmojiType}]`);
+        // Decrement its value because of emoji change
+        previousEmojiNode.dataset.count -= 1;
+
+        // If amount of emojis of this type less than 1 -> delete it from the list
+        if (previousEmojiNode.dataset.count < 1) {
+            previousEmojiNode.remove();
+        }
+    }   
+    
     const emojiList = postNode.querySelector("ul.emoji-list");
-    const emojiTag = emojiList.querySelector(`i[data-name=${emojiType}]`);
+    const emojiTag = emojiList.querySelector(`i[data-name=${newEmojiType}]`);
 
     // Check if emoji already in emoji list
     // If yes - just increment the counter and refresh it
@@ -176,7 +189,7 @@ function updateEmojiList(postNode, emojiType, previousEmojiType=null) {
     // If no - add emoji to emoji list
     else {
         let wrapper = document.createElement("div");
-        wrapper.innerHTML = emojiNameToHtml(emojiType)
+        wrapper.innerHTML = emojiNameToHtml(newEmojiType)
         emojiList.appendChild(wrapper.firstChild)
     }
 }
