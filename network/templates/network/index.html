@@ -13,6 +13,7 @@
     {% endif %}
     {% for post in page_obj.object_list %}
         <div class="post" id={{ post.id }}>
+            <!-- <h1>{{ post.get_emoji_count }}</h1> -->
             <div class="post-user">
                 {{ post.user}}
             </div>
@@ -95,3 +96,4 @@
         <script src="{% static 'network/not_authenticated.js' %}"></script>
     {% endif %}  
 {% endblock %}
+

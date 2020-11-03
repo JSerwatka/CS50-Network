@@ -33,6 +33,10 @@ class Post(models.Model):
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
+    # def get_emoji_count(self):
+    #     emoji_number = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == "like"][0]
+    #     return self.likes.filter(emoji_type=emoji_number).count()
+
     #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content)
 
 class Comment(models.Model):
@@ -51,9 +55,9 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-    #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content)
+    #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content) - można to zrobić z poziomu js
 
-
+# TODO: add method to user like choices by name or number
 class Like(models.Model):
 
     # Emojis - choices
