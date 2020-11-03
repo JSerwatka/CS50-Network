@@ -10,12 +10,15 @@ function likeHandling() {
             let csrftoken = getCookie('csrftoken');
 
             // Look for event's emoji type
+            // Check if like button is a target
             if (event.target.name === "like") {
                 emojiType = event.target.name;
             }
-            else if (typeof event.target.firstChild.name === "string"){
-                emojiType = event.target.firstChild.name;
+            // Check if emoji list is a target
+            else if (typeof event.target.dataset.name === "string"){
+                emojiType = event.target.dataset.name;
             }  
+            // Something is a target
             else {
                 return false;
             }
@@ -162,11 +165,12 @@ function editPostControl() {
 // Adds emoji to like/comment data panel
 function updateEmojiList(postNode, emojiType, previousEmojiType=null) {
     const emojiList = postNode.querySelector("ul.emoji-list");
-    const emojiATag = emojiList.querySelector(`a[name=${emojiType}]`);
+    const emojiTag = emojiList.querySelector(`i[data-name=${emojiType}]`);
 
     // Check if emoji already in emoji list
     // If yes - just increment the counter and refresh it
-    if (emojiATag) {
+    if (emojiTag) {
+        emojiTag.dataset.count = parseInt(emojiTag.dataset.count) + 1;
         updateLikeCounter(postNode)
     }
     // If no - add emoji to emoji list
@@ -234,19 +238,19 @@ function emojiNameToHtml(emojiType) {
 
     switch (emojiType) {
         case "like":
-            emojiHtml = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count=1><a name="like"></a></i>like';
+            emojiHtml = '<i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count=1 data-name="like"></i>like';
             break;
         case "dislike":
-            emojiHtml = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count=1><a name="dislike"></a></i>like';
+            emojiHtml = '<i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count=1 data-name="dislike"></i>like';
             break;
         case "smile":
-            emojiHtml = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count=1><a name="smile"></a></i>like';
+            emojiHtml = '<i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count=1 data-name="smile"></i>like';
             break;
         case "heart":
-            emojiHtml = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count=1><a name="heart"></a></i>like';
+            emojiHtml = '<i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count=1 data-name="heart"></i>like';
             break;
         case "thanks":
-            emojiHtml = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count=1><a name="thanks"></a></i>like';
+            emojiHtml = '<i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count=1 data-name="thanks"></i>like';
             break;
         default:
             emojiHtml = '';

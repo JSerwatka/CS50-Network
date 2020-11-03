@@ -31,15 +31,15 @@
                     {% for emoji in post.likes.all %}     
                         {% ifchanged emoji.get_emoji_type_display%}   
                             {% if emoji.get_emoji_type_display == "like" %}
-                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count={% get_emoji_count post 'like' %}><a name="like"></a></i>
+                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count={% get_emoji_count post 'like' %} data-name="like"></i>
                             {% elif emoji.get_emoji_type_display == "dislike" %}
-                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count={% get_emoji_count post 'dislike' %}><a name="dislike"></a></i>
+                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count={% get_emoji_count post 'dislike' %} data-name="dislike"></i>
                             {% elif emoji.get_emoji_type_display == "smile" %}
-                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count={% get_emoji_count post 'smile' %}><a name="smile"></a></i>
+                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count={% get_emoji_count post 'smile' %} data-name="smile"></i>
                             {% elif emoji.get_emoji_type_display == "heart" %}
-                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count={% get_emoji_count post 'heart' %}><a name="heart"></a></i>
+                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count={% get_emoji_count post 'heart' %} data-name="heart"></i>
                             {% elif emoji.get_emoji_type_display == "thanks" %}
-                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count={% get_emoji_count post 'thanks' %}><a name="thanks"></a></i>
+                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count={% get_emoji_count post 'thanks' %} data-name="thanks"></i>
                             {% endif  %}  
                         {% endifchanged %}                
                     {% endfor %}
@@ -52,11 +52,11 @@
                     <button class="like-button" name="like">like</button>
                     <div class="emoji-choice hidden">
                         <ul>
-                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN"><a name="like"></a></i>
-                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN"><a name="dislike"></a></i>
-                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES"><a name="smile"></a></i>
-                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART"><a name="heart"></a></i>
-                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET"><a name="thanks"></a></i>
+                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-name="like"></i>
+                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-name="dislike"></i>
+                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-name="smile"></i>
+                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-name="heart"></i>
+                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-name="thanks"></i>
                         </ul>
                     </div>
                 </div>
