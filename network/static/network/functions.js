@@ -276,6 +276,7 @@ function emojiNameToHtml(emojiType) {
 }
 
 // Shows little number indicator if you hover over emoji in emoji list
+// TODO: should be added for each added emoji after post or put request
 function likesAmountIndicatorControl() {
     document.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
         let likesAmountIndicator = document.createElement("li");

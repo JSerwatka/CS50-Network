@@ -38,7 +38,7 @@ div.like-panel {
 }
 
 /* like-comment-data */
-.emoji-list {
+.emoji-list > i {
     position: relative;
 }
 
@@ -47,10 +47,13 @@ div.like-panel {
     position: absolute;
     top: -30px;
     left: 6px;
+    padding: 1px 3px;
+    background: rgba(231, 161, 56, 0.5);
+    border-radius: 10px;
 }
 
 /* Emoji */
-i.em:hover {
+.emoji-choice i.em:hover {
     transform: scale(1.4);
     transition: transform 0.4s;
 }
