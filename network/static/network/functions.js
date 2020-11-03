@@ -28,7 +28,7 @@ function likeHandling() {
                 postNode = postNode.parentElement;
             }
 
-            // Already liked button - update like's emoji type
+            // Already liked - update like's emoji type
             if (postNode.querySelector(".like-button").classList.contains("liked")) {
                 fetch(`/like/post/${postNode.id}`, {
                     method: "PUT",
@@ -56,7 +56,7 @@ function likeHandling() {
                     alert(error)
                 })
             }
-            // No liked yet - save liked
+            // No liked yet - save like
             else {
                 fetch(`/like/post/${postNode.id}`, {
                     method: "POST",
@@ -273,6 +273,25 @@ function emojiNameToHtml(emojiType) {
     }
 
     return emojiHtml;
+}
+
+// Shows little number indicator if you hover over emoji in emoji list
+function likesAmountIndicatorControl() {
+    document.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
+        let likesAmountIndicator = document.createElement("li");
+        likesAmountIndicator.className = "likes-indicator";
+
+        emojiTag.addEventListener("mouseover", (event) => {
+            if (event.target.classList.contains("em")) {
+                likesAmountIndicator.innerHTML = event.target.dataset.count;
+                event.target.appendChild(likesAmountIndicator);
+            }
+        })
+
+        emojiTag.addEventListener("mouseout", (event) => {
+            likesAmountIndicator.remove();
+        })
+    })
 }
 
 function likePanelAnimationControl() {

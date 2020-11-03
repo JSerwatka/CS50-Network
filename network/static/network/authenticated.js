@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     editPostControl();
     likePanelAnimationControl();
-    likeHandling()
-
+    likeHandling();
+    likesAmountIndicatorControl();
     // Update all like counters and icons 
     document.querySelectorAll("div.post").forEach((postNode) => {
         updateLikeCounter(postNode)

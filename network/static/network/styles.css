@@ -37,6 +37,18 @@ div.like-panel {
     
 }
 
+/* like-comment-data */
+.emoji-list {
+    position: relative;
+}
+
+.likes-indicator {
+    display: inline;
+    position: absolute;
+    top: -30px;
+    left: 6px;
+}
+
 /* Emoji */
 i.em:hover {
     transform: scale(1.4);
