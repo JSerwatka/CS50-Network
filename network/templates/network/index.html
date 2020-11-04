@@ -1,6 +1,5 @@
 {% extends "network/layout.html" %}
 {% load static %}
-{% load custom_tags %}
 
 {% block body %}
     {% if user.is_authenticated and add_post_available %}
@@ -13,78 +12,11 @@
     </form>
     {% endif %}
     {% for post in page_obj.object_list %}
-        <div class="post" id={{ post.id }}>
-            <div class="post-user">
-                <a href="{% url 'network:user_profile' user_id=post.user.id %}">{{ post.user}}</a>
-            </div>
-            <div class="post-content">
-                {{ post.content}}
-            </div>
-            {% if user.id == post.user.id %}
-                <button class="edit-button">Edit</button>
-            {% endif %}
-            <div class="post-date">
-                {{ post.date}}
-            </div>
-            <div class="like-comment-data">
-                <ul class="emoji-list">
-                    {% for emoji in post.likes.all %}     
-                        {% ifchanged emoji.get_emoji_type_display%}   
-                            {% if emoji.get_emoji_type_display == "like" %}
-                                <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-count={% get_emoji_count post 'like' %} data-name="like"></i>
-                            {% elif emoji.get_emoji_type_display == "dislike" %}
-                                <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-count={% get_emoji_count post 'dislike' %} data-name="dislike"></i>
-                            {% elif emoji.get_emoji_type_display == "smile" %}
-                                <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-count={% get_emoji_count post 'smile' %} data-name="smile"></i>
-                            {% elif emoji.get_emoji_type_display == "heart" %}
-                                <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-count={% get_emoji_count post 'heart' %} data-name="heart"></i>
-                            {% elif emoji.get_emoji_type_display == "thanks" %}
-                                <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-count={% get_emoji_count post 'thanks' %} data-name="thanks"></i>
-                            {% endif  %}  
-                        {% endifchanged %}                
-                    {% endfor %}
-                </ul>
-                <span class="like-counter"></span>
-            </div>
-            {% if user.is_authenticated %}
-            <div class="like-comment-control">
-                <div class="like-panel">
-                    <button class="like-button" name="like">like</button>
-                    <div class="emoji-choice hidden">
-                        <ul>
-                            <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-name="like"></i>
-                            <i class="em em--1" aria-role="presentation" aria-label="THUMBS DOWN SIGN" data-name="dislike"></i>
-                            <i class="em em-smile" aria-role="presentation" aria-label="SMILING FACE WITH OPEN MOUTH AND SMILING EYES" data-name="smile"></i>
-                            <i class="em em-heart" aria-role="presentation" aria-label="HEAVY BLACK HEART" data-name="heart"></i>
-                            <i class="em em-bouquet" aria-role="presentation" aria-label="BOUQUET" data-name="thanks"></i>
-                        </ul>
-                    </div>
-                </div>
-                <button class="comment-button">comment</button>
-            </div>
-            {% endif %}
-        </div>
+        {% include "network/posts.html"%}
     {% empty %}
         No posts yet
     {% endfor %}
-    <!-- TODO: beautify paginator with bootstrap -->
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-    
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
+        {% include "network/paginator.html"%}
 {% endblock %}
 
 {% block script %}
