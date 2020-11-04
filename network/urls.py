@@ -7,7 +7,7 @@ app_name = "network"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("user-profile/<int:user_id>", views.user_profile, name="user_profile"),
+    path("user-profile/<int:user_id>", views.user_profile, name="user-profile"),
     path("following", views.following, name="following"),
     path("like/<str:action>/<int:action_id>", views.like, name="like"),
     path("login", views.login_view, name="login"),
