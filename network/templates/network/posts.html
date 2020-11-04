@@ -11,7 +11,7 @@
         <button class="edit-button">Edit</button>
     {% endif %}
     <div class="post-date">
-        {{ post.date}}
+        {{ post.date | timesince}} ago
     </div>
     <div class="like-comment-data">
         <ul class="emoji-list">
