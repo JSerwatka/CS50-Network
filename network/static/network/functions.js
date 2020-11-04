@@ -142,6 +142,9 @@ function editPostControl() {
                     headers: {"X-CSRFToken": csrftoken}
                 })
                 .then(response => {
+                    // Show edit button
+                    event.target.classList.toggle("hidden");
+
                     // if success - update post's content
                     if (response.status === 204) {
                         contentNode.innerHTML = submittedContent;
@@ -156,9 +159,6 @@ function editPostControl() {
                 .catch(error => {
                     alert(error)
                 })
-
-                // Show edit button
-                event.target.classList.toggle("hidden");
             });
         });
     });
@@ -280,7 +280,6 @@ function emojiNameToHtml(emojiType) {
 // Shows little number indicator if you hover over emoji in emoji list
 function likesAmountIndicatorControl(postNode) {
     postNode.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
-        console.log(emojiTag)
         // Create a like amount indicator element
         let likesAmountIndicator = document.createElement("li");
         likesAmountIndicator.className = "likes-indicator";

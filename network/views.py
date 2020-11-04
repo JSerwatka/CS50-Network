@@ -27,7 +27,7 @@ class CreatePostForm(forms.ModelForm):
         model = Post
         fields = ["content"]
 
-# TODO: page greater than page count handle
+# TODO: page query variable greater than max pages handle
 def index(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST)
@@ -202,7 +202,7 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
-# TODO: @logedin
+@login_required(login_url="network:login")
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("network:index"))

@@ -71,7 +71,6 @@ class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="likes", null=True, blank=True)
     emoji_type = models.IntegerField(choices=LIKE_TYPE_CHOICES, default=1)
-    # TODO: zastanów się czy nie lepszą opcją byłby JS sterujący kodem html
 
     # Model naming
     class Meta:
