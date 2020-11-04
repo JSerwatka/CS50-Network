@@ -73,9 +73,16 @@ def index(request):
 
 def user_profile(request, user_id):
     user_data = User.objects.get(pk=user_id)
+    posts = user_data.posts.all()
+
+    # Create page controll
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     return render(request, "network/user_profile.html", {
-        "user_data": user_data
+        "user_data": user_data,
+        "page_obj": page_obj
     })
 
 #TODO: @logedin

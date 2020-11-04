@@ -1,4 +1,5 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
     <div class="profile-username">
@@ -26,22 +27,20 @@
     <div class="profile-picture">
         <img src="{{ user_data.profile.image.url }}" }}>
     </div>
-
-    {% for post in user_data.posts.all %}
-        <div class="post">
-            <!-- TODO: add template for post showing and use it for every view with posts -->
-            {{ post.user}}
-            {{ post.content}}
-            {{ post.date}}
-            {% for emoji in post.likes.all %}
-                {% autoescape off %}
-                    {{ emoji.get_emoji_type_display }}
-                {% endautoescape %}
-                {% empty %}
-                nothing here
-            {% endfor %}
-        </div>
+    
+    {% for post in page_obj.object_list%}
+        {% include "network/posts.html"%}
     {% empty %}
         No posts yet
     {% endfor %}
+        {% include "network/paginator.html"%}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/functions.js' %}"></script>
+    {% if user.is_authenticated %}
+        <script src="{% static 'network/authenticated.js' %}"></script>
+    {% else %}
+        <script src="{% static 'network/not_authenticated.js' %}"></script>
+    {% endif %}  
 {% endblock %}
