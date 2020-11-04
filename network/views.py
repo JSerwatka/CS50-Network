@@ -4,6 +4,7 @@ import numpy as np
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
@@ -71,6 +72,7 @@ def index(request):
         "add_post_available": True
     })
 
+@login_required(login_url="network:login")
 def user_profile(request, user_id):
     user_data = User.objects.get(pk=user_id)
     posts = user_data.posts.all()
@@ -85,7 +87,7 @@ def user_profile(request, user_id):
         "page_obj": page_obj
     })
 
-#TODO: @logedin
+@login_required(login_url="network:login")
 def like(request, action, action_id):
     if request.method == "GET":
         # Check if like exists and send back info
@@ -151,8 +153,7 @@ def like(request, action, action_id):
             return HttpResponse(status=204) #TODO: corrent respons
 
 
-# TODO: @logedin
-# TODO: page greater than page count handle
+@login_required(login_url="network:login")
 def following(request):
     current_user = User.objects.get(pk=request.user.id)
 
@@ -183,7 +184,17 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("network:index"))
+
+            # If user tried to enter login_required page - go there after login
+            print(request.POST)
+            
+            if "next" in request.POST:
+                request_args =  request.POST.get("next")[1:].split('/')
+                print(request_args[0])
+                print(request_args[1:])
+                return HttpResponseRedirect(reverse("network:" + request_args[0], args=request_args[1:]))
+            else:
+                return HttpResponseRedirect(reverse("network:index"))
         else:
             return render(request, "network/login.html", {
                 "message": "Invalid username and/or password."
