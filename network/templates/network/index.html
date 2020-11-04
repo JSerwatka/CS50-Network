@@ -15,7 +15,7 @@
     {% for post in page_obj.object_list %}
         <div class="post" id={{ post.id }}>
             <div class="post-user">
-                {{ post.user}}
+                <a href="{% url 'network:user_profile' user_id=post.user.id %}">{{ post.user}}</a>
             </div>
             <div class="post-content">
                 {{ post.content}}

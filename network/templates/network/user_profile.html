@@ -2,32 +2,32 @@
 
 {% block body %}
     <div class="profile-username">
-        {{ user.username }}
+        {{ user_data.username }}
     </div>
     <div class="profile-following">
         <ul>
             <!-- TODO: change to count + show followed user profile -->
-            <li>Followers {{ user.followers.all }}</li>
-            <li>Following {{ user.following.all }}</li>
+            <li>Followers {{ user_data.followers.all }}</li>
+            <li>Following {{ user_data.following.all }}</li>
         </ul>
     </div>
     <div class="profile-name">
-        {{ user.profile.name }}
+        {{ user_data.profile.name }}
     </div>
     <div class="profile-birth">
-        {{ user.profile.date_of_birth }}
+        {{ user_data.profile.date_of_birth }}
     </div>
     <div class="profile-about">
-        {{ user.profile.about }}
+        {{ user_data.profile.about }}
     </div>
     <div class="profile-country">
-        {{ user.profile.country.name }}
+        {{ user_data.profile.country.name }}
     </div>
     <div class="profile-picture">
-        <img src="{{ user.profile.image.url }}" }}>
+        <img src="{{ user_data.profile.image.url }}" }}>
     </div>
 
-    {% for post in user.posts.all %}
+    {% for post in user_data.posts.all %}
         <div class="post">
             <!-- TODO: add template for post showing and use it for every view with posts -->
             {{ post.user}}
