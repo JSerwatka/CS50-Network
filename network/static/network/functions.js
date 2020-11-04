@@ -46,7 +46,8 @@ function likeHandling() {
                         // Update like counter and emoji list
                         let previousEmojiType = postNode.querySelector(".like-button > i").dataset.name;
                         updateEmojiList(postNode, emojiType, previousEmojiType);
-    
+                        // Reconnect like amount indicator event to each emoji
+                        likesAmountIndicatorControl(postNode);
                     }
                     else {
                         throw new Error("Unexpected error")  //TODO: Change message                      
@@ -73,7 +74,8 @@ function likeHandling() {
                         updateLikeIcon(postNode);
                         // Update like counter and emoji list
                         updateEmojiList(postNode, emojiType);
-    
+                        // Reconnect like amount indicator event to each emoji
+                        likesAmountIndicatorControl(postNode);
                     }
                     else {
                         throw new Error("Post doesn't exist or u already liked this post")                        
@@ -276,22 +278,27 @@ function emojiNameToHtml(emojiType) {
 }
 
 // Shows little number indicator if you hover over emoji in emoji list
-// TODO: should be added for each added emoji after post or put request
-function likesAmountIndicatorControl() {
-    document.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
+function likesAmountIndicatorControl(postNode) {
+    postNode.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
+        console.log(emojiTag)
+        // Create a like amount indicator element
         let likesAmountIndicator = document.createElement("li");
         likesAmountIndicator.className = "likes-indicator";
 
-        emojiTag.addEventListener("mouseover", (event) => {
+        // Show like amount indicator
+        emojiTag.onmouseover = (event) => {
+            // Make sure that the appended child doesn't inherit this eventlistener
             if (event.target.classList.contains("em")) {
                 likesAmountIndicator.innerHTML = event.target.dataset.count;
                 event.target.appendChild(likesAmountIndicator);
             }
-        })
+        }
 
-        emojiTag.addEventListener("mouseout", (event) => {
+        // Remove like amount indicator
+        emojiTag.onmouseout = () => {
             likesAmountIndicator.remove();
-        })
+        }
+
     })
 }
 
