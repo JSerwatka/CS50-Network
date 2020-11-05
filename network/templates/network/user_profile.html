@@ -6,23 +6,33 @@
         {{ user_data.username }}
     </div>
     <div class="profile-following">
+        {% if user.id != user_data.id %}
+            <form action="" method="POST">
+                {% csrf_token %}
+            {% if user in followers%}
+                    <button type="submit" class="follow">Follow</button>
+            {% else %}
+                    <button type="submit" class="unfollow">Unfollow</button>
+            {% endif %}
+            </form>            
+        {% endif %}
         <ul>
             <!-- TODO: change to count + show followed user profile -->
-            <li>Followers {{ user_data.followers.all }}</li>
-            <li>Following {{ user_data.following.all }}</li>
+            <li>Followers {{ followers }}</li>
+            <li>Following {{ following }}</li>
         </ul>
     </div>
     <div class="profile-name">
-        {{ user_data.profile.name }}
+        Name: {{ user_data.profile.name }}
     </div>
     <div class="profile-birth">
-        {{ user_data.profile.date_of_birth }}
+        Birth: {{ user_data.profile.date_of_birth }}
     </div>
     <div class="profile-about">
-        {{ user_data.profile.about }}
+        About: {{ user_data.profile.about }}
     </div>
     <div class="profile-country">
-        {{ user_data.profile.country.name }}
+        Country: {{ user_data.profile.country.name }}
     </div>
     <div class="profile-picture">
         <img src="{{ user_data.profile.image.url }}">

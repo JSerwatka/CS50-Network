@@ -75,7 +75,14 @@ def index(request):
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
     user_data = User.objects.get(pk=user_id)
-    posts = user_data.posts.all()
+    posts = user_data.posts.order_by("-date").all()
+
+    # Get following and followed user objects
+    following_id_list = Following.objects.filter(user=user_id).values_list('user_followed', flat=True)
+    followers_id_list = Following.objects.filter(user_followed=user_id).values_list('user_id', flat=True)
+
+    following_user_list = User.objects.filter(id__in=following_id_list)
+    followers_user_list = User.objects.filter(id__in=followers_id_list)
 
     # Create page controll
     paginator = Paginator(posts, 10)
@@ -84,6 +91,8 @@ def user_profile(request, user_id):
 
     return render(request, "network/user_profile.html", {
         "user_data": user_data,
+        "following": following_user_list,
+        "followers": followers_user_list,
         "page_obj": page_obj
     })
 
