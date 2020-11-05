@@ -7,12 +7,12 @@
     </div>
     <div class="profile-following">
         {% if user.id != user_data.id %}
-            <form action="" method="POST">
+            <form action="{% url 'network:follow-unfollow' user_id=user_data.id %}" method="POST">
                 {% csrf_token %}
             {% if user in followers%}
-                    <button type="submit" class="follow">Follow</button>
-            {% else %}
                     <button type="submit" class="unfollow">Unfollow</button>
+            {% else %}
+                    <button type="submit" class="follow">Follow</button>
             {% endif %}
             </form>            
         {% endif %}

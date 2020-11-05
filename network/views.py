@@ -182,6 +182,27 @@ def following(request):
         "add_post_available": False
     })
 
+@login_required(login_url="network:login")
+def follow_unfollow(request, user_id):
+    if request == "POST":
+        users_followed = request.user.following.all().values_list("user_followed", flat=True)
+        
+        # If user already followed -> unfollow him
+        if (user_id in users_followed):
+            get_follow_obj = Following.objects.get(user=request.user.id, user_followed=user_id)
+            get_follow_obj.remove()
+        # Else -> follow the user
+        else:
+            try:
+                user_to_follow = User.objects.get(pk=user_id)
+            except User.DoesNotExist:
+                HttpResponse(status=404) #TODO: render error msg
+            else:
+                follow_obj = Following(user=request.user.id, user_followed=user_to_follow.id)
+                follow_obj.save()
+
+    return HttpResponse(f"Current user: {request.user}, profile: {user_id}")
+
 def login_view(request):
     if request.method == "POST":
 
