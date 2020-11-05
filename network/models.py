@@ -15,7 +15,6 @@ class UserProfile(models.Model):
     country = CountryField(blank=True, null=True)
     image = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")
 
-
     def __str__(self):
         return f"{self.user.username}"
 
@@ -101,5 +100,5 @@ class Following(models.Model):
 
     # Get all posts from users that current user follows
     def get_user_followed_posts(self):
-        return self.user_followed.posts.all()
+        return self.user_followed.posts.order_by("-date").all()
     
