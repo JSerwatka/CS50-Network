@@ -184,22 +184,20 @@ def following(request):
 
 @login_required(login_url="network:login")
 def follow_unfollow(request, user_id):
-    if request == "POST":
-        users_followed = request.user.following.all().values_list("user_followed", flat=True)
-        
-        # If user already followed -> unfollow him
-        if (user_id in users_followed):
+    # Nested try/except helps to reduce db queries by one
+    if request.method == "POST":
+        try:
             get_follow_obj = Following.objects.get(user=request.user.id, user_followed=user_id)
-            get_follow_obj.remove()
-        # Else -> follow the user
-        else:
+        except Following.DoesNotExist:
             try:
                 user_to_follow = User.objects.get(pk=user_id)
             except User.DoesNotExist:
                 HttpResponse(status=404) #TODO: render error msg
             else:
-                follow_obj = Following(user=request.user.id, user_followed=user_to_follow.id)
-                follow_obj.save()
+                new_follow_obj = Following(user=request.user.id, user_followed=user_to_follow.id)
+                new_follow_obj.save()
+        else:
+            get_follow_obj.delete()
 
     return HttpResponse(f"Current user: {request.user}, profile: {user_id}")
 
