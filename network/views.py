@@ -10,9 +10,9 @@ from django.urls import reverse
 from django import forms
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from .models import User, Post, Comment, Like, Following, UserProfile
 
-from .models import User, Post, Comment, Like, Following
-
+#TODO: add change userprofile info settings
 
 class CreatePostForm(forms.ModelForm):
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
@@ -221,7 +221,7 @@ def register(request):
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
+        # Attempt to create new user and its profile
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
@@ -229,6 +229,9 @@ def register(request):
             return render(request, "network/register.html", {
                 "message": "Username already taken."
             })
+        else:
+            profile = UserProfile(user=user)
+            profile.save()
         login(request, user)
         return HttpResponseRedirect(reverse("network:index"))
     else:

@@ -1,4 +1,8 @@
-// TODO: hide like-comment panel when editing
+// TODO: sort emoji by data-docunt
+// TODO: add possibility to delete post
+// TODO: possibility to follow user
+// TODO: fix default photo not showing
+// TODO: add your photo option
 
 // Handles POST request and single post appearance after like
 function likeHandling() {

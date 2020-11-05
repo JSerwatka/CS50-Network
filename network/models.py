@@ -13,7 +13,8 @@ class UserProfile(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     about = models.TextField(blank=True, null=True)
     country = CountryField(blank=True, null=True)
-    image = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics", blank=True)
+    image = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")
+
 
     def __str__(self):
         return f"{self.user.username}"
@@ -29,7 +30,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = "post"
         verbose_name_plural = "posts"
-    
+  
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
