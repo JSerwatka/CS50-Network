@@ -6,7 +6,8 @@
 
 {% block body %}
 <div class="create-listing-form">
-    <form action="" method="post">
+    <form action="{% url 'network:user-profile' user_id=1%}" method="post">
+        {% csrf_token %}
         <div class="form-group">
             {{ form.name.label }}
             {{ form.name }}
@@ -28,6 +29,7 @@
             {{ form.image.label }}
             {{ form.image }}
         </div>
+        <input type="submit">
     </form>
 </div>
 {% endblock %}

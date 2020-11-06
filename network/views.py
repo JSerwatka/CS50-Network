@@ -123,6 +123,18 @@ def index(request):
 
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
+    #TODO: finish POST handling for edit user
+    #TODO: move form html to different place
+    #TODO: add edit profile button and populate form with current data
+    if request.method == "POST":
+        my_form = CreateUserProfileForm(request.POST)
+        if my_form.is_valid():
+            print(my_form.cleaned_data["name"])
+            print(my_form.cleaned_data["date_of_birth"])
+            print(my_form.cleaned_data["about"])
+            print(my_form.cleaned_data["country"])
+            print(my_form.cleaned_data["image"])
+
     user_data = User.objects.get(pk=user_id)
     posts = user_data.posts.order_by("-date").all()
 
