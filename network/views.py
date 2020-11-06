@@ -11,8 +11,10 @@ from django import forms
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from .models import User, Post, Comment, Like, Following, UserProfile
-from django_countries.widgets import CountrySelectWidget
 from django.utils.translation import ugettext_lazy as _
+from django_countries.widgets import CountrySelectWidget
+from flatpickr import DatePickerInput
+
 
 
 #TODO: add change userprofile info settings
@@ -32,6 +34,14 @@ class CreatePostForm(forms.ModelForm):
         fields = ["content"]
 
 class CreateUserProfileForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=DatePickerInput(
+        options = {
+            "altFormat": "d F Y",
+            "altInput": True,
+            "dateFormat": "d/m/Y"
+        },
+    ))
+
     class Meta:
         model = UserProfile
         fields = ["name", "date_of_birth", "about", "country", "image"]
@@ -45,13 +55,20 @@ class CreateUserProfileForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={
                 "placeholder": _("Your name..."),
-                "aria-label": _("your name")
+                "aria-label": _("your name"),
+                "class": "form-control"
                 }),
             "about": forms.Textarea(attrs={
                 "placeholder": _("Tell about yourself..."),
-                "aria-label": _("tell about yourself")
+                "aria-label": _("tell about yourself"),
+                "class": "form-control"
                 }),
-            'country': CountrySelectWidget(),
+            'country': CountrySelectWidget(
+                 attrs={"class": "form-control"}
+            ),
+            "image": forms.FileInput(
+                attrs={"class": "form-control-file"}
+            )
         }
 
 def form(request):

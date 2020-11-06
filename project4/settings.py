@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'network',
     'django_countries',
+    'flatpickr',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,6 +103,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# GLobal settings for all flatpickr inputs
+FLATPICKR_SETTINGS = {
+    'theme_name': 'material_blue',
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
