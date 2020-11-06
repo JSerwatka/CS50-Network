@@ -11,8 +11,10 @@ from django import forms
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from .models import User, Post, Comment, Like, Following, UserProfile
+from django_countries.widgets import CountrySelectWidget
 
 #TODO: add change userprofile info settings
+#TODO: change user profile creation to signals
 
 class CreatePostForm(forms.ModelForm):
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
@@ -26,6 +28,11 @@ class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["content"]
+
+class CreateUserProfileForm(forms.ModelForm):
+    class Meta:
+        fields = ["name", "date_of_birth", "about", "country", "image"]
+        widgets = {'country': CountrySelectWidget()}
 
 # TODO: page query variable greater than max pages handle
 def index(request):
