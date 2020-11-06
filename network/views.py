@@ -12,6 +12,8 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from .models import User, Post, Comment, Like, Following, UserProfile
 from django_countries.widgets import CountrySelectWidget
+from django.utils.translation import ugettext_lazy as _
+
 
 #TODO: add change userprofile info settings
 #TODO: change user profile creation to signals
@@ -31,8 +33,31 @@ class CreatePostForm(forms.ModelForm):
 
 class CreateUserProfileForm(forms.ModelForm):
     class Meta:
+        model = UserProfile
         fields = ["name", "date_of_birth", "about", "country", "image"]
-        widgets = {'country': CountrySelectWidget()}
+        labels = {
+            "name": _("Name: "),
+            "date_of_birth": _("Date of birth: "),
+            "about": _("About: "),
+            "country": _("Country: "),
+            "image": _("Image: ")
+        }
+        widgets = {
+            "name": forms.TextInput(attrs={
+                "placeholder": _("Your name..."),
+                "aria-label": _("your name")
+                }),
+            "about": forms.Textarea(attrs={
+                "placeholder": _("Tell about yourself..."),
+                "aria-label": _("tell about yourself")
+                }),
+            'country': CountrySelectWidget(),
+        }
+
+def form(request):
+    return render(request, "network/form.html", {
+        "form": CreateUserProfileForm()
+    })
 
 # TODO: page query variable greater than max pages handle
 def index(request):
