@@ -3,10 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     likePanelAnimationControl();
     likeHandling();
     
-    // Update all like counters, icons and add like amount indicator control
+    // Update all like counters, icons, add like amount indicator control and sort amojis by data-count
     document.querySelectorAll("div.post").forEach((postNode) => {
-        updateLikeCounter(postNode)
+        updateLikeCounter(postNode);
         updateLikeIcon(postNode);
         likesAmountIndicatorControl(postNode);
+        sortEmojiList(postNode);
     })
 })

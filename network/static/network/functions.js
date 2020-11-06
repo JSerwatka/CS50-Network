@@ -1,6 +1,4 @@
-// TODO: sort emoji by data-docunt
 // TODO: add possibility to delete post
-// TODO: possibility to follow user
 // TODO: fix default photo not showing
 // TODO: add your photo option
 
@@ -82,11 +80,11 @@ function likeHandling() {
                         likesAmountIndicatorControl(postNode);
                     }
                     else {
-                        throw new Error("Post doesn't exist or u already liked this post")                        
+                        throw new Error("Post doesn't exist or u already liked this post");                     
                     }
                 })
                 .catch(error => {
-                    alert(error)
+                    alert(error);
                 })
             }
                 
@@ -195,12 +193,14 @@ function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
     // If no - add emoji to emoji list
     else {
         let wrapper = document.createElement("div");
-        wrapper.innerHTML = emojiNameToHtml(newEmojiType)
-        emojiList.appendChild(wrapper.firstChild)
+        wrapper.innerHTML = emojiNameToHtml(newEmojiType);
+        emojiList.appendChild(wrapper.firstChild);
     }
 
     // Make sure that like counter has correct value
-    updateLikeCounter(postNode)
+    updateLikeCounter(postNode);
+    // Sort emojis by amount of likes
+    sortEmojiList(postNode);
 }
 
 function updateLikeCounter(postNode) {
@@ -228,6 +228,19 @@ function updateLikeCounter(postNode) {
     }
     else {
         postNode.querySelector("span.like-counter").textContent = "0"
+    }
+}
+
+// Sort emojis by amount of likes
+function sortEmojiList(postNode) {
+    let emojiList = postNode.querySelector("ul.emoji-list")
+
+    if (emojiList.children.length > 1) {
+        Array.from(emojiList.children)
+        .sort(({dataset: {count: a}}, {dataset: {count: b}}) => parseInt(b) - parseInt(a))
+        .forEach((emojiTag) => {
+            emojiList.appendChild(emojiTag)
+        })
     }
 }
 

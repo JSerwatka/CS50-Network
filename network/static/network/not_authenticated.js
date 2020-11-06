@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll("div.post").forEach((postNode) => {
         updateLikeCounter(postNode);
         likesAmountIndicatorControl(postNode);
+        sortEmojiList(postNode);
     })
 
 
