@@ -185,7 +185,6 @@ def following(request):
 @login_required(login_url="network:login")
 def follow_unfollow(request, user_id):
     # Nested try/except helps to reduce db queries by one
-    #TODO: redirect back to profile
     if request.method == "POST":
         try:
             get_follow_obj = Following.objects.get(user=request.user.id, user_followed=user_id)
@@ -199,8 +198,8 @@ def follow_unfollow(request, user_id):
                 new_follow_obj.save()
         else:
             get_follow_obj.delete()
-        finally:
-            HttpResponse(status=201) #TODO: render error msg
+
+        return HttpResponseRedirect(reverse("network:user-profile", args=[user_id]))
 
     return HttpResponse(f"Current user: {request.user}, profile: {user_id}")
 
