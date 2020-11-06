@@ -205,7 +205,6 @@ def follow_unfollow(request, user_id):
 
 def login_view(request):
     if request.method == "POST":
-
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
@@ -215,13 +214,9 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            # If user tried to enter login_required page - go there after login
-            print(request.POST)
-            
+            # If user tried to enter login_required page - go there after login            
             if "next" in request.POST:
                 request_args =  request.POST.get("next")[1:].split('/')
-                print(request_args[0])
-                print(request_args[1:])
                 return HttpResponseRedirect(reverse("network:" + request_args[0], args=request_args[1:]))
             else:
                 return HttpResponseRedirect(reverse("network:index"))
