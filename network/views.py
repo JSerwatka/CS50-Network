@@ -172,6 +172,12 @@ def edit_profile(request):
             
             # Save changes
             new_profile.save()
+
+            # Go back to user's profile page
+            return HttpResponseRedirect(reverse(
+                    "network:user-profile", 
+                    args=[request.user.id]
+                ))
         else:
             print(my_form.errors)
 
