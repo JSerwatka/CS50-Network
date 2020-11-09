@@ -71,11 +71,6 @@ class CreateUserProfileForm(forms.ModelForm):
             )
         }
 
-def form(request):
-    return render(request, "network/form.html", {
-        "form": CreateUserProfileForm()
-    })
-
 # TODO: page query variable greater than max pages handle
 def index(request):
     if request.method == "POST":
@@ -123,8 +118,30 @@ def index(request):
 
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
+    user_data = User.objects.get(pk=user_id)
+    posts = user_data.posts.order_by("-date").all()
+
+    # Get following and followed user objects
+    following_id_list = Following.objects.filter(user=user_id).values_list('user_followed', flat=True)
+    followers_id_list = Following.objects.filter(user_followed=user_id).values_list('user_id', flat=True)
+
+    following_user_list = User.objects.filter(id__in=following_id_list)
+    followers_user_list = User.objects.filter(id__in=followers_id_list)
+
+    # Create page controll
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "network/user_profile.html", {
+        "user_data": user_data,
+        "following": following_user_list,
+        "followers": followers_user_list,
+        "page_obj": page_obj
+    })
+
+def edit_profile(request):
     #TODO: finish POST handling for edit user
-    #TODO: move form html to different place
     #TODO: add edit profile button and populate form with current data
     if request.method == "POST":
         my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
@@ -158,26 +175,8 @@ def user_profile(request, user_id):
         else:
             print(my_form.errors)
 
-    user_data = User.objects.get(pk=user_id)
-    posts = user_data.posts.order_by("-date").all()
-
-    # Get following and followed user objects
-    following_id_list = Following.objects.filter(user=user_id).values_list('user_followed', flat=True)
-    followers_id_list = Following.objects.filter(user_followed=user_id).values_list('user_id', flat=True)
-
-    following_user_list = User.objects.filter(id__in=following_id_list)
-    followers_user_list = User.objects.filter(id__in=followers_id_list)
-
-    # Create page controll
-    paginator = Paginator(posts, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return render(request, "network/user_profile.html", {
-        "user_data": user_data,
-        "following": following_user_list,
-        "followers": followers_user_list,
-        "page_obj": page_obj
+    return render(request, "network/edit_profile.html", {
+        "form": CreateUserProfileForm(instance=request.user.profile)
     })
 
 @login_required(login_url="network:login")
