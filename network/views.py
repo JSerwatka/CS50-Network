@@ -34,7 +34,7 @@ class CreatePostForm(forms.ModelForm):
         fields = ["content"]
 
 class CreateUserProfileForm(forms.ModelForm):
-    date_of_birth = forms.DateField(required=False, widget=DatePickerInput(
+    date_of_birth = forms.DateField(required=False, label=_("Date of birth: "), widget=DatePickerInput(
         options = {
             "altFormat": "d F Y",
             "altInput": True,
@@ -47,7 +47,7 @@ class CreateUserProfileForm(forms.ModelForm):
         fields = ["name", "date_of_birth", "about", "country", "image"]
         labels = {
             "name": _("Name: "),
-            "date_of_birth": _("Date of birth: "),
+            "date_of_birth": _("Date of birth: sd"),
             "about": _("About: "),
             "country": _("Country: "),
             "image": _("Image: ")
@@ -140,9 +140,9 @@ def user_profile(request, user_id):
         "page_obj": page_obj
     })
 
+@login_required(login_url="network:login")
 def edit_profile(request):
-    #TODO: finish POST handling for edit user
-    #TODO: add edit profile button and populate form with current data
+    #TODO: add edit profile button
     if request.method == "POST":
         my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
         if my_form.is_valid():
