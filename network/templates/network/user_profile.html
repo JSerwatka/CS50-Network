@@ -22,16 +22,36 @@
         </ul>
     </div>
     <div class="profile-name">
-        Name: {{ user_data.profile.name }}
+        Name: 
+        {% if user_data.profile.name is None %}
+            Nothing here
+        {% else %}
+            {{ user_data.profile.name }}
+        {% endif %}
     </div>
     <div class="profile-birth">
-        Birth: {{ user_data.profile.date_of_birth }}
+        Birth: 
+        {% if user_data.profile.date_of_birth is None %}
+            Nothing here
+        {% else %}
+            {{ user_data.profile.date_of_birth }}
+        {% endif %}
     </div>
     <div class="profile-about">
-        About: {{ user_data.profile.about }}
+        About:
+        {% if user_data.profile.about == "" %}
+            Nothing here
+        {% else %}
+            {{ user_data.profile.about }}
+        {% endif %}
     </div>
     <div class="profile-country">
-        Country: {{ user_data.profile.country.name }}
+        Country: 
+        {% if user_data.profile.country == ""%}
+            Nothing here
+        {% else %}
+            {{ user_data.profile.country.name }}
+        {% endif %}
     </div>
     <div class="profile-picture">
         <img src="{{ user_data.profile.image.url }}">
