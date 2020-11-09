@@ -6,14 +6,14 @@
 
 {% block body %}
 <div class="create-listing-form">
-    <form action="{% url 'network:user-profile' user_id=1%}" method="post">
+    <form action="{% url 'network:edit-profile'%}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
+        {{form.as_p}}
+        <!-- <div class="form-group">
             {{ form.name.label }}
             {{ form.name }}
         </div>
         <div class="form-group">
-            <!-- date-picker based on: https://github.com/monim67/django-flatpickr -->
             {{ form.date_of_birth.label }}
             {{ form.date_of_birth }}
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             {{ form.image.label }}
             {{ form.image }}
-        </div>
+        </div> -->
         <input type="submit">
     </form>
 </div>
@@ -36,6 +36,7 @@
 
 {% block script %}
     {{ form.media.js }}
+    <!-- TODO: move scipt to separate file -->
     <script>
         let fileInput = document.querySelector("form input[type=file]");
 
@@ -58,3 +59,4 @@
         
     </script>
 {% endblock %}
+            <!-- date-picker based on: https://github.com/monim67/django-flatpickr -->
