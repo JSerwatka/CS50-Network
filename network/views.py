@@ -129,14 +129,32 @@ def user_profile(request, user_id):
     if request.method == "POST":
         my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
         if my_form.is_valid():
-            print(user_id)
-            print(my_form.cleaned_data["name"])
-            print(my_form.cleaned_data["date_of_birth"])
-            print(my_form.cleaned_data["about"])
-            print(my_form.cleaned_data["country"])
-            print(my_form.cleaned_data["image"])
-            print(request.FILES)
-            my_form.save()
+            # Get most data from the form
+            name = my_form.cleaned_data["name"]
+            date_of_birth = my_form.cleaned_data["date_of_birth"]
+            about = my_form.cleaned_data["about"]
+            country = my_form.cleaned_data["country"]
+            # Get image only if any file was uploaded
+            if len(request.FILES) == 1:
+                image = request.FILES['image']
+
+            #TODO: add function to resize the photo or update super.save method of this model
+
+            # Get current user's profle
+            new_profile = UserProfile.objects.get(user=request.user.id)
+
+            # Update all profile's data
+            new_profile.name = name
+            new_profile.date_of_birth = date_of_birth
+            new_profile.about = about
+            new_profile.country = country
+            # Update image only if any file was uploaded
+            #TODO: handle this (image=None) in super.save method of this model
+            if len(request.FILES) == 1:
+                new_profile.image = image
+            
+            # Save changes
+            new_profile.save()
         else:
             print(my_form.errors)
 
