@@ -14,7 +14,9 @@
             {% else %}
                     <button type="submit" class="follow">Follow</button>
             {% endif %}
-            </form>            
+            </form>
+        {% else %}
+            <button><a href="{% url 'network:edit-profile'%}" >Edit profile</a></button>      
         {% endif %}
         <ul>
             <li>Followers {{ followers.count }}</li>
