@@ -146,30 +146,18 @@ def edit_profile(request):
     if request.method == "POST":
         my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
         if my_form.is_valid():
-            # Get most data from the form
-            name = my_form.cleaned_data["name"]
-            date_of_birth = my_form.cleaned_data["date_of_birth"]
-            about = my_form.cleaned_data["about"]
-            country = my_form.cleaned_data["country"]
-            # Get image only if any file was uploaded
-            if len(request.FILES) == 1:
-                image = request.FILES['image']
-
-            #TODO: add function to resize the photo or update super.save method of this model
-
-            # Get current user's profle
+            # Get current user's profile
             new_profile = UserProfile.objects.get(user=request.user.id)
 
-            # Update all profile's data
-            new_profile.name = name
-            new_profile.date_of_birth = date_of_birth
-            new_profile.about = about
-            new_profile.country = country
+            # Update all profile's data with form's data
+            new_profile.name = my_form.cleaned_data["name"]
+            new_profile.date_of_birth = my_form.cleaned_data["date_of_birth"]
+            new_profile.about = my_form.cleaned_data["about"]
+            new_profile.country = my_form.cleaned_data["country"]
             # Update image only if any file was uploaded
-            #TODO: handle this (image=None) in super.save method of this model
             if len(request.FILES) == 1:
-                new_profile.image = image
-            
+                new_profile.image = request.FILES['image']
+
             # Save changes
             new_profile.save()
 
