@@ -8,8 +8,7 @@
 <div class="create-listing-form">
     <form action="{% url 'network:edit-profile'%}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form.as_p}}
-        <!-- <div class="form-group">
+        <div class="form-group">
             {{ form.name.label }}
             {{ form.name }}
         </div>
@@ -28,7 +27,7 @@
         <div class="form-group">
             {{ form.image.label }}
             {{ form.image }}
-        </div> -->
+        </div>
         <input type="submit">
     </form>
 </div>
