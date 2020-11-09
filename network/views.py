@@ -179,7 +179,10 @@ def edit_profile(request):
                     args=[request.user.id]
                 ))
         else:
-            print(my_form.errors)
+            # If form invalid - load edit-profile with error info
+            return render(request, "network/edit_profile.html", {
+                "form": my_form
+            })
 
     return render(request, "network/edit_profile.html", {
         "form": CreateUserProfileForm(instance=request.user.profile)
