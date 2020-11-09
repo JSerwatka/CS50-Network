@@ -34,11 +34,11 @@ class CreatePostForm(forms.ModelForm):
         fields = ["content"]
 
 class CreateUserProfileForm(forms.ModelForm):
-    date_of_birth = forms.DateField(widget=DatePickerInput(
+    date_of_birth = forms.DateField(required=False, widget=DatePickerInput(
         options = {
             "altFormat": "d F Y",
             "altInput": True,
-            "dateFormat": "d/m/Y"
+            "dateFormat": "yyyy-mm-dd"
         },
     ))
 
@@ -127,13 +127,18 @@ def user_profile(request, user_id):
     #TODO: move form html to different place
     #TODO: add edit profile button and populate form with current data
     if request.method == "POST":
-        my_form = CreateUserProfileForm(request.POST)
+        my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
         if my_form.is_valid():
+            print(user_id)
             print(my_form.cleaned_data["name"])
             print(my_form.cleaned_data["date_of_birth"])
             print(my_form.cleaned_data["about"])
             print(my_form.cleaned_data["country"])
             print(my_form.cleaned_data["image"])
+            print(request.FILES)
+            my_form.save()
+        else:
+            print(my_form.errors)
 
     user_data = User.objects.get(pk=user_id)
     posts = user_data.posts.order_by("-date").all()
