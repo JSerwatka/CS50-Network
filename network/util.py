@@ -37,7 +37,7 @@ def image_transpose_exif(img):
         return img
     else:
         return functools.reduce(type(img).transpose, seq, img)
-#TODO: reference before assigment error
+
 def resize_image(img_path, height, width):
     img = Image.open(img_path)
     img = image_transpose_exif(img)

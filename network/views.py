@@ -18,8 +18,7 @@ from .forms import CreatePostForm, CreateUserProfileForm
 
 # TODO: change user profile creation to signals
 # TODO: page query variable greater than max pages handle
-# TODO: add translation to every view's content
-# TODO: kalendarz, eidt post buttons
+# TODO: translacja: kalendarz, edit post buttons, every view's content
 def index(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST)

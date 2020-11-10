@@ -1,5 +1,4 @@
 // TODO: add possibility to delete post
-// TODO: add your photo option
 
 // Handles POST request and single post appearance after like
 function likeHandling() {

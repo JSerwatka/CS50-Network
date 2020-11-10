@@ -58,7 +58,6 @@ class Comment(models.Model):
 
     #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content) - można to zrobić z poziomu js
 
-# TODO: add method to user like choices by name or number
 class Like(models.Model):
 
     # Emojis - choices
