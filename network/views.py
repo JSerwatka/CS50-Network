@@ -10,16 +10,15 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateUserProfileForm
 
 
 #TODO: change user profile creation to signals
-#TODO: move forms to seperate file
-
-
 # TODO: page query variable greater than max pages handle
+
 def index(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST)
@@ -90,7 +89,6 @@ def user_profile(request, user_id):
 
 @login_required(login_url="network:login")
 def edit_profile(request):
-    #TODO: add server side file size limit validation
     if request.method == "POST":
         # Cancel edit -> go back to the profile
         if request.POST.get("cancel") == "clicked":
@@ -125,11 +123,13 @@ def edit_profile(request):
         else:
             # If form invalid - load edit-profile with error info
             return render(request, "network/edit_profile.html", {
-                "form": form
+                "form": form,
+                "max_file_size": settings.MAX_UPLOAD_SIZE
             })
 
     return render(request, "network/edit_profile.html", {
-        "form": CreateUserProfileForm(instance=request.user.profile)
+        "form": CreateUserProfileForm(instance=request.user.profile),
+        "max_file_size": settings.MAX_UPLOAD_SIZE
     })
 
 @login_required(login_url="network:login")

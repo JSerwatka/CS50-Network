@@ -21,10 +21,10 @@
     {% endfor %}
 {% endif %}
 <div class="alert alert-danger hidden" id="file-size-error">
-    <strong>file size</strong>
+    <strong>Image file exceeds {{ max_file_size }} MB size limit</strong>
 </div>
 <div class="alert alert-danger hidden" id="file-type-error">
-    <strong>file type</strong>
+    <strong>File must be type image</strong>
 </div>
 <div class="create-listing-form">
     <form action="{% url 'network:edit-profile'%}" method="post" enctype="multipart/form-data">
