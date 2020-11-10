@@ -15,6 +15,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.widgets import CountrySelectWidget
 from flatpickr import DatePickerInput
 
+from django.core.exceptions import ValidationError
 
 
 #TODO: change user profile creation to signals
@@ -40,6 +41,14 @@ class CreateUserProfileForm(forms.ModelForm):
             "dateFormat": "yyyy-mm-dd"
         },
     ))
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+
+        if "default.png" not in image:
+            if image.size > 5*1024*1024:
+                raise ValidationError("Image file too large ( > 5mb )")
+        return image
 
     class Meta:
         model = UserProfile
@@ -150,16 +159,16 @@ def edit_profile(request):
                 ))
 
         # Submit edit -> update profile
-        my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
-        if my_form.is_valid():
+        form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
             # Get current user's profile
             new_profile = UserProfile.objects.get(user=request.user.id)
 
             # Update all profile's data with form's data
-            new_profile.name = my_form.cleaned_data["name"]
-            new_profile.date_of_birth = my_form.cleaned_data["date_of_birth"]
-            new_profile.about = my_form.cleaned_data["about"]
-            new_profile.country = my_form.cleaned_data["country"]
+            new_profile.name = form.cleaned_data["name"]
+            new_profile.date_of_birth = form.cleaned_data["date_of_birth"]
+            new_profile.about = form.cleaned_data["about"]
+            new_profile.country = form.cleaned_data["country"]
             # Update image only if any file was uploaded
             if len(request.FILES) == 1:
                 new_profile.image = request.FILES['image']
@@ -175,7 +184,7 @@ def edit_profile(request):
         else:
             # If form invalid - load edit-profile with error info
             return render(request, "network/edit_profile.html", {
-                "form": my_form
+                "form": form
             })
 
     return render(request, "network/edit_profile.html", {
