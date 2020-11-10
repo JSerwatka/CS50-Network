@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from .util import resize_image
 
 from django_countries.fields import CountryField
 # django countries from https://pypi.org/project/django-countries/
@@ -17,6 +18,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}"
+
+    def save(self, *args, **kwargs): 
+        super().save(*args, **kwargs)
+        resize_image(self.image.path, 600, 600)
 
 class Post(models.Model):
     # Model fields
