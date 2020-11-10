@@ -12,7 +12,7 @@
         <button class="edit-button">{% trans "Edit" %}</button>
     {% endif %}
     <div class="post-date">
-        {% blocktrans %}{{ post.date | timesince}} ago {% endblocktrans %}
+        {{post.date|timesince}} {% trans "ago" %}
     </div>
     <div class="like-comment-data">
         <ul class="emoji-list">
@@ -37,7 +37,7 @@
     {% if user.is_authenticated %}
     <div class="like-comment-control">
         <div class="like-panel">
-            <button class="like-button" name="like">{% trans "Like" %}</button>
+            <button class="like-button" name="like">Like</button>
             <div class="emoji-choice hidden">
                 <ul>
                     <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-name="like"></i>

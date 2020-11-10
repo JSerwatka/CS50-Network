@@ -27,7 +27,7 @@
     <div class="profile-name">
         {% trans "Name:" %} 
         {% if user_data.profile.name is None %}
-            Nothing here
+            ---
         {% else %}
             {{ user_data.profile.name }}
         {% endif %}
@@ -35,7 +35,7 @@
     <div class="profile-birth">
         {% trans "Birth:" %} 
         {% if user_data.profile.date_of_birth is None %}
-            Nothing here
+            ---
         {% else %}
             {{ user_data.profile.date_of_birth | date:"d.m.Y" }}
         {% endif %}
@@ -43,7 +43,7 @@
     <div class="profile-about">
         {% trans "About:" %}
         {% if user_data.profile.about == "" %}
-            Nothing here
+            ---
         {% else %}
             {{ user_data.profile.about }}
         {% endif %}
@@ -51,7 +51,7 @@
     <div class="profile-country">
         {% trans "Country:" %} 
         {% if user_data.profile.country == ""%}
-            Nothing here
+            ---
         {% else %}
             {{ user_data.profile.country.name }}
         {% endif %}
@@ -63,7 +63,7 @@
     {% for post in page_obj.object_list%}
         {% include "network/posts.html"%}
     {% empty %}
-        No posts yet
+        {% trans "No posts yet" %}
     {% endfor %}
         {% include "network/paginator.html"%}
 {% endblock %}

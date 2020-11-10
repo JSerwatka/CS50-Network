@@ -16,9 +16,10 @@ from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateUserProfileForm
 
 
-#TODO: change user profile creation to signals
+# TODO: change user profile creation to signals
 # TODO: page query variable greater than max pages handle
-
+# TODO: add translation to every view's content
+# TODO: kalendarz, eidt post buttons
 def index(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST)

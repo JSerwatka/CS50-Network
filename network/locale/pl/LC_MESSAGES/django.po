@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-10 16:05+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+#: .\forms.py:11
+msgid "What are you thinking about?"
+msgstr "O czym myślisz?"
+
+#: .\forms.py:23
+msgid "Date of birth: "
+msgstr "Data urodzenia: "
+
+#: .\forms.py:37
+#, fuzzy, python-brace-format
+#| msgid "Image file exceeds %(max_file_size)s MB size limit"
+msgid "Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"
+msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
+
+#: .\forms.py:44
+msgid "Name: "
+msgstr "Imię: "
+
+#: .\forms.py:45
+msgid "About: "
+msgstr "O mnie: "
+
+#: .\forms.py:46
+msgid "Country: "
+msgstr "Państwo: "
+
+#: .\forms.py:47
+msgid "Image: "
+msgstr "Zdjęcie: "
+
+#: .\forms.py:51
+msgid "Your name..."
+msgstr "Twoje imię..."
+
+#: .\forms.py:52
+msgid "your name"
+msgstr "twoje imię"
+
+#: .\forms.py:56
+msgid "Tell about yourself..."
+msgstr "Opowiedz o sobie..."
+
+#: .\forms.py:57
+msgid "tell about yourself"
+msgstr "opowiedz o sobie"
+
+#: .\templates\network\edit_profile.html:25
+#, python-format
+msgid "Image file exceeds %(max_file_size)s MB size limit"
+msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
+
+#: .\templates\network\edit_profile.html:28
+msgid "File must be type image"
+msgstr "Plik musi być typu zdjęcie"
+
+#: .\templates\network\edit_profile.html:55
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: .\templates\network\index.html:12
+msgid "Post"
+msgstr "Wyślij"
+
+#: .\templates\network\layout.html:27
+msgid "All Posts"
+msgstr "Wszystkie posty"
+
+#: .\templates\network\layout.html:31
+msgid "Following"
+msgstr "Osoby followowane"
+
+#: .\templates\network\layout.html:34
+msgid "Log Out"
+msgstr "Wyloguj się"
+
+#: .\templates\network\layout.html:38
+msgid "Log In"
+msgstr "Zaloguj się"
+
+#: .\templates\network\layout.html:41 .\templates\network\register.html:7
+#: .\templates\network\register.html:27
+msgid "Register"
+msgstr "Utwórz nowe konto"
+
+#: .\templates\network\login.html:6 .\templates\network\login.html:23
+msgid "Login"
+msgstr "Zaloguj się"
+
+#: .\templates\network\login.html:15 .\templates\network\register.html:16
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: .\templates\network\login.html:18 .\templates\network\register.html:22
+msgid "Password"
+msgstr "Hasło"
+
+#: .\templates\network\login.html:26
+msgid "Don't have an account?"
+msgstr "Nie masz jeszcze konta?"
+
+#: .\templates\network\login.html:26
+msgid "Register here."
+msgstr "Utwórz nowe konto tutaj"
+
+#: .\templates\network\posts.html:12
+msgid "Edit"
+msgstr "Edytuj"
+
+#: .\templates\network\posts.html:15
+msgid "ago"
+msgstr "temu"
+
+#: .\templates\network\posts.html:51
+msgid "Comment"
+msgstr "Komentarz"
+
+#: .\templates\network\register.html:19
+msgid "Email Address"
+msgstr "Adres email"
+
+#: .\templates\network\register.html:25
+msgid "Confirm Password"
+msgstr "Potwierdź hasło"
+
+#: .\templates\network\register.html:30
+msgid "Already have an account?"
+msgstr "Masz już konto?"
+
+#: .\templates\network\register.html:30
+msgid "Log In here."
+msgstr "Zaloguj się tutaj"
+
+#: .\templates\network\user_profile.html:20
+msgid "Edit profile"
+msgstr "Edytuj profil"
+
+#: .\templates\network\user_profile.html:28
+msgid "Name:"
+msgstr "Imię i nazwisko:"
+
+#: .\templates\network\user_profile.html:36
+msgid "Birth:"
+msgstr "Data urodzenia:"
+
+#: .\templates\network\user_profile.html:44
+msgid "About:"
+msgstr "O mnie:"
+
+#: .\templates\network\user_profile.html:52
+msgid "Country:"
+msgstr "Państwo:"
+
+#: .\templates\network\user_profile.html:66
+msgid "No posts yet"
+msgstr "Brak postów"
+
+#~ msgid "Like"
+#~ msgstr "Lubię to"

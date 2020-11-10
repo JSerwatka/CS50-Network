@@ -8,7 +8,7 @@ from django_countries.widgets import CountrySelectWidget
 
 class CreatePostForm(forms.ModelForm):
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
-                                    'placeholder': "What are you thinking about?",
+                                    'placeholder': _("What are you thinking about?"),
                                     'autofocus': 'autofocus',
                                     'rows': '3',
                                     'class': 'form-control',
