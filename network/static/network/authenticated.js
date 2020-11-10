@@ -9,5 +9,5 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLikeIcon(postNode);
         likesAmountIndicatorControl(postNode);
         sortEmojiList(postNode);
-    })
-})
+    });
+});
