@@ -22,7 +22,7 @@ class CreatePostForm(forms.ModelForm):
 class CreateUserProfileForm(forms.ModelForm):
     date_of_birth = forms.DateField(required=False, label=_("Date of birth: "), widget=DatePickerInput(
         options = {
-            "altFormat": "d E Y",
+            "altFormat": "d F Y",
             "altInput": True,
             "dateFormat": "yyyy-mm-dd"
         },
