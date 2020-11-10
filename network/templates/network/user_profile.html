@@ -36,7 +36,7 @@
         {% if user_data.profile.date_of_birth is None %}
             Nothing here
         {% else %}
-            {{ user_data.profile.date_of_birth }}
+            {{ user_data.profile.date_of_birth | date:"d.m.Y" }}
         {% endif %}
     </div>
     <div class="profile-about">
