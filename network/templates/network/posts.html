@@ -1,17 +1,18 @@
 {% load custom_tags %}
+{% load i18n %}
 
 <div class="post" id={{ post.id }}>
     <div class="post-user">
-        <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user}}</a>
+        <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
     </div>
     <div class="post-content">
         {{ post.content}}
     </div>
     {% if user.id == post.user.id %}
-        <button class="edit-button">Edit</button>
+        <button class="edit-button">{% trans "Edit" %}</button>
     {% endif %}
     <div class="post-date">
-        {{ post.date | timesince}} ago
+        {% blocktrans %}{{ post.date | timesince}} ago {% endblocktrans %}
     </div>
     <div class="like-comment-data">
         <ul class="emoji-list">
@@ -36,7 +37,7 @@
     {% if user.is_authenticated %}
     <div class="like-comment-control">
         <div class="like-panel">
-            <button class="like-button" name="like">like</button>
+            <button class="like-button" name="like">{% trans "Like" %}</button>
             <div class="emoji-choice hidden">
                 <ul>
                     <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-name="like"></i>
@@ -47,7 +48,7 @@
                 </ul>
             </div>
         </div>
-        <button class="comment-button">comment</button>
+        <button class="comment-button">{% trans "Comment" %}</button>
     </div>
     {% endif %}
 </div>

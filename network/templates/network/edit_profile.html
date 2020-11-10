@@ -1,4 +1,5 @@
 {% extends "network/layout.html" %}
+{% load i18n %}
 
 {% block extra_css %}
     {{ form.media.css }}
@@ -51,7 +52,7 @@
             {{ form.image }}
         </div>
         <input class="btn btn-primary" type="submit">
-        <button class="btn btn-primary" name="cancel" value="clicked">Cancel</button></a>  
+        <button class="btn btn-primary" name="cancel" value="clicked">{% trans "Cancel" %}</button></a>  
     </form>
 </div>
 {% endblock %}

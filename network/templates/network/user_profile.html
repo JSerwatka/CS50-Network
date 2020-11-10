@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block body %}
     <div class="profile-username">
@@ -16,7 +17,7 @@
             {% endif %}
             </form>
         {% else %}
-            <a href="{% url 'network:edit-profile'%}"><button class="btn btn-primary">Edit profile</button></a>      
+            <a href="{% url 'network:edit-profile'%}"><button class="btn btn-primary">{% trans "Edit profile" %}</button></a>      
         {% endif %}
         <ul>
             <li>Followers {{ followers.count }}</li>
@@ -24,7 +25,7 @@
         </ul>
     </div>
     <div class="profile-name">
-        Name: 
+        {% trans "Name:" %} 
         {% if user_data.profile.name is None %}
             Nothing here
         {% else %}
@@ -32,7 +33,7 @@
         {% endif %}
     </div>
     <div class="profile-birth">
-        Birth: 
+        {% trans "Birth:" %} 
         {% if user_data.profile.date_of_birth is None %}
             Nothing here
         {% else %}
@@ -40,7 +41,7 @@
         {% endif %}
     </div>
     <div class="profile-about">
-        About:
+        {% trans "About:" %}
         {% if user_data.profile.about == "" %}
             Nothing here
         {% else %}
@@ -48,7 +49,7 @@
         {% endif %}
     </div>
     <div class="profile-country">
-        Country: 
+        {% trans "Country:" %} 
         {% if user_data.profile.country == ""%}
             Nothing here
         {% else %}

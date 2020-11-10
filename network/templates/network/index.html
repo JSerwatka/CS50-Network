@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block body %}
     {% if user.is_authenticated and add_post_available %}
@@ -8,7 +9,7 @@
         <div class="form-group">
             {{ form.content}}
         </div>
-        <input class="btn btn-primary" type="submit" value="Post">
+        <input class="btn btn-primary" type="submit" value='{% trans "Post" %}'>
     </form>
     {% endif %}
     {% for post in page_obj.object_list %}

@@ -1,8 +1,9 @@
 {% extends "network/layout.html" %}
+{% load i18n %}
 
 {% block body %}
 
-    <h2>Login</h2>
+    <h2>{% trans "Login" %}</h2>
 
     {% if message %}
         <div>{{ message }}</div>
@@ -11,17 +12,17 @@
     <form action="{% url 'network:login' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+            <input autofocus class="form-control" type="text" name="username" placeholder='{% trans "Username" %}'>
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" name="password" placeholder='{% trans "Password" %}'>
         </div>
         {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}">
         {% endif %}
-        <input class="btn btn-primary" type="submit" value="Login">
+        <input class="btn btn-primary" type="submit" value='{% trans "Login" %}'>
     </form>
 
-    Don't have an account? <a href="{% url 'network:register' %}">Register here.</a>
+    {% trans "Don't have an account?" %} <a href="{% url 'network:register' %}">{% trans "Register here." %}</a>
 
 {% endblock %}

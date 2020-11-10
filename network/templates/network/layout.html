@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,21 +24,21 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'network:index'%}">All Posts</a>
+                  <a class="nav-link" href="{% url 'network:index'%}">{% trans "All Posts" %}</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'network:following'%}">Following</a>
+                        <a class="nav-link" href="{% url 'network:following'%}">{% trans "Following" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'network:logout' %}">Log Out</a>
+                        <a class="nav-link" href="{% url 'network:logout' %}">{% trans "Log Out" %}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'network:login' %}">Log In</a>
+                        <a class="nav-link" href="{% url 'network:login' %}">{% trans "Log In" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'network:register' %}">Register</a>
+                        <a class="nav-link" href="{% url 'network:register' %}">{% trans "Register" %}</a>
                     </li>
                 {% endif %}
               </ul>
