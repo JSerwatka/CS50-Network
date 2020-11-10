@@ -5,6 +5,27 @@
 {% endblock %}
 
 {% block body %}
+<!-- based on https://stackoverflow.com/a/14647770 -->
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="alert alert-danger hidden" id="file-size-error">
+    <strong>file size</strong>
+</div>
+<div class="alert alert-danger hidden" id="file-type-error">
+    <strong>file type</strong>
+</div>
 <div class="create-listing-form">
     <form action="{% url 'network:edit-profile'%}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -47,12 +68,12 @@
 
             // Check if file is an image
             if (typeof fileType == "undefined" || fileType.indexOf("image") === -1) {
-                alert("File must be an image!");
+                document.getElementById("file-type-error").classList.remove("hidden")
                 fileInput.value = null ;              
             }
             // Check if file exceeds file size limit
             else if (fileSize > 5) {
-                alert("File size exceeds 5 MB limit!");
+                document.getElementById("file-size-error").classList.remove("hidden")
                 fileInput.value = null;
             }
         })
