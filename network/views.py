@@ -11,15 +11,14 @@ from django import forms
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from .models import User, Post, Comment, Like, Following, UserProfile
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_countries.widgets import CountrySelectWidget
 from flatpickr import DatePickerInput
 
 
 
-#TODO: add change userprofile info settings
 #TODO: change user profile creation to signals
-
+#TODO: move forms to seperate file
 class CreatePostForm(forms.ModelForm):
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
                                     'placeholder': "What are you thinking about?",
@@ -47,7 +46,6 @@ class CreateUserProfileForm(forms.ModelForm):
         fields = ["name", "date_of_birth", "about", "country", "image"]
         labels = {
             "name": _("Name: "),
-            "date_of_birth": _("Date of birth: sd"),
             "about": _("About: "),
             "country": _("Country: "),
             "image": _("Image: ")
@@ -142,8 +140,16 @@ def user_profile(request, user_id):
 
 @login_required(login_url="network:login")
 def edit_profile(request):
-    #TODO: add edit profile button
+    #TODO: add server side file size limit validation
     if request.method == "POST":
+        # Cancel edit -> go back to the profile
+        if request.POST.get("cancel") == "clicked":
+            return HttpResponseRedirect(reverse(
+                    "network:user-profile", 
+                    args=[request.user.id]
+                ))
+
+        # Submit edit -> update profile
         my_form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
         if my_form.is_valid():
             # Get current user's profile
