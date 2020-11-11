@@ -38,7 +38,7 @@ class Post(models.Model):
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-    #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content)
+    
 
 class Comment(models.Model):
     # Model fields
@@ -56,7 +56,6 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment {self.id} made by {self.user} on post {self.post_id} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-    #TODO: give only part of content followed by ... method (czytaj dalej option, which shows more content) - można to zrobić z poziomu js
 
 class Like(models.Model):
 

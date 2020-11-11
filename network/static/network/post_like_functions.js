@@ -1,4 +1,3 @@
-// TODO: add possibility to delete post
 
 // Handles POST request and single post appearance after like
 function likeHandling() {

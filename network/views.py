@@ -16,9 +16,12 @@ from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateUserProfileForm
 
 
-# TODO: change user profile creation to signals
-# TODO: page query variable greater than max pages handle
 # TODO: translacja: kalendarz, edit post buttons, every view's content
+# TODO: add error page
+# TODO: add comment handlings
+# TODO: add possibility to delete post
+# TODO: give only part of content (post and comment) followed by ... method (czytaj dalej option, which shows more content)
+
 def index(request):
     if request.method == "POST":
         form = CreatePostForm(request.POST)
@@ -290,9 +293,6 @@ def register(request):
             return render(request, "network/register.html", {
                 "message": "Username already taken."
             })
-        else:
-            profile = UserProfile(user=user)
-            profile.save()
         login(request, user)
         return HttpResponseRedirect(reverse("network:index"))
     else:
