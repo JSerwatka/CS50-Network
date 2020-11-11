@@ -26,7 +26,7 @@
     </div>
     <div class="profile-name">
         {% trans "Name:" %} 
-        {% if user_data.profile.name is None %}
+        {% if user_data.profile.about == "" or user_data.profile.about is None %}
             ---
         {% else %}
             {{ user_data.profile.name }}
@@ -34,7 +34,7 @@
     </div>
     <div class="profile-birth">
         {% trans "Birth:" %} 
-        {% if user_data.profile.date_of_birth is None %}
+        {% if user_data.profile.about == "" or user_data.profile.about is None %}
             ---
         {% else %}
             {{ user_data.profile.date_of_birth | date:"d.m.Y" }}
@@ -42,7 +42,7 @@
     </div>
     <div class="profile-about">
         {% trans "About:" %}
-        {% if user_data.profile.about == "" %}
+        {% if user_data.profile.about == "" or user_data.profile.about is None %}
             ---
         {% else %}
             {{ user_data.profile.about }}
@@ -50,7 +50,7 @@
     </div>
     <div class="profile-country">
         {% trans "Country:" %} 
-        {% if user_data.profile.country == ""%}
+        {% if user_data.profile.country == ""  or user_data.profile.about is None %}
             ---
         {% else %}
             {{ user_data.profile.country.name }}
