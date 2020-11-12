@@ -8,7 +8,7 @@
     <div class="post-content short">
         {{ post.content}}
     </div>
-    <div class="show-more hidden">Show more</div>
+    <div class="show-more hidden">{% trans "Show more" %}</div>
     {% if user.id == post.user.id %}
         <button class="edit-button">{% trans "Edit" %}</button>
     {% endif %}

@@ -20,7 +20,6 @@ from .forms import CreatePostForm, CreateUserProfileForm
 # TODO: add error page
 # TODO: add comment handlings
 # TODO: add possibility to delete post
-# TODO: give only part of content (post and comment) followed by ... method (czytaj dalej option, which shows more content)
 # TODO post duplication after posting (many posts posted)
 
 def index(request):
@@ -36,6 +35,7 @@ def index(request):
                 content = content
             )
             post.save()
+        return HttpResponseRedirect(reverse("network:index")) # TODO: add status code
 
     if request.method == "PUT":
         body = json.loads(request.body)
@@ -44,7 +44,7 @@ def index(request):
         try:
             post_to_edit = Post.objects.get(pk=body.get('id'), user=request.user)
         except Post.DoesNotExist: 
-            return HttpResponse(status=404)
+            return HttpResponse(status=404) # TODO: error handling
 
         # Update post's content
         post_to_edit.content = body.get('content')
