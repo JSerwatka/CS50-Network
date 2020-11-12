@@ -5,10 +5,10 @@
     <div class="post-user">
         <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
     </div>
-    <div class="post-content">
+    <div class="post-content short">
         {{ post.content}}
     </div>
-    <a href="#" class="show-more hidden">Show more</a>
+    <div class="show-more hidden">Show more</div>
     {% if user.id == post.user.id %}
         <button class="edit-button">{% trans "Edit" %}</button>
     {% endif %}

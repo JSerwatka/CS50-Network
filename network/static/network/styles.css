@@ -9,11 +9,24 @@
     display: none;
 }
 
+/* ------ Post content styles ------ */
 .post-content {
-    max-height: 6em;
+    max-height: none;
     line-height: 1.5em;
     overflow: hidden;
 }
+
+.post-content.short {
+    max-height: 6em;
+}
+
+.show-more {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
 
 /* ------ Like-comment panel styles ------ */
 div.like-panel {

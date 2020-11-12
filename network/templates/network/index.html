@@ -28,7 +28,8 @@
         <script src="{% static 'network/not_authenticated.js' %}"></script>
     {% endif %}  
     <script>
-        window.onresize = () => {
+        // window.onresize = () => {
+            // Show show-more button if post's content overflowing
             document.querySelectorAll(".post-content").forEach(post => {
                 let isOverflowing = (post.clientWidth < post.scrollWidth)
                                     || (post.clientHeight < post.scrollHeight); 
@@ -42,7 +43,25 @@
                     showMore.classList.add("hidden")
                 }
             })
-        }
+        // }
+
+        // Control post's content show more/less action
+        document.querySelectorAll(".show-more").forEach(button => {
+            button.addEventListener("click", (event) => {
+                let postContent = event.target.previousElementSibling
+                let showMore = event.target
+
+                // Make post content short or full height
+                if (postContent.classList.contains("short")){
+                    postContent.classList.remove("short");
+                    showMore.textContent = "Show less";
+                }
+                else {
+                    postContent.classList.add("short");
+                    showMore.textContent = "Show more";
+                } 
+            })
+        })
     </script>
 {% endblock %}
 
