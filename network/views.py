@@ -20,7 +20,6 @@ from .forms import CreatePostForm, CreateUserProfileForm
 # TODO: add error page
 # TODO: add comment handlings
 # TODO: add possibility to delete post
-# TODO post duplication after posting (many posts posted)
 
 def index(request):
     if request.method == "POST":
@@ -52,6 +51,19 @@ def index(request):
 
         # Return positive response
         return HttpResponse(status=204)
+    
+    if request.method == "DELETE":
+        body = json.loads(request.body)
+        # Query for requested post - make sure
+        # that current user is the author
+        try:
+            post_to_delete = Post.objects.get(pk=body.get('id'), user=request.user)
+        except Post.DoesNotExist: 
+            return HttpResponse(status=404) # TODO: error handling
+            
+        # Delete the post and refresh the page
+        post_to_delete.delete()
+        return HttpResponse(status=204) # TODO: add status code
 
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()

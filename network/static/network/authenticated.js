@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         likesAmountIndicatorControl(postNode);
         sortEmojiList(postNode);
         showMoreButtonControl(postNode);
+        deleteButtonHandle(postNode);
     });
 
     window.addEventListener("resize", () => {

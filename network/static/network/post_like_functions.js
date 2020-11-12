@@ -337,6 +337,7 @@ function likePanelAnimationControl() {
     })
 }
 
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -373,5 +374,40 @@ function showMoreButtonControl(postNode) {
     // Text not overflowing -> hide show-more button
     else {
         showMore.classList.add("hidden")
+    }
+}
+
+
+function deleteButtonHandle(postNode) {
+    let deleteButton = postNode.querySelector(".modal-footer > .btn-danger");
+    if (deleteButton !== null) {
+        deleteButton.addEventListener("click", () => {
+            console.log(deleteButton)
+            console.log(postNode)
+            let csrftoken = getCookie('csrftoken');
+
+            // Send DELETE request
+            fetch("/", {
+                method: "DELETE",
+                body: JSON.stringify({
+                    id: postNode.id,
+                }),
+                headers: {"X-CSRFToken": csrftoken}
+            })
+            .then(response => {
+                // if success - update post's content and relaod the page
+                if (response.status === 204) {
+                    console.log(`post id: ${postNode.id} deleted successfully`)
+                    window.location = '/'
+                }
+                // if error -  restore original post's content and throw an error
+                else {
+                    throw new Error("Post doesn't exist or user is invalid")                        
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        })
     }
 }
