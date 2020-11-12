@@ -21,6 +21,7 @@ from .forms import CreatePostForm, CreateUserProfileForm
 # TODO: add comment handlings
 # TODO: add possibility to delete post
 # TODO: give only part of content (post and comment) followed by ... method (czytaj dalej option, which shows more content)
+# TODO post duplication after posting (many posts posted)
 
 def index(request):
     if request.method == "POST":

@@ -8,6 +8,7 @@
     <div class="post-content">
         {{ post.content}}
     </div>
+    <a href="#" class="show-more hidden">Show more</a>
     {% if user.id == post.user.id %}
         <button class="edit-button">{% trans "Edit" %}</button>
     {% endif %}

@@ -9,6 +9,12 @@
     display: none;
 }
 
+.post-content {
+    max-height: 6em;
+    line-height: 1.5em;
+    overflow: hidden;
+}
+
 /* ------ Like-comment panel styles ------ */
 div.like-panel {
     display: inline-block;

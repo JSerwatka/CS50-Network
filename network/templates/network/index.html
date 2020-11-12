@@ -15,7 +15,7 @@
     {% for post in page_obj.object_list %}
         {% include "network/posts.html"%}
     {% empty %}
-        No posts yet
+        {% trans "No posts yet" %}
     {% endfor %}
         {% include "network/paginator.html"%}
 {% endblock %}
@@ -27,5 +27,22 @@
     {% else %}
         <script src="{% static 'network/not_authenticated.js' %}"></script>
     {% endif %}  
+    <script>
+        window.onresize = () => {
+            document.querySelectorAll(".post-content").forEach(post => {
+                let isOverflowing = (post.clientWidth < post.scrollWidth)
+                                    || (post.clientHeight < post.scrollHeight); 
+                
+                let showMore = post.nextElementSibling
+                
+                if (isOverflowing) {
+                    showMore.classList.remove("hidden")
+                }
+                else {
+                    showMore.classList.add("hidden")
+                }
+            })
+        }
+    </script>
 {% endblock %}
 
