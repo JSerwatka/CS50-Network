@@ -9,5 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLikeCounter(postNode);
         likesAmountIndicatorControl(postNode);
         sortEmojiList(postNode);
+        showMoreButtonControl(postNode);
     })
+
+    window.onresize = () => {
+        document.querySelectorAll("div.post").forEach((postNode) => {
+            showMoreButtonControl(postNode);
+        })
+    }
 });

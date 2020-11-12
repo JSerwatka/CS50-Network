@@ -352,3 +352,26 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Show show-more button if post's content overflowing
+function showMoreButtonControl(postNode) {
+    let postContent = postNode.querySelector(".post-content")
+    let showMore = postContent.nextElementSibling
+
+    let isOverflowing = (postContent.clientWidth < postContent.scrollWidth)
+                        || (postContent.clientHeight < postContent.scrollHeight); 
+                    
+    // Text overflowing -> show show-more button and handle click event
+    if (isOverflowing) {
+        showMore.classList.remove("hidden")
+
+        showMore.onclick = () => {
+            // Make post content short or full height
+            postContent.classList.remove("short");
+            showMore.classList.add("hidden")
+        }
+    }
+    // Text not overflowing -> hide show-more button
+    else {
+        showMore.classList.add("hidden")
+    }
+}
