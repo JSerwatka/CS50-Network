@@ -22,7 +22,7 @@ function likePostControl(postNode) {
         }
         // Already liked - update like's emoji type
         if (postNode.querySelector(".like-button").classList.contains("liked")) {
-            fetch(`/like/post/${postNode.id}`, {
+            fetch(`/like/post/${postNode.id.substr(5)}`, {
                 method: "PUT",
                 body: JSON.stringify({
                     emojiType: emojiType
@@ -32,7 +32,7 @@ function likePostControl(postNode) {
             .then(response => {
                 // Successful like -> update post view
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} like updated successfully`)
+                    console.log(`post id: ${postNode.id.substr(5)} like updated successfully`)
                     // Update like button emoji and class
                     updatePostLikeIcon(postNode);
                     // Update like counter and emoji list
@@ -51,7 +51,7 @@ function likePostControl(postNode) {
         }
         // No liked yet - save like
         else {
-            fetch(`/like/post/${postNode.id}`, {
+            fetch(`/like/post/${postNode.id.substr(5)}`, {
                 method: "POST",
                 body: JSON.stringify({
                     emojiType: emojiType
@@ -61,7 +61,7 @@ function likePostControl(postNode) {
             .then(response => {
                 // Successful like -> update post view
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} liked successfully`)
+                    console.log(`post id: ${postNode.id.substr(5)} liked successfully`)
                     // Update like button emoji and class
                     updatePostLikeIcon(postNode);
                     // Update like counter and emoji list
@@ -92,7 +92,7 @@ function editPostControl(postNode) {
             deleteButton.classList.toggle("hidden");
 
             // Get post id
-            const postID = postNode.id
+            const postID = postNode.id.substr(5)
 
             // Get content of post to be edited
             let contentNode = postNode.querySelector("div.post-content")
@@ -168,14 +168,14 @@ function deletePostControl(postNode) {
             fetch("/post-comment/post", {
                 method: "DELETE",
                 body: JSON.stringify({
-                    id: postNode.id,
+                    id: postNode.id.substr(5),
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
             .then(response => {
                 // if success - update post's content and relaod the page
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} deleted successfully`)
+                    console.log(`post id: ${postNode.id.substr(5)} deleted successfully`)
                     location.reload()
                 }
                 // if error -  restore original post's content and throw an error
@@ -192,7 +192,7 @@ function deletePostControl(postNode) {
 
 function updatePostLikeIcon(postNode){
     // Show user's like type on like button
-    fetch(`/like/post/${postNode.id}`)
+    fetch(`/like/post/${postNode.id.substr(5)}`)
     .then(response => {
         if (response.status === 201) {
             return response.json();

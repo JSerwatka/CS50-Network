@@ -18,7 +18,6 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 # TODO: translacja: kalendarz, edit post buttons, every view's content
 # TODO: add error page
-# TODO: add comment handlings
 # TODO: post and comment the same id
 
 def post_comment(request, action):

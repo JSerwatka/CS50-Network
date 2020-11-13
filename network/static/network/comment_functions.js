@@ -22,7 +22,7 @@ function likeCommentControl(commentNode) {
         }
         // Already liked - update like's emoji type
         if (commentNode.querySelector(".like-button").classList.contains("liked")) {
-            fetch(`/like/comment/${commentNode.id}`, {
+            fetch(`/like/comment/${commentNode.id.substr(8)}`, {
                 method: "PUT",
                 body: JSON.stringify({
                     emojiType: emojiType
@@ -32,7 +32,7 @@ function likeCommentControl(commentNode) {
             .then(response => {
                 // Successful like -> update comment view
                 if (response.status === 204) {
-                    console.log(`comment id: ${commentNode.id} like updated successfully`)
+                    console.log(`comment id: ${commentNode.id.substr(8)} like updated successfully`)
                     // Update like button emoji and class
                     updateCommentLikeIcon(commentNode);
                     // Update like counter and emoji list
@@ -51,7 +51,7 @@ function likeCommentControl(commentNode) {
         }
         // No liked yet - save like
         else {
-            fetch(`/like/comment/${commentNode.id}`, {
+            fetch(`/like/comment/${commentNode.id.substr(8)}`, {
                 method: "POST",
                 body: JSON.stringify({
                     emojiType: emojiType
@@ -61,7 +61,7 @@ function likeCommentControl(commentNode) {
             .then(response => {
                 // Successful like -> update comment view
                 if (response.status === 204) {
-                    console.log(`comment id: ${commentNode.id} liked successfully`)
+                    console.log(`comment id: ${commentNode.id.substr(8)} liked successfully`)
                     // Update like button emoji and class
                     updateCommentLikeIcon(commentNode);
                     // Update like counter and emoji list
@@ -92,7 +92,7 @@ function editCommentControl(commentNode) {
             deleteButton.classList.toggle("hidden");
 
             // Get comment id
-            const commentID = commentNode.id
+            const commentID = commentNode.id.substr(8)
 
             // Get content of comment to be edited
             let contentNode = commentNode.querySelector("div.comment-content")
@@ -169,14 +169,14 @@ function deleteCommentControl(commentNode) {
             fetch("/post-comment/comment", {
                 method: "DELETE",
                 body: JSON.stringify({
-                    id: commentNode.id,
+                    id: commentNode.id.substr(8),
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
             .then(response => {
                 // if success - update comment's content and relaod the page
                 if (response.status === 204) {
-                    console.log(`Comment id: ${commentNode.id} deleted successfully`)
+                    console.log(`Comment id: ${commentNode.id.substr(8)} deleted successfully`)
                     location.reload()
                 }
                 // if error -  restore original comment's content and throw an error
@@ -193,7 +193,7 @@ function deleteCommentControl(commentNode) {
 
 function updateCommentLikeIcon(commentNode){
     // Show user's like type on like button
-    fetch(`/like/comment/${commentNode.id}`)
+    fetch(`/like/comment/${commentNode.id.substr(8)}`)
     .then(response => {
         if (response.status === 201) {
             return response.json();

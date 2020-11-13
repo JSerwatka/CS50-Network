@@ -1,7 +1,7 @@
 {% load custom_tags %}
 {% load i18n %}
 
-<div class="comment" id={{ comment.id }}>
+<div class="comment" id='comment_{{ comment.id }}'>
     <div class="comment-user">
         <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
     </div>

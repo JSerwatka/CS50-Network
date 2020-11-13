@@ -3,7 +3,7 @@
 
 
 <div class="post-comment-element">
-    <div class="post" id={{ post.id }}>
+    <div class="post" id='post_{{ post.id }}'>
         <div class="post-user">
             <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
         </div>
@@ -84,12 +84,6 @@
     </div>
     {% if user.is_authenticated %}
     <div class="comment-section">
-        {% for comment in post.comments.all %}
-            {% include "network/comments.html"%}
-        {% empty %}
-            {% trans "No posts yet" %}
-        {% endfor %}
-        
         <form action="{% url 'network:post-comment' action='comment' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -98,6 +92,13 @@
             <input type="hidden" name="postId" value={{ post.id }}>
             <input class="btn btn-primary" type="submit" value='{% trans "Comment" %}'>
         </form>
+
+        {% for comment in post.comments.all %}
+            {% include "network/comments.html"%}
+        {% empty %}
+            {% trans "No posts yet" %}
+        {% endfor %}
+        
     </div>
     {% endif %}
 </div>
