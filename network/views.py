@@ -42,14 +42,20 @@ def post_comment(request, action):
             if form.is_valid():
                 # Get all data from the form
                 content = form.cleaned_data["content"]
-                print(content)
-                # TODO: add comment saving to proper post
+                
+                # Get commented post
+                try:
+                    post = Post.objects.get(pk=request.POST.get('postId'))
+                except Post.DoesNotExist:
+                    return HttpResponse(status=404) #TODO: update error
+
                 # Save the record
-                # post = Comment(
-                #     user = User.objects.get(pk=request.user.id),
-                #     content = content
-                # )
-                # post.save()
+                comment = Comment(
+                    user = User.objects.get(pk=request.user.id),
+                    content = content,
+                    post = post
+                )
+                comment.save()
 
         return HttpResponseRedirect(reverse("network:index")) # TODO: add status code
 
@@ -99,7 +105,7 @@ def index(request):
 
     return render(request, "network/index.html", {
         "post_form": CreatePostForm(),
-        "comment_form": CreateCommentForm(),
+        "comment_form": CreateCommentForm(auto_id=False),
         "page_obj": page_obj,
         "add_post_available": True
     })
@@ -178,13 +184,19 @@ def like(request, action, action_id):
     if request.method == "GET":
         # Check if like exists and send back info
         try:
-            post = Post.objects.get(pk=action_id)
-            like = Like.objects.get(user=request.user, post=post)
+            if action == "post":
+                post = Post.objects.get(pk=action_id)
+                like = Like.objects.get(user=request.user, post=post)
+            elif action == "comment":
+                comment = Comment.objects.get(pk=action_id)
+                like = Like.objects.get(user=request.user, comment=comment)
+            else:
+               return HttpResponse(status=404) #TODO: redirect to error page 
         except Like.DoesNotExist:
             return JsonResponse({
                 "like": "False"
             }, status=201)  #TODO: update status code
-        except Post.DoesNotExist:
+        except (Post.DoesNotExist, Comment.DoesNotExist):
              return HttpResponse(status=404) #TODO: redirect to error page
         # if like exists send emojiType text
         else:

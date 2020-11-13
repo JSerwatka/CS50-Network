@@ -1,38 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
-    /* Update all:
-        * like counters
-        * like icons
-        * add like amount indicator control
-        * sort emojis by data-count 
-        * show more/less post content buttons
-    */
+    // Init posts
     document.querySelectorAll("div.post").forEach((postNode) => {
-        updateLikeCounter(postNode);
-        updateLikeIcon(postNode);
-        likesAmountIndicatorControl(postNode);
-        sortEmojiList(postNode);
-        showMoreButtonControl(postNode);
-        deletePostControl(postNode);
-        likeHandling(postNode);
+        likePostControl(postNode);
         editPostControl(postNode);
+        deletePostControl(postNode);
+        updatePostLikeIcon(postNode);
+        updateLikeCounter(postNode);
+        sortEmojiList(postNode);
+        likesAmountIndicatorControl(postNode);
         likePanelAnimationControl(postNode);
+        showMoreButtonControl(postNode);
     });
 
-    // document.querySelectorAll("div.comment").forEach((commentNode) => {
-    //     updateLikeCounter(commentNode);
-    //     updateLikeIcon(commentNode);
-    //     likesAmountIndicatorControl(commentNode);
-    //     sortEmojiList(commentNode);
-    //     showMoreButtonControl(commentNode);
-    //     deleteCommentControl(commentNode);
-    //     likeHandling(commentNode);
-    //     editCommentControl(commentNode);
-    //     likePanelAnimationControl(commentNode);
-    // });
+    document.querySelectorAll("div.comment").forEach((commentNode) => {
+        likeCommentControl(commentNode);
+        editCommentControl(commentNode);
+        deleteCommentControl(commentNode);
+        updateCommentLikeIcon(commentNode);
+        updateLikeCounter(commentNode);
+        sortEmojiList(commentNode);
+        likesAmountIndicatorControl(commentNode);
+        likePanelAnimationControl(commentNode);
+        showMoreButtonControl(commentNode);
+    });
 
     window.addEventListener("resize", () => {
         document.querySelectorAll("div.post").forEach((postNode) => {
             showMoreButtonControl(postNode);
+        })
+
+        document.querySelectorAll("div.comment").forEach((commentNode) => {
+            showMoreButtonControl(commentNode);
         })
     })
 });

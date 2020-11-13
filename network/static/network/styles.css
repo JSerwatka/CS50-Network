@@ -31,7 +31,7 @@
 /* ------ Like-comment panel styles ------ */
 div.like-panel {
     display: inline-block;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .like-comment-control {
@@ -110,4 +110,8 @@ div.like-panel {
 
 .comment-content.short {
     max-height: 6em;
+}
+
+.form-control {
+    width: 40%;
 }

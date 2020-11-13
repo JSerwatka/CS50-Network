@@ -5,7 +5,7 @@
     <div class="comment-user">
         <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
     </div>
-    <div class="comment-content short">
+    <div class="content comment-content short">
         {{ comment.content}}
     </div>
     <div class="show-more hidden">{% trans "Show more" %}</div>
