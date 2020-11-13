@@ -19,7 +19,6 @@ from .forms import CreatePostForm, CreateUserProfileForm
 # TODO: translacja: kalendarz, edit post buttons, every view's content
 # TODO: add error page
 # TODO: add comment handlings
-# TODO: add possibility to delete post
 
 def index(request):
     if request.method == "POST":
@@ -50,7 +49,7 @@ def index(request):
         post_to_edit.save()
 
         # Return positive response
-        return HttpResponse(status=204)
+        return HttpResponse(status=204)  # TODO: change message
     
     if request.method == "DELETE":
         body = json.loads(request.body)
@@ -60,10 +59,10 @@ def index(request):
             post_to_delete = Post.objects.get(pk=body.get('id'), user=request.user)
         except Post.DoesNotExist: 
             return HttpResponse(status=404) # TODO: error handling
-            
+
         # Delete the post and refresh the page
         post_to_delete.delete()
-        return HttpResponse(status=204) # TODO: add status code
+        return HttpResponse(status=204) # TODO: change message
 
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()
@@ -184,7 +183,6 @@ def like(request, action, action_id):
             return HttpResponse(status=404)
             #TODO: corrent response 
 
-        # TODO: like duplicate handling
         like.save()
         #TODO: corrent respons
         return HttpResponse(status=204)
