@@ -1,105 +1,105 @@
 
 // Handles POST request and single post appearance after like
-function likeHandling() {
-    document.querySelectorAll(".like-panel").forEach((element) => {
-        // Handle like post/comment
-        element.addEventListener('click', (event) => {
-            let emojiType;
-            let postNode = event.target;
-            let csrftoken = getCookie('csrftoken');
+function likeHandling(postNode) {
+    let element = postNode.querySelector(".like-panel")
+    // Handle like post/comment
+    element.addEventListener('click', (event) => {
+        let emojiType;
+        let postNode = event.target;
+        let csrftoken = getCookie('csrftoken');
 
-            // Look for event's emoji type
-            // Check if like button is a target
-            if (event.target.name === "like") {
-                emojiType = event.target.name;
-            }
-            // Check if emoji list is a target
-            else if (typeof event.target.dataset.name === "string"){
-                emojiType = event.target.dataset.name;
-            }  
-            // Something is a target
-            else {
-                return false;
-            }
+        // Look for event's emoji type
+        // Check if like button is a target
+        if (event.target.name === "like") {
+            emojiType = event.target.name;
+        }
+        // Check if emoji list is a target
+        else if (typeof event.target.dataset.name === "string"){
+            emojiType = event.target.dataset.name;
+        }  
+        // Something is a target
+        else {
+            return false;
+        }
 
-            // Get post node regarding of what triggered it
-            while (postNode.className !== "post") { 
-                postNode = postNode.parentElement;
-            }
+        // Get post node regarding of what triggered it
+        while (postNode.className !== "post") { 
+            postNode = postNode.parentElement;
+        }
 
-            // Already liked - update like's emoji type
-            if (postNode.querySelector(".like-button").classList.contains("liked")) {
-                fetch(`/like/post/${postNode.id}`, {
-                    method: "PUT",
-                    body: JSON.stringify({
-                        emojiType: emojiType
-                    }),
-                    headers: {"X-CSRFToken": csrftoken}
-                })
-                .then(response => {
-                    // Successful like -> update post view
-                    if (response.status === 204) {
-                        console.log(`post id: ${postNode.id} like updated successfully`)
-                        // Update like button emoji and class
-                        updateLikeIcon(postNode);
-                        // Update like counter and emoji list
-                        let previousEmojiType = postNode.querySelector(".like-button > i").dataset.name;
-                        updateEmojiList(postNode, emojiType, previousEmojiType);
-                        // Reconnect like amount indicator event to each emoji
-                        likesAmountIndicatorControl(postNode);
-                    }
-                    else {
-                        throw new Error("Unexpected error")  //TODO: Change message                      
-                    }
-                })
-                .catch(error => {
-                    alert(error)
-                })
-            }
-            // No liked yet - save like
-            else {
-                fetch(`/like/post/${postNode.id}`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        emojiType: emojiType
-                    }),
-                    headers: {"X-CSRFToken": csrftoken}
-                })
-                .then(response => {
-                    // Successful like -> update post view
-                    if (response.status === 204) {
-                        console.log(`post id: ${postNode.id} liked successfully`)
-                        // Update like button emoji and class
-                        updateLikeIcon(postNode);
-                        // Update like counter and emoji list
-                        updateEmojiList(postNode, emojiType);
-                        // Reconnect like amount indicator event to each emoji
-                        likesAmountIndicatorControl(postNode);
-                    }
-                    else {
-                        throw new Error("Post doesn't exist or u already liked this post");                     
-                    }
-                })
-                .catch(error => {
-                    alert(error);
-                })
-            }
-                
-        })
-    })  
-}
+        // Already liked - update like's emoji type
+        if (postNode.querySelector(".like-button").classList.contains("liked")) {
+            fetch(`/like/post/${postNode.id}`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    emojiType: emojiType
+                }),
+                headers: {"X-CSRFToken": csrftoken}
+            })
+            .then(response => {
+                // Successful like -> update post view
+                if (response.status === 204) {
+                    console.log(`post id: ${postNode.id} like updated successfully`)
+                    // Update like button emoji and class
+                    updateLikeIcon(postNode);
+                    // Update like counter and emoji list
+                    let previousEmojiType = postNode.querySelector(".like-button > i").dataset.name;
+                    updateEmojiList(postNode, emojiType, previousEmojiType);
+                    // Reconnect like amount indicator event to each emoji
+                    likesAmountIndicatorControl(postNode);
+                }
+                else {
+                    throw new Error("Unexpected error")  //TODO: Change message                      
+                }
+            })
+            .catch(error => {
+                alert(error)
+            })
+        }
+        // No liked yet - save like
+        else {
+            fetch(`/like/post/${postNode.id}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    emojiType: emojiType
+                }),
+                headers: {"X-CSRFToken": csrftoken}
+            })
+            .then(response => {
+                // Successful like -> update post view
+                if (response.status === 204) {
+                    console.log(`post id: ${postNode.id} liked successfully`)
+                    // Update like button emoji and class
+                    updateLikeIcon(postNode);
+                    // Update like counter and emoji list
+                    updateEmojiList(postNode, emojiType);
+                    // Reconnect like amount indicator event to each emoji
+                    likesAmountIndicatorControl(postNode);
+                }
+                else {
+                    throw new Error("Post doesn't exist or u already liked this post");                     
+                }
+            })
+            .catch(error => {
+                alert(error);
+            })
+        }
+            
+    })
+} 
 
 // Controls asynchronous editing of a post
-function editPostControl() {
-    let editButtons = document.querySelectorAll("div.post .edit-button")
-
-    editButtons.forEach((button) => {
-        button.addEventListener('click', (event) => {
-            // hide edit button
-            event.target.classList.toggle("hidden");
+function editPostControl(postNode) {
+    let editButton = postNode.querySelector(".edit-button")
+    let deleteButton = postNode.querySelector(".delete-edit-panel .btn-danger")
+    if (editButton !== null) {
+        editButton.addEventListener('click', () => {
+            // hide edit/delete button
+            editButton.classList.toggle("hidden");
+            deleteButton.classList.toggle("hidden");
 
             // Get post node and post id
-            const postNode = event.target.parentElement
+            const postNode = editButton.parentElement.parentElement
             const postID = postNode.id
 
             // Get content of post to be edited
@@ -117,17 +117,18 @@ function editPostControl() {
                 </div>`;
 
             // After cancel - restore orginal post content
-            document.querySelector("button.cancel").addEventListener("click", () => {
+            postNode.querySelector("button.cancel").addEventListener("click", () => {
                 contentNode.innerHTML = contentInnerText;
 
-                // show edit button
-                event.target.classList.toggle("hidden");
+                // show edit/delete button
+                editButton.classList.toggle("hidden");
+                deleteButton.classList.toggle("hidden");
             });
 
             // After save - update
-            document.querySelector("button.save").addEventListener("click", () => {
+            postNode.querySelector("button.save").addEventListener("click", () => {
                 // Get content to submit
-                const submittedContent = document.querySelector("textarea.new-content").value.trim();
+                const submittedContent = postNode.querySelector("textarea.new-content").value.trim();
                 
                 let csrftoken = getCookie('csrftoken');
 
@@ -141,8 +142,9 @@ function editPostControl() {
                     headers: {"X-CSRFToken": csrftoken}
                 })
                 .then(response => {
-                    // Show edit button
-                    event.target.classList.toggle("hidden");
+                    // Show edit/delete button
+                    editButton.classList.toggle("hidden");
+                    deleteButton.classList.toggle("hidden");
 
                     // if success - update post's content
                     if (response.status === 204) {
@@ -160,7 +162,7 @@ function editPostControl() {
                 })
             });
         });
-    });
+    }
 }
 
 // Controls deleting of a post
@@ -350,27 +352,49 @@ function likesAmountIndicatorControl(postNode) {
     })
 }
 
-function likePanelAnimationControl() {
-    document.querySelectorAll(".like-panel").forEach((element) => {
-        const emojiPanel = element.querySelector(".emoji-choice");
-        let timeoutVar;
+function likePanelAnimationControl(postNode) {
+    let likePanel = postNode.querySelector(".like-panel")
+    const emojiPanel = likePanel.querySelector(".emoji-choice");
+    let timeoutVar;
 
-        // On hover show like-panel
-        element.addEventListener("mouseover", () => {
-            clearTimeout(timeoutVar)
-            emojiPanel.classList.remove("hidden");
-            emojiPanel.classList.add("like-panel-in");
-        })
+    // On hover show like-panel
+    likePanel.addEventListener("mouseover", () => {
+        clearTimeout(timeoutVar)
+        emojiPanel.classList.remove("hidden");
+        emojiPanel.classList.add("like-panel-in");
+    })
 
-        // On hover out hide like-panel after 1s
-        element.addEventListener("mouseout", () => {
-            timeoutVar = setTimeout(() => {
-                emojiPanel.classList.remove("like-panel-in");
-                emojiPanel.classList.add("hidden");
-            }, 1000)
-        })
+    // On hover out hide like-panel after 1s
+    likePanel.addEventListener("mouseout", () => {
+        timeoutVar = setTimeout(() => {
+            emojiPanel.classList.remove("like-panel-in");
+            emojiPanel.classList.add("hidden");
+        }, 1000)
     })
 }
+
+// function likePanelAnimationControl() {
+//     document.querySelectorAll(".like-panel").forEach((element) => {
+//         const emojiPanel = element.querySelector(".emoji-choice");
+//         let timeoutVar;
+
+//         // On hover show like-panel
+//         element.addEventListener("mouseover", () => {
+//             clearTimeout(timeoutVar)
+//             emojiPanel.classList.remove("hidden");
+//             emojiPanel.classList.add("like-panel-in");
+//         })
+
+//         // On hover out hide like-panel after 1s
+//         element.addEventListener("mouseout", () => {
+//             timeoutVar = setTimeout(() => {
+//                 emojiPanel.classList.remove("like-panel-in");
+//                 emojiPanel.classList.add("hidden");
+//             }, 1000)
+//         })
+//     })
+// }
+
 
 
 function getCookie(name) {

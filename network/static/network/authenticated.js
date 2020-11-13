@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    editPostControl();
-    likePanelAnimationControl();
-    likeHandling();
-    
     /* Update all:
         * like counters
         * like icons
@@ -17,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
         sortEmojiList(postNode);
         showMoreButtonControl(postNode);
         deletePostControl(postNode);
+        likeHandling(postNode);
+        editPostControl(postNode);
+        likePanelAnimationControl(postNode);
     });
 
     window.addEventListener("resize", () => {

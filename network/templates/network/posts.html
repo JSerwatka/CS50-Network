@@ -10,13 +10,14 @@
     </div>
     <div class="show-more hidden">{% trans "Show more" %}</div>
     {% if user.id == post.user.id %}
-        <button class="edit-button">{% trans "Edit" %}</button>
+        <div class="delete-edit-panel">
+            <button class="edit-button">{% trans "Edit" %}</button>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-            {% trans "Delete" %}
-        </button>
-        
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                {% trans "Delete" %}
+            </button>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
