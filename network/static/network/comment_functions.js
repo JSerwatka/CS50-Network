@@ -91,7 +91,6 @@ function editCommentControl(commentNode) {
             editButton.classList.toggle("hidden");
             deleteButton.classList.toggle("hidden");
 
-
             // Get comment id
             const commentID = commentNode.id
 
@@ -161,7 +160,7 @@ function editCommentControl(commentNode) {
 
 // Controls deleting of a comment
 function deleteCommentControl(commentNode) {
-    let deleteButton = commentNode.querySelector(".modal-footer > .btn-danger");
+    deleteButton = commentNode.querySelector(".modal-footer > .btn-danger");
     if (deleteButton !== null) {
         deleteButton.addEventListener("click", () => {
             let csrftoken = getCookie('csrftoken');
