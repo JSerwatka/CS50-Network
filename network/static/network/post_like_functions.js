@@ -5,7 +5,6 @@ function likeHandling(postNode) {
     // Handle like post/comment
     element.addEventListener('click', (event) => {
         let emojiType;
-        let postNode = event.target;
         let csrftoken = getCookie('csrftoken');
 
         // Look for event's emoji type
@@ -21,12 +20,6 @@ function likeHandling(postNode) {
         else {
             return false;
         }
-
-        // Get post node regarding of what triggered it
-        while (postNode.className !== "post") { 
-            postNode = postNode.parentElement;
-        }
-
         // Already liked - update like's emoji type
         if (postNode.querySelector(".like-button").classList.contains("liked")) {
             fetch(`/like/post/${postNode.id}`, {
@@ -372,29 +365,6 @@ function likePanelAnimationControl(postNode) {
         }, 1000)
     })
 }
-
-// function likePanelAnimationControl() {
-//     document.querySelectorAll(".like-panel").forEach((element) => {
-//         const emojiPanel = element.querySelector(".emoji-choice");
-//         let timeoutVar;
-
-//         // On hover show like-panel
-//         element.addEventListener("mouseover", () => {
-//             clearTimeout(timeoutVar)
-//             emojiPanel.classList.remove("hidden");
-//             emojiPanel.classList.add("like-panel-in");
-//         })
-
-//         // On hover out hide like-panel after 1s
-//         element.addEventListener("mouseout", () => {
-//             timeoutVar = setTimeout(() => {
-//                 emojiPanel.classList.remove("like-panel-in");
-//                 emojiPanel.classList.add("hidden");
-//             }, 1000)
-//         })
-//     })
-// }
-
 
 
 function getCookie(name) {
