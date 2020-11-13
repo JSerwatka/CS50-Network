@@ -84,6 +84,15 @@
         {% empty %}
             {% trans "No posts yet" %}
         {% endfor %}
+        {% if user.is_authenticated and add_post_available %}
+        <form action="{% url 'network:post-comment' action='comment' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ comment_form.content}}
+            </div>
+            <input class="btn btn-primary" type="submit" value='{% trans "Comment" %}'>
+        </form>
+        {% endif %}
     </div>
     {% endif %}
 </div>

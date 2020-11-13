@@ -1,5 +1,5 @@
 from django import forms
-from .models import  Post, UserProfile
+from .models import  Post, Comment, UserProfile
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -17,6 +17,18 @@ class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
+        fields = ["content"]
+
+class CreateCommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea(attrs={
+                                    'placeholder': _("..."),
+                                    'rows': '3',
+                                    'class': 'form-control',
+                                    'aria-label': "comment content"
+                             }))
+
+    class Meta:
+        model = Comment
         fields = ["content"]
 
 class CreateUserProfileForm(forms.ModelForm):

@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
 from .models import User, Post, Comment, Like, Following, UserProfile
-from .forms import CreatePostForm, CreateUserProfileForm
+from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
 # TODO: translacja: kalendarz, edit post buttons, every view's content
@@ -21,20 +21,36 @@ from .forms import CreatePostForm, CreateUserProfileForm
 # TODO: add comment handlings
 
 def post_comment(request, action):
+    # TODO: add post comment logic
     if request.method == "POST":
-        form = CreatePostForm(request.POST)
+        if action == "post":
+            form = CreatePostForm(request.POST)
 
-        if form.is_valid():
-            # Get all data from the form
-            content = form.cleaned_data["content"]
+            if form.is_valid():
+                # Get all data from the form
+                content = form.cleaned_data["content"]
 
-            # Save the record
-            post = Post(
-                user = User.objects.get(pk=request.user.id),
-                content = content
-            )
-            post.save()
-            
+                # Save the record
+                post = Post(
+                    user = User.objects.get(pk=request.user.id),
+                    content = content
+                )
+                post.save()
+        elif action == "comment":
+            form = CreateCommentForm(request.POST)
+
+            if form.is_valid():
+                # Get all data from the form
+                content = form.cleaned_data["content"]
+                print(content)
+                # TODO: add comment saving to proper post
+                # Save the record
+                # post = Comment(
+                #     user = User.objects.get(pk=request.user.id),
+                #     content = content
+                # )
+                # post.save()
+
         return HttpResponseRedirect(reverse("network:index")) # TODO: add status code
 
     if request.method == "PUT":
@@ -42,13 +58,16 @@ def post_comment(request, action):
         # Query for requested post - make sure
         # that current user is the author
         try:
-            post_to_edit = Post.objects.get(pk=body.get('id'), user=request.user)
-        except Post.DoesNotExist: 
+            if action == "post":
+                object_to_edit = Post.objects.get(pk=body.get('id'), user=request.user)
+            else:
+                object_to_edit = Comment.objects.get(pk=body.get('id'), user=request.user)
+        except (Post.DoesNotExist, Comment.DoesNotExist):
             return HttpResponse(status=404) # TODO: error handling
 
         # Update post's content
-        post_to_edit.content = body.get('content')
-        post_to_edit.save()
+        object_to_edit.content = body.get('content')
+        object_to_edit.save()
 
         # Return positive response
         return HttpResponse(status=204)  # TODO: change message
@@ -58,12 +77,15 @@ def post_comment(request, action):
         # Query for requested post - make sure
         # that current user is the author
         try:
-            post_to_delete = Post.objects.get(pk=body.get('id'), user=request.user)
-        except Post.DoesNotExist: 
+            if action == "post":
+                object_to_delete = Post.objects.get(pk=body.get('id'), user=request.user)
+            else:
+                object_to_delete = Comment.objects.get(pk=body.get('id'), user=request.user)
+        except (Post.DoesNotExist, Comment.DoesNotExist): 
             return HttpResponse(status=404) # TODO: error handling
 
         # Delete the post and refresh the page
-        post_to_delete.delete()
+        object_to_delete.delete()
         return HttpResponse(status=204) # TODO: change message
 
 def index(request):
@@ -76,7 +98,8 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, "network/index.html", {
-        "form": CreatePostForm(),
+        "post_form": CreatePostForm(),
+        "comment_form": CreateCommentForm(),
         "page_obj": page_obj,
         "add_post_available": True
     })

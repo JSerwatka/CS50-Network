@@ -4,6 +4,7 @@ from ..models import Like
 register = template.Library()
 
 # Gets given post's emoji type count
+# TODO: change naming to get also comments
 @register.simple_tag
 def get_emoji_count(post, emoji_type):
     emoji_number = [emoji_tuple[0] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[1] == emoji_type][0]

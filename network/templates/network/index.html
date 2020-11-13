@@ -7,7 +7,7 @@
     <form action="{% url 'network:post-comment' action='post' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            {{ form.content}}
+            {{ post_form.content}}
         </div>
         <input class="btn btn-primary" type="submit" value='{% trans "Post" %}'>
     </form>
