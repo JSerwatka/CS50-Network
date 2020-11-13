@@ -4,7 +4,7 @@
 
 {% block body %}
     {% if user.is_authenticated and add_post_available %}
-    <form action="{% url 'network:index' %}" method="post">
+    <form action="{% url 'network:post-comment' action='post' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             {{ form.content}}
@@ -22,6 +22,7 @@
 
 {% block script %}
     <script src="{% static 'network/post_like_functions.js' %}"></script>
+    <!-- <script src="{% static 'network/comment_like_functions.js' %}"></script> -->
     {% if user.is_authenticated %}
         <script src="{% static 'network/authenticated.js' %}"></script>
     {% else %}

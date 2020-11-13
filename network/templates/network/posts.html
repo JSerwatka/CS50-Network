@@ -78,5 +78,12 @@
         </div>
         <button class="comment-button">{% trans "Comment" %}</button>
     </div>
+    <div class="comments">
+        {% for comment in post.comments.all %}
+            {% include "network/comments.html"%}
+        {% empty %}
+            {% trans "No posts yet" %}
+        {% endfor %}
+    </div>
     {% endif %}
 </div>

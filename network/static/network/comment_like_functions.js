@@ -1,7 +1,7 @@
 
 // Handles POST request and single comment appearance after like
 function likeHandling(commentNode) {
-    let element = postNode.querySelector(".like-panel")
+    let element = commentNode.querySelector(".like-panel")
     // Handle like comment
     element.addEventListener('click', (event) => {
         let emojiType;
@@ -83,8 +83,8 @@ function likeHandling(commentNode) {
 
 // Controls asynchronous editing of a comment
 function editCommentControl(commentNode) {
-    let editButton = postNode.querySelector(".edit-button")
-    let deleteButton = postNode.querySelector(".delete-edit-panel .btn-danger")
+    let editButton = commentNode.querySelector(".edit-button")
+    let deleteButton = commentNode.querySelector(".delete-edit-panel .btn-danger")
     if (editButton !== null) {
         editButton.addEventListener('click', () => {
             // hide edit/delete button

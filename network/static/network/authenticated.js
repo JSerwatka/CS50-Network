@@ -18,6 +18,18 @@ document.addEventListener('DOMContentLoaded', function() {
         likePanelAnimationControl(postNode);
     });
 
+    // document.querySelectorAll("div.comment").forEach((commentNode) => {
+    //     updateLikeCounter(commentNode);
+    //     updateLikeIcon(commentNode);
+    //     likesAmountIndicatorControl(commentNode);
+    //     sortEmojiList(commentNode);
+    //     showMoreButtonControl(commentNode);
+    //     deleteCommentControl(commentNode);
+    //     likeHandling(commentNode);
+    //     editCommentControl(commentNode);
+    //     likePanelAnimationControl(commentNode);
+    // });
+
     window.addEventListener("resize", () => {
         document.querySelectorAll("div.post").forEach((postNode) => {
             showMoreButtonControl(postNode);

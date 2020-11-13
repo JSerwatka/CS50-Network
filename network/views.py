@@ -20,9 +20,10 @@ from .forms import CreatePostForm, CreateUserProfileForm
 # TODO: add error page
 # TODO: add comment handlings
 
-def index(request):
+def post_comment(request, action):
     if request.method == "POST":
         form = CreatePostForm(request.POST)
+
         if form.is_valid():
             # Get all data from the form
             content = form.cleaned_data["content"]
@@ -33,6 +34,7 @@ def index(request):
                 content = content
             )
             post.save()
+            
         return HttpResponseRedirect(reverse("network:index")) # TODO: add status code
 
     if request.method == "PUT":
@@ -64,6 +66,7 @@ def index(request):
         post_to_delete.delete()
         return HttpResponse(status=204) # TODO: change message
 
+def index(request):
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()
 

@@ -93,3 +93,21 @@ div.like-panel {
  }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+
+ /* ------ Comment styles ------ */
+.comment {
+    border: 1px solid rgb(96, 214, 66);
+    margin: 10px;
+    max-width: 60%;
+    padding: 25px 10px;
+}
+
+.comment-content {
+    max-height: none;
+    line-height: 1.5em;
+    overflow: hidden;
+}
+
+.comment-content.short {
+    max-height: 6em;
+}

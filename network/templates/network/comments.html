@@ -64,6 +64,7 @@
         <span class="like-counter"></span>
     </div>
     {% if user.is_authenticated %}
+    <div class="like-comment-control">
         <div class="like-panel">
             <button class="like-button" name="like">Like</button>
             <div class="emoji-choice hidden">
@@ -76,5 +77,6 @@
                 </ul>
             </div>
         </div>
+    </div>
     {% endif %}
 </div>

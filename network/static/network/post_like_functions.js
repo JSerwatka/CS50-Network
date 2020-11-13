@@ -125,7 +125,7 @@ function editPostControl(postNode) {
                 let csrftoken = getCookie('csrftoken');
 
                 // Send PUT request
-                fetch("/", {
+                fetch("/post-comment/post", {
                     method: "PUT",
                     body: JSON.stringify({
                         id: postID,
@@ -167,7 +167,7 @@ function deletePostControl(postNode) {
             let csrftoken = getCookie('csrftoken');
 
             // Send DELETE request
-            fetch("/", {
+            fetch("/post-comment/post", {
                 method: "DELETE",
                 body: JSON.stringify({
                     id: postNode.id,
