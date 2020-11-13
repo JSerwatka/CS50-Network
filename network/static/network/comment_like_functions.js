@@ -1,8 +1,8 @@
 
-// Handles POST request and single post appearance after like
-function likeHandling(postNode) {
+// Handles POST request and single comment appearance after like
+function likeHandling(commentNode) {
     let element = postNode.querySelector(".like-panel")
-    // Handle like post/comment
+    // Handle like comment
     element.addEventListener('click', (event) => {
         let emojiType;
         let csrftoken = getCookie('csrftoken');
@@ -21,8 +21,8 @@ function likeHandling(postNode) {
             return false;
         }
         // Already liked - update like's emoji type
-        if (postNode.querySelector(".like-button").classList.contains("liked")) {
-            fetch(`/like/post/${postNode.id}`, {
+        if (commentNode.querySelector(".like-button").classList.contains("liked")) {
+            fetch(`/like/comment/${commentNode.id}`, {
                 method: "PUT",
                 body: JSON.stringify({
                     emojiType: emojiType
@@ -30,16 +30,16 @@ function likeHandling(postNode) {
                 headers: {"X-CSRFToken": csrftoken}
             })
             .then(response => {
-                // Successful like -> update post view
+                // Successful like -> update comment view
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} like updated successfully`)
+                    console.log(`comment id: ${commentNode.id} like updated successfully`)
                     // Update like button emoji and class
-                    updateLikeIcon(postNode);
+                    updateLikeIcon(commentNode);
                     // Update like counter and emoji list
-                    let previousEmojiType = postNode.querySelector(".like-button > i").dataset.name;
-                    updateEmojiList(postNode, emojiType, previousEmojiType);
+                    let previousEmojiType = commentNode.querySelector(".like-button > i").dataset.name;
+                    updateEmojiList(commentNode, emojiType, previousEmojiType);
                     // Reconnect like amount indicator event to each emoji
-                    likesAmountIndicatorControl(postNode);
+                    likesAmountIndicatorControl(commentNode);
                 }
                 else {
                     throw new Error("Unexpected error")  //TODO: Change message                      
@@ -51,7 +51,7 @@ function likeHandling(postNode) {
         }
         // No liked yet - save like
         else {
-            fetch(`/like/post/${postNode.id}`, {
+            fetch(`/like/comment/${commentNode.id}`, {
                 method: "POST",
                 body: JSON.stringify({
                     emojiType: emojiType
@@ -59,18 +59,18 @@ function likeHandling(postNode) {
                 headers: {"X-CSRFToken": csrftoken}
             })
             .then(response => {
-                // Successful like -> update post view
+                // Successful like -> update comment view
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} liked successfully`)
+                    console.log(`comment id: ${commentNode.id} liked successfully`)
                     // Update like button emoji and class
-                    updateLikeIcon(postNode);
+                    updateLikeIcon(commentNode);
                     // Update like counter and emoji list
-                    updateEmojiList(postNode, emojiType);
+                    updateEmojiList(commentNode, emojiType);
                     // Reconnect like amount indicator event to each emoji
-                    likesAmountIndicatorControl(postNode);
+                    likesAmountIndicatorControl(commentNode);
                 }
                 else {
-                    throw new Error("Post doesn't exist or u already liked this post");                     
+                    throw new Error("Comment doesn't exist or u already liked this comment");                     
                 }
             })
             .catch(error => {
@@ -79,10 +79,10 @@ function likeHandling(postNode) {
         }
             
     })
-} 
+}
 
-// Controls asynchronous editing of a post
-function editPostControl(postNode) {
+// Controls asynchronous editing of a comment
+function editCommentControl(commentNode) {
     let editButton = postNode.querySelector(".edit-button")
     let deleteButton = postNode.querySelector(".delete-edit-panel .btn-danger")
     if (editButton !== null) {
@@ -91,11 +91,12 @@ function editPostControl(postNode) {
             editButton.classList.toggle("hidden");
             deleteButton.classList.toggle("hidden");
 
-            // Get post id
-            const postID = postNode.id
 
-            // Get content of post to be edited
-            let contentNode = postNode.querySelector("div.post-content")
+            // Get comment id
+            const commentID = commentNode.id
+
+            // Get content of comment to be edited
+            let contentNode = commentNode.querySelector("div.comment-content")
             const contentInnerText = contentNode.textContent.trim();
             
             // Populate content with form to fill
@@ -108,19 +109,19 @@ function editPostControl(postNode) {
                     <button class="btn btn-primary save">Save</button>
                 </div>`;
 
-            // After cancel - restore orginal post content
-            postNode.querySelector("button.cancel").addEventListener("click", () => {
+            // After cancel - restore orginal comment content
+            commentNode.querySelector("button.cancel").addEventListener("click", () => {
                 contentNode.innerHTML = contentInnerText;
 
-                // show edit/delete button
+                // Show edit/delete button
                 editButton.classList.toggle("hidden");
                 deleteButton.classList.toggle("hidden");
             });
 
             // After save - update
-            postNode.querySelector("button.save").addEventListener("click", () => {
+            commentNode.querySelector("button.save").addEventListener("click", () => {
                 // Get content to submit
-                const submittedContent = postNode.querySelector("textarea.new-content").value.trim();
+                const submittedContent = commentNode.querySelector("textarea.new-content").value.trim();
                 
                 let csrftoken = getCookie('csrftoken');
 
@@ -128,7 +129,7 @@ function editPostControl(postNode) {
                 fetch("/", {
                     method: "PUT",
                     body: JSON.stringify({
-                        id: postID,
+                        id: commentID,
                         content: submittedContent,
                     }),
                     headers: {"X-CSRFToken": csrftoken}
@@ -138,15 +139,16 @@ function editPostControl(postNode) {
                     editButton.classList.toggle("hidden");
                     deleteButton.classList.toggle("hidden");
 
-                    // if success - update post's content
+
+                    // if success - update comment's content
                     if (response.status === 204) {
                         contentNode.innerHTML = submittedContent;
-                        console.log(`post id: ${postID} edited successfully`)
+                        console.log(`comment id: ${commentID} edited successfully`)
                     }
-                    // if error -  restore original post's content and throw an error
+                    // if error -  restore original comment's content and throw an error
                     else {
                         contentNode.innerHTML = contentInnerText;
-                        throw new Error("Post doesn't exist or user is invalid")                        
+                        throw new Error("Comment doesn't exist or user is invalid")                        
                     }
                 })
                 .catch(error => {
@@ -157,32 +159,32 @@ function editPostControl(postNode) {
     }
 }
 
-// Controls deleting of a post
-function deletePostControl(postNode) {
-    let deleteButton = postNode.querySelector(".modal-footer > .btn-danger");
+// Controls deleting of a comment
+function deleteCommentControl(commentNode) {
+    let deleteButton = commentNode.querySelector(".modal-footer > .btn-danger");
     if (deleteButton !== null) {
         deleteButton.addEventListener("click", () => {
             console.log(deleteButton)
-            console.log(postNode)
+            console.log(commentNode)
             let csrftoken = getCookie('csrftoken');
 
             // Send DELETE request
             fetch("/", {
                 method: "DELETE",
                 body: JSON.stringify({
-                    id: postNode.id,
+                    id: commentNode.id,
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
             .then(response => {
-                // if success - update post's content and relaod the page
+                // if success - update comment's content and relaod the page
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id} deleted successfully`)
+                    console.log(`Comment id: ${commentNode.id} deleted successfully`)
                     location.reload()
                 }
-                // if error -  restore original post's content and throw an error
+                // if error -  restore original comment's content and throw an error
                 else {
-                    throw new Error("Post doesn't exist or user is invalid")                        
+                    throw new Error("Comment doesn't exist or user is invalid")                        
                 }
             })
             .catch(error => {
@@ -192,12 +194,12 @@ function deletePostControl(postNode) {
     }
 }
 
-// Adds emoji to like/comment data panel
-function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
+// Adds emoji to like data panel
+function updateEmojiList(commentNode, newEmojiType, previousEmojiType=null) {
     // PUT request -> update previous emoji count and visibility
     if (previousEmojiType !== null) {
         // Grab node of previous emoji
-        let previousEmojiNode = postNode.querySelector(`.emoji-list > i[data-name=${previousEmojiType}]`);
+        let previousEmojiNode = commentNode.querySelector(`.emoji-list > i[data-name=${previousEmojiType}]`);
         // Decrement its value because of emoji change
         previousEmojiNode.dataset.count -= 1;
 
@@ -208,7 +210,7 @@ function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
     }   
     
     // PUT or POST request -> add new emoji node or update its counter
-    let emojiList = postNode.querySelector("ul.emoji-list");
+    let emojiList = commentNode.querySelector("ul.emoji-list");
     let newEmojiNode = emojiList.querySelector(`i[data-name=${newEmojiType}]`);
 
     // Check if emoji already in emoji list
@@ -224,12 +226,12 @@ function updateEmojiList(postNode, newEmojiType, previousEmojiType=null) {
     }
 
     // Make sure that like counter has correct value
-    updateLikeCounter(postNode);
+    updateLikeCounter(commentNode);
     // Sort emojis by amount of likes
-    sortEmojiList(postNode);
+    sortEmojiList(commentNode);
 }
 
-function updateLikeCounter(postNode) {
+function updateLikeCounter(commentNode) {
     let additionalLikes = 0;
 
     // Emoji tags counter
@@ -238,7 +240,7 @@ function updateLikeCounter(postNode) {
     let emojiTypeCount = 0;
 
     // Get list of emoji tags
-    let emojiTagArray = Array.from(postNode.querySelector("ul.emoji-list").children)
+    let emojiTagArray = Array.from(commentNode.querySelector("ul.emoji-list").children)
 
     // Get sum of emoji tags and data-count values
     for (const key in emojiTagArray) {
@@ -250,16 +252,16 @@ function updateLikeCounter(postNode) {
     additionalLikes = emojiTypeCount - emojiTagCount;
 
     if (additionalLikes > 0) {
-        postNode.querySelector("span.like-counter").textContent = `+${additionalLikes}`;
+        commentNode.querySelector("span.like-counter").textContent = `+${additionalLikes}`;
     }
     else {
-        postNode.querySelector("span.like-counter").textContent = "0"
+        commentNode.querySelector("span.like-counter").textContent = "0"
     }
 }
 
 // Sort emojis by amount of likes
-function sortEmojiList(postNode) {
-    let emojiList = postNode.querySelector("ul.emoji-list")
+function sortEmojiList(commentNode) {
+    let emojiList = commentNode.querySelector("ul.emoji-list")
 
     if (emojiList.children.length > 1) {
         Array.from(emojiList.children)
@@ -270,9 +272,9 @@ function sortEmojiList(postNode) {
     }
 }
 
-function updateLikeIcon(postNode){
+function updateLikeIcon(commentNode){
     // Show user's like type on like button
-    fetch(`/like/post/${postNode.id}`)
+    fetch(`/like/comment/${commentNode.id}`)
     .then(response => {
         if (response.status === 201) {
             return response.json();
@@ -283,7 +285,7 @@ function updateLikeIcon(postNode){
     })
     .then(result => {
         if (result.like === "True"){
-            const likeButton = postNode.querySelector(".like-button");
+            const likeButton = commentNode.querySelector(".like-button");
             likeButton.classList.add("liked");
             // Add emoji of user's like type to like button
             likeButton.innerHTML = emojiNameToHtml(result.emojiType);
@@ -321,8 +323,8 @@ function emojiNameToHtml(emojiType) {
 }
 
 // Shows little number indicator if you hover over emoji in emoji list
-function likesAmountIndicatorControl(postNode) {
-    postNode.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
+function likesAmountIndicatorControl(commentNode) {
+    commentNode.querySelectorAll(".emoji-list > i.em").forEach(emojiTag => {
         // Create a like amount indicator element
         let likesAmountIndicator = document.createElement("li");
         likesAmountIndicator.className = "likes-indicator";
@@ -344,8 +346,8 @@ function likesAmountIndicatorControl(postNode) {
     })
 }
 
-function likePanelAnimationControl(postNode) {
-    let likePanel = postNode.querySelector(".like-panel")
+function likePanelAnimationControl(commentNode) {
+    let likePanel = commentNode.querySelector(".like-panel")
     const emojiPanel = likePanel.querySelector(".emoji-choice");
     let timeoutVar;
 
@@ -366,6 +368,7 @@ function likePanelAnimationControl(postNode) {
 }
 
 
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -381,21 +384,21 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// Show show-more button if post's content overflowing
-function showMoreButtonControl(postNode) {
-    let postContent = postNode.querySelector(".post-content")
-    let showMore = postContent.nextElementSibling
+// Show show-more button if comment's content overflowing
+function showMoreButtonControl(commentNode) {
+    let commentContent = commentNode.querySelector(".comment-content")
+    let showMore = commentContent.nextElementSibling
 
-    let isOverflowing = (postContent.clientWidth < postContent.scrollWidth)
-                        || (postContent.clientHeight < postContent.scrollHeight); 
+    let isOverflowing = (commentContent.clientWidth < commentContent.scrollWidth)
+                        || (commentContent.clientHeight < commentContent.scrollHeight); 
                     
     // Text overflowing -> show show-more button and handle click event
     if (isOverflowing) {
         showMore.classList.remove("hidden")
 
         showMore.onclick = () => {
-            // Make post content short or full height
-            postContent.classList.remove("short");
+            // Make comment content short or full height
+            commentContent.classList.remove("short");
             showMore.classList.add("hidden")
         }
     }
@@ -404,4 +407,3 @@ function showMoreButtonControl(postNode) {
         showMore.classList.add("hidden")
     }
 }
-
