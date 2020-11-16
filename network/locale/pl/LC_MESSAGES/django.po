@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 10:10+0100\n"
+"POT-Creation-Date: 2020-11-16 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,9 +24,13 @@ msgstr ""
 msgid "What are you thinking about?"
 msgstr "O czym myślisz?"
 
-#: .\forms.py:24
-msgid "..."
-msgstr ""
+#: .\forms.py:15
+msgid "post content"
+msgstr "zawartość posta"
+
+#: .\forms.py:27
+msgid "comment content"
+msgstr "zawartość komentarza"
 
 #: .\forms.py:35
 msgid "Date of birth: "
@@ -86,7 +90,9 @@ msgstr "Usuń"
 #: .\templates\network\comments.html:33
 msgid ""
 "Are you sure you want to delete this comment? This procedure is irreversible!"
-msgstr "Jesteś pewien, że chcesz usunąć ten komentarz? Ta procedura jest nieodwracalna!"
+msgstr ""
+"Jesteś pewien, że chcesz usunąć ten komentarz? Ta procedura jest "
+"nieodwracalna!"
 
 #: .\templates\network\comments.html:36 .\templates\network\posts.html:37
 msgid "Close"
@@ -166,7 +172,12 @@ msgstr "Jesteś pewien?"
 #: .\templates\network\posts.html:34
 msgid ""
 "Are you sure you want to delete this post? This procedure is irreversible!"
-msgstr "Jesteś pewien, że chcesz usunąć ten post? Ta procedura jest nieodwracalna!"
+msgstr ""
+"Jesteś pewien, że chcesz usunąć ten post? Ta procedura jest nieodwracalna!"
+
+#: .\templates\network\posts.html:70
+msgid "Like"
+msgstr "Lubię to"
 
 #: .\templates\network\posts.html:81 .\templates\network\posts.html:93
 msgid "Comment"
@@ -208,17 +219,14 @@ msgstr "O mnie:"
 msgid "Country:"
 msgstr "Państwo:"
 
-#: .\views.py:313
+#: .\views.py:315
 msgid "Invalid username and/or password."
 msgstr "Nieprawidłowa nazwa użytkownika i/lub hasło"
 
-#: .\views.py:334
+#: .\views.py:336
 msgid "Passwords must match."
 msgstr "Hasła muszą się zgadzać"
 
-#: .\views.py:343
+#: .\views.py:345
 msgid "Username already taken."
 msgstr "Nazwa użytkownika już zajęta"
-
-#~ msgid "Like"
-#~ msgstr "Lubię to"

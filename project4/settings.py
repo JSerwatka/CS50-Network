@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -115,7 +115,7 @@ FLATPICKR_SETTINGS = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl' #'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -125,9 +125,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOCALE_PATHS = [
-    BASE_DIR + '\\network\\locale',
-]
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 
 
 # Static files (CSS, JavaScript, Images)

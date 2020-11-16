@@ -69,7 +69,9 @@
 {% endblock %}
 
 {% block script %}
-        <script src="{% static 'network/post_like_functions.js' %}"></script>
+        <script src="{% static 'network/post-comment_functions.js' %}"></script>
+        <script src="{% static 'network/post_functions.js' %}"></script>
+        <script src="{% static 'network/comment_functions.js' %}"></script>
     {% if user.is_authenticated %}
         <script src="{% static 'network/authenticated.js' %}"></script>
     {% else %}

@@ -103,10 +103,10 @@ function editPostControl(postNode) {
                 <div class="form-group">
                     <textarea class="new-content form-control">${contentInnerText}</textarea>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-primary cancel">Cancel</button>
-                    <button class="btn btn-primary save">Save</button>
-                </div>`;
+                <div class="form-group">`
+                +    '<button class="btn btn-primary cancel">' + gettext("Cancel") + '</button>'
+                +    '<button class="btn btn-primary save">' + gettext("Save") + '</button>'
+                + '</div>';
 
             // After cancel - restore orginal post content
             postNode.querySelector("button.cancel").addEventListener("click", () => {
@@ -146,7 +146,7 @@ function editPostControl(postNode) {
                     // if error -  restore original post's content and throw an error
                     else {
                         contentNode.innerHTML = contentInnerText;
-                        throw new Error("Post doesn't exist or user is invalid")                        
+                        throw new Error(gettext("Post doesn't exist or user is invalid"))                        
                     }
                 })
                 .catch(error => {
@@ -175,18 +175,18 @@ function deletePostControl(postNode) {
             .then(response => {
                 // if success - update post's content and relaod the page
                 if (response.status === 204) {
-                    console.log(`post id: ${postNode.id.substr(5)} deleted successfully`)
-                    location.reload()
+                    console.log(`post id: ${postNode.id.substr(5)} deleted successfully`);
+                    location.reload();
                 }
                 // if error -  restore original post's content and throw an error
                 else {
-                    throw new Error("Post doesn't exist or user is invalid")                        
+                    throw new Error(gettext("Post doesn't exist or user is invalid"));                        
                 }
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
             })
-        })
+        });
     }
 }
 
@@ -198,7 +198,7 @@ function updatePostLikeIcon(postNode){
             return response.json();
         }
         else {
-            throw new Error("Something went wrong"); //TODO: update message
+            throw new Error(gettext("Something went wrong")); //TODO: update message
         }
     })
     .then(result => {

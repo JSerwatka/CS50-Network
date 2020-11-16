@@ -42,7 +42,7 @@ function likeCommentControl(commentNode) {
                     likesAmountIndicatorControl(commentNode);
                 }
                 else {
-                    throw new Error("Unexpected error")  //TODO: Change message                      
+                    throw new Error(gettext("Unexpected error"));  //TODO: Change message                      
                 }
             })
             .catch(error => {
@@ -70,7 +70,7 @@ function likeCommentControl(commentNode) {
                     likesAmountIndicatorControl(commentNode);
                 }
                 else {
-                    throw new Error("Comment doesn't exist or u already liked this comment");                     
+                    throw new Error(gettext("Comment doesn't exist or u already liked this comment"));                     
                 }
             })
             .catch(error => {
@@ -103,11 +103,10 @@ function editCommentControl(commentNode) {
                 <div class="form-group">
                     <textarea class="new-content form-control">${contentInnerText}</textarea>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-primary cancel">Cancel</button>
-                    <button class="btn btn-primary save">Save</button>
-                </div>`;
-
+                <div class="form-group">`
+                +    '<button class="btn btn-primary cancel">' + gettext("Cancel") + '</button>'
+                +    '<button class="btn btn-primary save">' + gettext("Save") + '</button>'
+                + '</div>';
             // After cancel - restore orginal comment content
             commentNode.querySelector("button.cancel").addEventListener("click", () => {
                 contentNode.innerHTML = contentInnerText;
@@ -147,7 +146,7 @@ function editCommentControl(commentNode) {
                     // if error -  restore original comment's content and throw an error
                     else {
                         contentNode.innerHTML = contentInnerText;
-                        throw new Error("Comment doesn't exist or user is invalid")                        
+                        throw new Error(gettext("Comment doesn't exist or user is invalid"))                        
                     }
                 })
                 .catch(error => {
@@ -181,7 +180,7 @@ function deleteCommentControl(commentNode) {
                 }
                 // if error -  restore original comment's content and throw an error
                 else {
-                    throw new Error("Comment doesn't exist or user is invalid")                        
+                    throw new Error(gettext("Comment doesn't exist or user is invalid"));                        
                 }
             })
             .catch(error => {
@@ -199,7 +198,7 @@ function updateCommentLikeIcon(commentNode){
             return response.json();
         }
         else {
-            throw new Error("Something went wrong"); //TODO: update message
+            throw new Error(gettext("Something went wrong")); //TODO: update message
         }
     })
     .then(result => {
