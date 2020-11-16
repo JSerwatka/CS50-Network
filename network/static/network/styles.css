@@ -115,3 +115,12 @@ div.like-panel {
 .form-control {
     width: 40%;
 }
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Language buttons styles ------ */
+.lang-button {
+    border: none;
+    background: transparent;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

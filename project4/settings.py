@@ -115,7 +115,13 @@ FLATPICKR_SETTINGS = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'pl' #'en-us'
+LANGUAGES = [
+    ('en', 'English'),
+    ('pl', 'Polish')
+]
+
+LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'pl'
 
 TIME_ZONE = 'UTC'
 

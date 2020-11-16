@@ -43,8 +43,18 @@
                 {% endif %}
               </ul>
             </div>
+            <div class="choose-lang">
+                {% get_current_language as LANGUAGE_CODE %}
+                <form action="{% url 'set_language' %}" method="post" style="display:inline!important;">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                    <button class="lang-button" name="language" type="submit" value="en"><img src="{% static 'network/img/en.png' %}"></button>
+                    <!-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+                    <button class="lang-button" name="language" type="submit" value="pl"><img src="{% static 'network/img/pl.png' %}"></button>
+                    <!-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+                </form>
+            </div>
           </nav>
-        
         <div class="body">
             {% block body %}
             {% endblock %}
