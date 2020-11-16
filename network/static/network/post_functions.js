@@ -213,3 +213,4 @@ function updatePostLikeIcon(postNode){
         alert(error);
     })
 }
+

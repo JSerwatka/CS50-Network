@@ -12,7 +12,7 @@ class CreatePostForm(forms.ModelForm):
                                     'autofocus': 'autofocus',
                                     'rows': '3',
                                     'class': 'form-control',
-                                    'aria-label': "post content"
+                                    'aria-label': _("post content")
                              }))
 
     class Meta:
@@ -21,10 +21,10 @@ class CreatePostForm(forms.ModelForm):
 
 class CreateCommentForm(forms.ModelForm):
     content = forms.CharField(widget=forms.Textarea(attrs={
-                                    'placeholder': _("..."),
+                                    'placeholder': "...",
                                     'rows': '3',
                                     'class': 'form-control',
-                                    'aria-label': "comment content"
+                                    'aria-label': _("comment content")
                              }))
 
     class Meta:

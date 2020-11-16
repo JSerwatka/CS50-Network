@@ -83,7 +83,7 @@
         {% endif %}
     </div>
     {% if user.is_authenticated %}
-    <div class="comment-section">
+    <div class="comment-section hidden">
         <form action="{% url 'network:post-comment' action='comment' %}" method="post">
             {% csrf_token %}
             <div class="form-group">

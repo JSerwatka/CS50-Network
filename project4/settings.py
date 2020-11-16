@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    # 'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # GLobal settings for all flatpickr inputs
 FLATPICKR_SETTINGS = {
-    'theme_name': 'material_blue'
+    'theme_name': 'material_blue',
 }
 
 # Internationalization

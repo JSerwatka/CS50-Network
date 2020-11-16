@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
         likesAmountIndicatorControl(postNode);
         likePanelAnimationControl(postNode);
         showMoreButtonControl(postNode);
+        showHideComments(postNode);
     });
 
+    // Init comments
     document.querySelectorAll("div.comment").forEach((commentNode) => {
         likeCommentControl(commentNode);
         editCommentControl(commentNode);

@@ -146,6 +146,16 @@ function showMoreButtonControl(node) {
     }
 }
 
+// Control showing and hidding comments
+function showHideComments(postNode) {
+    let commentButton = postNode.querySelector(".comment-button");
+    let commentSection = postNode.nextElementSibling
+    
+    commentButton.addEventListener("click", () => {
+        commentSection.classList.toggle("hidden")
+    })
+}
+
 function emojiNameToHtml(emojiType) {
     let emojiHtml;
 

@@ -16,8 +16,9 @@ from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
-# TODO: translacja: kalendarz, edit post buttons, every view's content
+# TODO: translacja: edit post buttons, every view's content, "wybierz plik" and some buttons - eng default
 # TODO: add error page
+# TODO: change language button
 
 def index(request):
     # Get all posts
