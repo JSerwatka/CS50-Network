@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.http import JsonResponse
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from .models import User, Post, Comment, Like, Following, UserProfile
@@ -18,8 +18,24 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 # TODO: translacja: kalendarz, edit post buttons, every view's content
 # TODO: add error page
-# TODO: post and comment the same id
 
+def index(request):
+    # Get all posts
+    all_posts = Post.objects.order_by("-date").all()
+
+    # Create page controll
+    paginator = Paginator(all_posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "network/index.html", {
+        "post_form": CreatePostForm(),
+        "comment_form": CreateCommentForm(auto_id=False),
+        "page_obj": page_obj,
+        "add_post_available": True
+    })
+
+@login_required(login_url="network:login")
 def post_comment(request, action):
     # TODO: add post comment logic
     if request.method == "POST":
@@ -93,22 +109,6 @@ def post_comment(request, action):
         # Delete the post and refresh the page
         object_to_delete.delete()
         return HttpResponse(status=204) # TODO: change message
-
-def index(request):
-    # Get all posts
-    all_posts = Post.objects.order_by("-date").all()
-
-    # Create page controll
-    paginator = Paginator(all_posts, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return render(request, "network/index.html", {
-        "post_form": CreatePostForm(),
-        "comment_form": CreateCommentForm(auto_id=False),
-        "page_obj": page_obj,
-        "add_post_available": True
-    })
 
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
@@ -310,7 +310,7 @@ def login_view(request):
                 return HttpResponseRedirect(reverse("network:index"))
         else:
             return render(request, "network/login.html", {
-                "message": "Invalid username and/or password."
+                "message": _("Invalid username and/or password.")
             })
     else:
         return render(request, "network/login.html")
@@ -331,7 +331,7 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "network/register.html", {
-                "message": "Passwords must match."
+                "message": _("Passwords must match.")
             })
 
         # Attempt to create new user and its profile
@@ -340,7 +340,7 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
-                "message": "Username already taken."
+                "message": _("Username already taken.")
             })
         login(request, user)
         return HttpResponseRedirect(reverse("network:index"))
