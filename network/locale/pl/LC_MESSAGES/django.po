@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 16:05+0100\n"
+"POT-Creation-Date: 2020-11-16 10:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,64 +24,99 @@ msgstr ""
 msgid "What are you thinking about?"
 msgstr "O czym myślisz?"
 
-#: .\forms.py:23
+#: .\forms.py:24
+msgid "..."
+msgstr ""
+
+#: .\forms.py:35
 msgid "Date of birth: "
 msgstr "Data urodzenia: "
 
-#: .\forms.py:37
+#: .\forms.py:49
 #, fuzzy, python-brace-format
 #| msgid "Image file exceeds %(max_file_size)s MB size limit"
 msgid "Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"
 msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
 
-#: .\forms.py:44
+#: .\forms.py:56
 msgid "Name: "
 msgstr "Imię: "
 
-#: .\forms.py:45
+#: .\forms.py:57
 msgid "About: "
 msgstr "O mnie: "
 
-#: .\forms.py:46
+#: .\forms.py:58
 msgid "Country: "
 msgstr "Państwo: "
 
-#: .\forms.py:47
+#: .\forms.py:59
 msgid "Image: "
 msgstr "Zdjęcie: "
 
-#: .\forms.py:51
+#: .\forms.py:63
 msgid "Your name..."
 msgstr "Twoje imię..."
 
-#: .\forms.py:52
+#: .\forms.py:64
 msgid "your name"
 msgstr "twoje imię"
 
-#: .\forms.py:56
+#: .\forms.py:68
 msgid "Tell about yourself..."
 msgstr "Opowiedz o sobie..."
 
-#: .\forms.py:57
+#: .\forms.py:69
 msgid "tell about yourself"
 msgstr "opowiedz o sobie"
 
-#: .\templates\network\edit_profile.html:25
+#: .\templates\network\comments.html:11 .\templates\network\posts.html:13
+msgid "Show more"
+msgstr "Pokaż więcej"
+
+#: .\templates\network\comments.html:14 .\templates\network\posts.html:16
+msgid "Edit"
+msgstr "Edytuj"
+
+#: .\templates\network\comments.html:18 .\templates\network\comments.html:37
+#: .\templates\network\posts.html:20 .\templates\network\posts.html:38
+msgid "Delete"
+msgstr "Usuń"
+
+#: .\templates\network\comments.html:33
+msgid ""
+"Are you sure you want to delete this comment? This procedure is irreversible!"
+msgstr "Jesteś pewien, że chcesz usunąć ten komentarz? Ta procedura jest nieodwracalna!"
+
+#: .\templates\network\comments.html:36 .\templates\network\posts.html:37
+msgid "Close"
+msgstr "Anuluj"
+
+#: .\templates\network\comments.html:44 .\templates\network\posts.html:45
+msgid "ago"
+msgstr "temu"
+
+#: .\templates\network\edit_profile.html:26
 #, python-format
 msgid "Image file exceeds %(max_file_size)s MB size limit"
 msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
 
-#: .\templates\network\edit_profile.html:28
+#: .\templates\network\edit_profile.html:29
 msgid "File must be type image"
 msgstr "Plik musi być typu zdjęcie"
 
-#: .\templates\network\edit_profile.html:55
+#: .\templates\network\edit_profile.html:57
 msgid "Cancel"
 msgstr "Anuluj"
 
 #: .\templates\network\index.html:12
 msgid "Post"
 msgstr "Wyślij"
+
+#: .\templates\network\index.html:20 .\templates\network\posts.html:99
+#: .\templates\network\user_profile.html:66
+msgid "No posts yet"
+msgstr "Brak postów"
 
 #: .\templates\network\layout.html:27
 msgid "All Posts"
@@ -124,15 +159,16 @@ msgstr "Nie masz jeszcze konta?"
 msgid "Register here."
 msgstr "Utwórz nowe konto tutaj"
 
-#: .\templates\network\posts.html:12
-msgid "Edit"
-msgstr "Edytuj"
+#: .\templates\network\posts.html:28
+msgid "Are you sure?"
+msgstr "Jesteś pewien?"
 
-#: .\templates\network\posts.html:15
-msgid "ago"
-msgstr "temu"
+#: .\templates\network\posts.html:34
+msgid ""
+"Are you sure you want to delete this post? This procedure is irreversible!"
+msgstr "Jesteś pewien, że chcesz usunąć ten post? Ta procedura jest nieodwracalna!"
 
-#: .\templates\network\posts.html:51
+#: .\templates\network\posts.html:81 .\templates\network\posts.html:93
 msgid "Comment"
 msgstr "Komentarz"
 
@@ -172,9 +208,17 @@ msgstr "O mnie:"
 msgid "Country:"
 msgstr "Państwo:"
 
-#: .\templates\network\user_profile.html:66
-msgid "No posts yet"
-msgstr "Brak postów"
+#: .\views.py:313
+msgid "Invalid username and/or password."
+msgstr "Nieprawidłowa nazwa użytkownika i/lub hasło"
+
+#: .\views.py:334
+msgid "Passwords must match."
+msgstr "Hasła muszą się zgadzać"
+
+#: .\views.py:343
+msgid "Username already taken."
+msgstr "Nazwa użytkownika już zajęta"
 
 #~ msgid "Like"
 #~ msgstr "Lubię to"
