@@ -16,10 +16,8 @@ from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
-# TODO: translacja: edit post buttons, every view's content, "wybierz plik" and some buttons - eng default, paginator
 # TODO: add error page
-# TODO: change language button
-# TODO: lack of comment form inside user profile posts
+# TODO: translacja: every view's content, "wybierz plik" and some buttons - eng default, paginator
 
 def index(request):
     # Get all posts
@@ -74,8 +72,9 @@ def post_comment(request, action):
                     post = post
                 )
                 comment.save()
+                
 
-        return HttpResponseRedirect(reverse("network:index")) # TODO: add status code
+        return HttpResponseRedirect(request.headers['Referer']) # TODO: add status code
 
     if request.method == "PUT":
         body = json.loads(request.body)
@@ -133,7 +132,8 @@ def user_profile(request, user_id):
         "user_data": user_data,
         "following": following_user_list,
         "followers": followers_user_list,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "comment_form": CreateCommentForm(auto_id=False)
     })
 
 @login_required(login_url="network:login")

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 14:50+0100\n"
+"POT-Creation-Date: 2020-11-16 17:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,7 +120,7 @@ msgid "Post"
 msgstr "Wyślij"
 
 #: .\templates\network\index.html:20 .\templates\network\posts.html:99
-#: .\templates\network\user_profile.html:66
+#: .\templates\network\user_profile.html:67
 msgid "No posts yet"
 msgstr "Brak postów"
 
@@ -179,9 +179,13 @@ msgstr ""
 msgid "Like"
 msgstr "Lubię to"
 
-#: .\templates\network\posts.html:81 .\templates\network\posts.html:93
+#: .\templates\network\posts.html:81
+msgid "Comments"
+msgstr "Komentarze"
+
+#: .\templates\network\posts.html:93
 msgid "Comment"
-msgstr "Komentarz"
+msgstr "Skomentuj"
 
 #: .\templates\network\register.html:19
 msgid "Email Address"
@@ -219,14 +223,14 @@ msgstr "O mnie:"
 msgid "Country:"
 msgstr "Państwo:"
 
-#: .\views.py:315
+#: .\views.py:314
 msgid "Invalid username and/or password."
 msgstr "Nieprawidłowa nazwa użytkownika i/lub hasło"
 
-#: .\views.py:336
+#: .\views.py:335
 msgid "Passwords must match."
 msgstr "Hasła muszą się zgadzać"
 
-#: .\views.py:345
+#: .\views.py:344
 msgid "Username already taken."
 msgstr "Nazwa użytkownika już zajęta"

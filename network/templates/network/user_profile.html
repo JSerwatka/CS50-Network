@@ -62,6 +62,7 @@
     
     {% for post in page_obj.object_list%}
         {% include "network/posts.html"%}
+        <br><br><hr>
     {% empty %}
         {% trans "No posts yet" %}
     {% endfor %}
