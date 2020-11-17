@@ -51,9 +51,16 @@
         </div>
         <div class="form-group">
             {{ form.image.label }}
-            {{ form.image }}
+            <div class="custom-file">
+                <input type="file" name="image" class="custom-file-input" accept="image/*" id="id_image">
+                {% if LANGUAGE_CODE == "pl" %}
+                    <label class="custom-file-label" data-browse="Wybierz" for="id_image" data-default="Wybierz plik">Wybierz plik</label>
+                {% else %}
+                    <label class="custom-file-label" data-browse="Browse" for="id_image" data-default="Choose file">Choose file</label>
+                {% endif %}
+            </div>
         </div>
-        <input class="btn btn-primary" type="submit">
+        <input class="btn btn-primary" type="submit" value={% trans "Submit" %}>
         <button class="btn btn-primary" name="cancel" value="clicked">{% trans "Cancel" %}</button></a>  
     </form>
 </div>

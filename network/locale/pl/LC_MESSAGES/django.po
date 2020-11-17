@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 17:30+0100\n"
+"POT-Creation-Date: 2020-11-17 12:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,7 +111,11 @@ msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
 msgid "File must be type image"
 msgstr "Plik musi być typu zdjęcie"
 
-#: .\templates\network\edit_profile.html:57
+#: .\templates\network\edit_profile.html:63
+msgid "Submit"
+msgstr "Prześlij"
+
+#: .\templates\network\edit_profile.html:64
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -223,14 +227,14 @@ msgstr "O mnie:"
 msgid "Country:"
 msgstr "Państwo:"
 
-#: .\views.py:314
+#: .\views.py:315
 msgid "Invalid username and/or password."
 msgstr "Nieprawidłowa nazwa użytkownika i/lub hasło"
 
-#: .\views.py:335
+#: .\views.py:336
 msgid "Passwords must match."
 msgstr "Hasła muszą się zgadzać"
 
-#: .\views.py:344
+#: .\views.py:345
 msgid "Username already taken."
 msgstr "Nazwa użytkownika już zajęta"

@@ -72,7 +72,4 @@ class CreateUserProfileForm(forms.ModelForm):
             'country': CountrySelectWidget(
                  attrs={"class": "form-control"}
             ),
-            "image": forms.FileInput(
-                attrs={"class": "form-control-file"}
-            )
         }

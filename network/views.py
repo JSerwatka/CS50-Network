@@ -15,9 +15,10 @@ from django.conf import settings
 from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
-
+# TODO: add comments
 # TODO: add error page
 # TODO: translacja: every view's content, "wybierz plik" and some buttons - eng default, paginator
+# TODO: lang button disabled/enabled
 
 def index(request):
     # Get all posts
@@ -37,7 +38,6 @@ def index(request):
 
 @login_required(login_url="network:login")
 def post_comment(request, action):
-    # TODO: add post comment logic
     if request.method == "POST":
         if action == "post":
             form = CreatePostForm(request.POST)
@@ -73,7 +73,7 @@ def post_comment(request, action):
                 )
                 comment.save()
                 
-
+        # Go back to place from which request came
         return HttpResponseRedirect(request.headers['Referer']) # TODO: add status code
 
     if request.method == "PUT":
@@ -94,7 +94,7 @@ def post_comment(request, action):
 
         # Return positive response
         return HttpResponse(status=204)  # TODO: change message
-    
+
     if request.method == "DELETE":
         body = json.loads(request.body)
         # Query for requested post - make sure
@@ -166,7 +166,7 @@ def edit_profile(request):
 
             # Go back to user's profile page
             return HttpResponseRedirect(reverse(
-                    "network:user-profile", 
+                    "network:user-profile",
                     args=[request.user.id]
                 ))
         else:
