@@ -123,4 +123,9 @@ div.like-panel {
     border: none;
     background: transparent;
 }
+
+.grey-out {
+    opacity: 0.35;
+}
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+

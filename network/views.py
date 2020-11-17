@@ -17,8 +17,7 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 # TODO: add comments
 # TODO: add error page
-# TODO: translacja: every view's content, "wybierz plik" and some buttons - eng default, paginator
-# TODO: lang button disabled/enabled
+# TODO: translacja: every view's content, paginator
 
 def index(request):
     # Get all posts
