@@ -18,6 +18,7 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 # TODO: add comments
 # TODO: translacja: paginator
+# TODO: change like-indicator to tooltip
 
 def index(request):
     # Get all posts

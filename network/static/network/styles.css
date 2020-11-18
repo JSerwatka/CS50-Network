@@ -6,7 +6,7 @@
 .post {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(50px, auto);
+    grid-auto-rows: minmax(40px, auto);
 }
 
 .post-user {
@@ -83,12 +83,11 @@
 
 /* ------ Post delete-edit-panel styles ------ */
 .delete-edit-panel {
-    display: flex;
-    justify-content: flex-end;
+    justify-self: end;
 }
 
 .delete-edit-panel button{ 
-    height:80%;
+    height: 90%;
     margin: 0px 5px;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
@@ -120,8 +119,50 @@
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+/* ------ Post like-data styles ------ */
 
-/* ------ Like-comment panel styles ------ */
+.like-data {
+    align-self: center;
+}
+
+.emoji-list {
+    display: inline;   
+}
+
+.emoji-list > i {
+    position: relative;
+}
+
+.like-counter {
+    margin-left: 5px;
+    font-size: 0.9em;
+    font-weight: 380;
+    color: rgb(92, 91, 91);
+}
+
+.likes-indicator {
+    display: inline;
+    position: absolute;
+    top: -30px;
+    left: 6px;
+    padding: 1px 3px;
+    background: rgba(231, 161, 56, 0.5);
+    border-radius: 10px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Post comment-data styles ------ */
+ .comment-data {
+     align-self: center;
+     justify-self: end;
+     font-size: 0.9em;
+     font-weight: 380;
+     color: rgb(92, 91, 91);
+ }
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Post like-comment panel styles ------ */
 .like-comment-control {
     position: relative;
 }
@@ -146,21 +187,6 @@
 .like-panel-in {
     animation: like-panel-in 0.5s ease-out forwards;
     
-}
-
-/* like-comment-data */
-.emoji-list > i {
-    position: relative;
-}
-
-.likes-indicator {
-    display: inline;
-    position: absolute;
-    top: -30px;
-    left: 6px;
-    padding: 1px 3px;
-    background: rgba(231, 161, 56, 0.5);
-    border-radius: 10px;
 }
 
 /* Emoji */
