@@ -4,10 +4,6 @@
 
 /* ------ Post grid structure styles ------ */
 .post {
-    border: 1px solid black;
-    margin: 0 auto;
-    max-width: 60%;
-    padding: 25px 10px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: minmax(50px, auto);
@@ -54,18 +50,24 @@
     grid-row: 7/8;
 }
 
-.like-button {
-    width: 100%;
-    height: 100%
-}
-
 .comment-button {
     grid-column: 7/13;
     grid-row: 7/8;
 }
-
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+ /* ------ Post block styles ------ */
+.post {
+    border: 1px solid black;
+    margin: 40px auto;
+    max-width: 60%;
+    padding: 25px 10px;
+    background-color: rgb(148, 221, 209)
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Post post-user styles ------ */
  .post-profile-picture {
     border-radius: 50%;
     height: 40px;
@@ -73,11 +75,38 @@
     object-fit: cover;
 }
 
-/* ------ Post content styles ------ */
+.post-user a {
+    padding-left: 10px;
+    font-weight: bold;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Post delete-edit-panel styles ------ */
+.delete-edit-panel {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.delete-edit-panel button{ 
+    height:80%;
+    margin: 0px 5px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Post post-date styles ------ */
+.post-date {
+    font-family: Helvetica, sans-serif;
+    font-size: 0.8em;
+    align-self: center;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Post post-content styles ------ */
 .post-content {
     max-height: none;
     line-height: 1.5em;
     overflow: hidden;
+    background-color: white;
 }
 
 .post-content.short {
@@ -95,6 +124,11 @@
 /* ------ Like-comment panel styles ------ */
 .like-comment-control {
     position: relative;
+}
+
+.like-button {
+    width: 100%;
+    height: 100%
 }
 
 /* Like panel */

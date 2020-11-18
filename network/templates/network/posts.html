@@ -10,7 +10,7 @@
         </div>
         <div class="delete-edit-panel">
         {% if user.id == post.user.id %}
-                <button class="edit-button">{% trans "Edit" %}</button>
+                <button class="edit-button btn btn-light">{% trans "Edit" %}</button>
 
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_post_{{ post.id }}">
@@ -39,7 +39,7 @@
         {% endif %}
         </div>
         <div class="post-date">
-            {{post.date|timesince}} {% trans "ago" %}
+            {% trans "Posted: " %} {{post.date|timesince}} {% trans "ago" %}
         </div>
         <div class="content post-content short">
             {{ post.content}}
