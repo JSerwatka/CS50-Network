@@ -203,7 +203,7 @@ function updateCommentLikeIcon(commentNode){
 
         if (response.status === 200) {
             if (response_body.like === "True"){
-                const likeButton = postNode.querySelector(".like-button");
+                const likeButton = commentNode.querySelector(".like-button");
                 likeButton.classList.add("liked");
                 // Add emoji of user's like type to like button
                 likeButton.innerHTML = emojiNameToHtml(response_body.emojiType);

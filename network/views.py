@@ -204,7 +204,7 @@ def like(request, action, action_id):
         except Like.DoesNotExist:
             return JsonResponse({
                 "like": "False"
-            }, status=200)  #TODO: update status code
+            }, status=200)
         except (Post.DoesNotExist, Comment.DoesNotExist):
             return JsonResponse({
                 "error": _("Post or Comment does not exist")
@@ -214,7 +214,7 @@ def like(request, action, action_id):
             return JsonResponse({
                 "like": "True",
                 "emojiType": [emoji_tuple[1] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[0] == like.emoji_type][0]
-            }, status=200)  #TODO: update status code
+            }, status=200)
         # Something went wrong
         return JsonResponse({
                 "error": _(f"Unknown error during GET {action} like ")
