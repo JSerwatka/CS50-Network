@@ -133,24 +133,26 @@ function editPostControl(postNode) {
                     }),
                     headers: {"X-CSRFToken": csrftoken}
                 })
-                .then(response => {
+                .then(async(response) => {
                     // Show edit/delete button
                     editButton.classList.toggle("hidden");
                     deleteButton.classList.toggle("hidden");
 
                     // if success - update post's content
-                    if (response.status === 204) {
+                    if (response.status === 201) {
                         contentNode.innerHTML = submittedContent;
                         console.log(`post id: ${postID} edited successfully`)
                     }
-                    // if error -  restore original post's content and throw an error
+                    // if error - show alert and reload the page
                     else {
-                        contentNode.innerHTML = contentInnerText;
-                        throw new Error(gettext("Post doesn't exist or user is invalid"))                        
+                        let response_body = await response.json();
+
+                        throw new Error(response_body.error);                        
                     }
                 })
                 .catch(error => {
-                    alert(error)
+                    alert(error);
+                    location.reload();
                 })
             });
         });
@@ -172,19 +174,22 @@ function deletePostControl(postNode) {
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
-            .then(response => {
+            .then(async(response) => {
                 // if success - update post's content and relaod the page
                 if (response.status === 204) {
                     console.log(`post id: ${postNode.id.substr(5)} deleted successfully`);
                     location.reload();
                 }
-                // if error -  restore original post's content and throw an error
+                // if error - show alert and reload the page
                 else {
-                    throw new Error(gettext("Post doesn't exist or user is invalid"));                        
+                    let response_body = await response.json();
+
+                    throw new Error(response_body.error);                        
                 }
             })
             .catch(error => {
-                console.log(error);
+                alert(error);
+                location.reload();
             })
         });
     }

@@ -15,6 +15,7 @@ from django.conf import settings
 from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
+
 # TODO: add comments
 # TODO: add error page
 # TODO: translacja: every view's content, paginator
@@ -72,8 +73,8 @@ def post_comment(request, action):
                 )
                 comment.save()
                 
-        # Go back to place from which request came
-        return HttpResponseRedirect(request.headers['Referer']) # TODO: add status code
+        # Go back to place from which the request came
+        return HttpResponseRedirect(request.headers['Referer'])
 
     if request.method == "PUT":
         body = json.loads(request.body)
@@ -85,14 +86,16 @@ def post_comment(request, action):
             else:
                 object_to_edit = Comment.objects.get(pk=body.get('id'), user=request.user)
         except (Post.DoesNotExist, Comment.DoesNotExist):
-            return HttpResponse(status=404) # TODO: error handling
+            return JsonResponse({
+                "error": _("Post or Comment does not exist")
+            }, status=404)
 
         # Update post's content
         object_to_edit.content = body.get('content')
         object_to_edit.save()
 
         # Return positive response
-        return HttpResponse(status=204)  # TODO: change message
+        return HttpResponse(status=201)
 
     if request.method == "DELETE":
         body = json.loads(request.body)
@@ -104,11 +107,14 @@ def post_comment(request, action):
             else:
                 object_to_delete = Comment.objects.get(pk=body.get('id'), user=request.user)
         except (Post.DoesNotExist, Comment.DoesNotExist): 
-            return HttpResponse(status=404) # TODO: error handling
+            return JsonResponse({
+                "error": _("Post or Comment does not exist")
+            }, status=404)
 
         # Delete the post and refresh the page
         object_to_delete.delete()
-        return HttpResponse(status=204) # TODO: change message
+        return HttpResponse(status=204)
+
 
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
@@ -141,7 +147,7 @@ def edit_profile(request):
         # Cancel edit -> go back to the profile
         if request.POST.get("cancel") == "clicked":
             return HttpResponseRedirect(reverse(
-                    "network:user-profile", 
+                    "network:user-profile",
                     args=[request.user.id]
                 ))
 

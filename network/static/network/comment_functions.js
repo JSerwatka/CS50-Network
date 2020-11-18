@@ -132,7 +132,7 @@ function editCommentControl(commentNode) {
                     }),
                     headers: {"X-CSRFToken": csrftoken}
                 })
-                .then(response => {
+                .then(async(response) => {
                     // Show edit/delete button
                     editButton.classList.toggle("hidden");
                     deleteButton.classList.toggle("hidden");
@@ -143,14 +143,16 @@ function editCommentControl(commentNode) {
                         contentNode.innerHTML = submittedContent;
                         console.log(`comment id: ${commentID} edited successfully`)
                     }
-                    // if error -  restore original comment's content and throw an error
+                    // if error - show alert and reload the page
                     else {
-                        contentNode.innerHTML = contentInnerText;
-                        throw new Error(gettext("Comment doesn't exist or user is invalid"))                        
+                        let response_body = await response.json();
+
+                        throw new Error(response_body.error);                        
                     }
                 })
                 .catch(error => {
-                    alert(error)
+                    alert(error);
+                    location.reload();
                 })
             });
         });
@@ -172,19 +174,22 @@ function deleteCommentControl(commentNode) {
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
-            .then(response => {
+            .then(async(response) => {
                 // if success - update comment's content and relaod the page
                 if (response.status === 204) {
                     console.log(`Comment id: ${commentNode.id.substr(8)} deleted successfully`)
                     location.reload()
                 }
-                // if error -  restore original comment's content and throw an error
+                // if error - show alert and reload the page
                 else {
-                    throw new Error(gettext("Comment doesn't exist or user is invalid"));                        
+                    let response_body = await response.json();
+
+                    throw new Error(response_body.error);                        
                 }
             })
             .catch(error => {
-                console.log(error)
+                alert(error);
+                location.reload();
             })
         })
     }
