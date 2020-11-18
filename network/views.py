@@ -17,8 +17,7 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
 # TODO: add comments
-# TODO: add error page
-# TODO: translacja: every view's content, paginator, follow/unfollow, errors
+# TODO: translacja: paginator
 
 def index(request):
     # Get all posts

@@ -5,21 +5,17 @@
 <div class="post-comment-element">
     <div class="post" id='post_{{ post.id }}'>
         <div class="post-user">
+            <img class="post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
             <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
         </div>
-        <div class="content post-content short">
-            {{ post.content}}
-        </div>
-        <div class="show-more hidden">{% trans "Show more" %}</div>
+        <div class="delete-edit-panel">
         {% if user.id == post.user.id %}
-            <div class="delete-edit-panel">
                 <button class="edit-button">{% trans "Edit" %}</button>
 
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_post_{{ post.id }}">
                     {% trans "Delete" %}
                 </button>
-            </div>
             <!-- Modal -->
             <div class="modal fade" id="modal_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_post_{{ post.id }}_label" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -41,10 +37,15 @@
                 </div>
             </div>
         {% endif %}
+        </div>
         <div class="post-date">
             {{post.date|timesince}} {% trans "ago" %}
         </div>
-        <div class="like-comment-data">
+        <div class="content post-content short">
+            {{ post.content}}
+        </div>
+        <div class="show-more hidden">{% trans "Show more" %}</div>
+        <div class="like-data">
             <ul class="emoji-list">
                 {% for emoji in post.likes.all %}     
                     {% ifchanged emoji.get_emoji_type_display%}   
@@ -63,6 +64,9 @@
                 {% endfor %}
             </ul>
             <span class="like-counter"></span>
+        </div>
+        <div class="comment-data">
+            <span class="comment-count">Komentarzy: {{post.comments.all.count}}</span>
         </div>
         {% if user.is_authenticated %}
         <div class="like-comment-control">
