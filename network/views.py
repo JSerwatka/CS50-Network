@@ -18,7 +18,7 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 # TODO: add comments
 # TODO: add error page
-# TODO: translacja: every view's content, paginator
+# TODO: translacja: every view's content, paginator, follow/unfollow, errors
 
 def index(request):
     # Get all posts
@@ -295,8 +295,6 @@ def follow_unfollow(request, user_id):
             get_follow_obj.delete()
 
         return HttpResponseRedirect(reverse("network:user-profile", args=[user_id]))
-
-    return HttpResponse(f"Current user: {request.user}, profile: {user_id}")
 
 def login_view(request):
     if request.method == "POST":

@@ -11,9 +11,9 @@
             <form action="{% url 'network:follow-unfollow' user_id=user_data.id %}" method="POST">
                 {% csrf_token %}
             {% if user in followers%}
-                    <button type="submit" class="unfollow">Unfollow</button>
+                    <button type="submit" class="unfollow">{% trans "Unfollow" %}</button>
             {% else %}
-                    <button type="submit" class="follow">Follow</button>
+                    <button type="submit" class="follow">{% trans "Follow" %}</button>
             {% endif %}
             </form>
         {% else %}
