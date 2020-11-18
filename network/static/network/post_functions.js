@@ -16,7 +16,7 @@ function likePostControl(postNode) {
         else if (typeof event.target.dataset.name === "string"){
             emojiType = event.target.dataset.name;
         }  
-        // Something is a target
+        // Incorrect target
         else {
             return false;
         }
@@ -198,24 +198,24 @@ function deletePostControl(postNode) {
 function updatePostLikeIcon(postNode){
     // Show user's like type on like button
     fetch(`/like/post/${postNode.id.substr(5)}`)
-    .then(response => {
-        if (response.status === 201) {
-            return response.json();
+    .then(async(response) => {
+        let response_body = await response.json();
+
+        if (response.status === 200) {
+            if (response_body.like === "True"){
+                const likeButton = postNode.querySelector(".like-button");
+                likeButton.classList.add("liked");
+                // Add emoji of user's like type to like button
+                likeButton.innerHTML = emojiNameToHtml(response_body.emojiType);
+            }
         }
         else {
-            throw new Error(gettext("Something went wrong")); //TODO: update message
-        }
-    })
-    .then(result => {
-        if (result.like === "True"){
-            const likeButton = postNode.querySelector(".like-button");
-            likeButton.classList.add("liked");
-            // Add emoji of user's like type to like button
-            likeButton.innerHTML = emojiNameToHtml(result.emojiType);
+            throw new Error(response_body.error);
         }
     })
     .catch(error => {
         alert(error);
+        location.reload();
     })
 }
 

@@ -198,23 +198,23 @@ function deleteCommentControl(commentNode) {
 function updateCommentLikeIcon(commentNode){
     // Show user's like type on like button
     fetch(`/like/comment/${commentNode.id.substr(8)}`)
-    .then(response => {
-        if (response.status === 201) {
-            return response.json();
+    .then(async(response) => {
+        let response_body = await response.json();
+
+        if (response.status === 200) {
+            if (response_body.like === "True"){
+                const likeButton = postNode.querySelector(".like-button");
+                likeButton.classList.add("liked");
+                // Add emoji of user's like type to like button
+                likeButton.innerHTML = emojiNameToHtml(response_body.emojiType);
+            }
         }
         else {
-            throw new Error(gettext("Something went wrong")); //TODO: update message
-        }
-    })
-    .then(result => {
-        if (result.like === "True"){
-            const likeButton = commentNode.querySelector(".like-button");
-            likeButton.classList.add("liked");
-            // Add emoji of user's like type to like button
-            likeButton.innerHTML = emojiNameToHtml(result.emojiType);
+            throw new Error(response_body.error);
         }
     })
     .catch(error => {
         alert(error);
+        location.reload();
     })
 }

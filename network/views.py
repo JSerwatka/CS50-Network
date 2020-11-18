@@ -198,21 +198,27 @@ def like(request, action, action_id):
                 comment = Comment.objects.get(pk=action_id)
                 like = Like.objects.get(user=request.user, comment=comment)
             else:
-               return HttpResponse(status=404) #TODO: redirect to error page 
+                return JsonResponse({
+                    "error": _("Unknown action - you can only like post or comment")
+                }, status=400)
         except Like.DoesNotExist:
             return JsonResponse({
                 "like": "False"
-            }, status=201)  #TODO: update status code
+            }, status=200)  #TODO: update status code
         except (Post.DoesNotExist, Comment.DoesNotExist):
-             return HttpResponse(status=404) #TODO: redirect to error page
+            return JsonResponse({
+                "error": _("Post or Comment does not exist")
+            }, status=404)
         # if like exists send emojiType text
         else:
             return JsonResponse({
                 "like": "True",
                 "emojiType": [emoji_tuple[1] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[0] == like.emoji_type][0]
-            }, status=201)  #TODO: update status code
+            }, status=200)  #TODO: update status code
         # Something went wrong
-        return HttpResponse(status=400) #TODO: update status code
+        return JsonResponse({
+                "error": _(f"Unknown error during GET {action} like ")
+        }, status=400)
 
     elif request.method == "POST":
         body = json.loads(request.body)
