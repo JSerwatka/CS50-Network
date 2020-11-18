@@ -29,9 +29,9 @@ function likeCommentControl(commentNode) {
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
-            .then(response => {
+            .then(async(response) => {
                 // Successful like -> update comment view
-                if (response.status === 204) {
+                if (response.status === 201) {
                     console.log(`comment id: ${commentNode.id.substr(8)} like updated successfully`)
                     // Update like button emoji and class
                     updateCommentLikeIcon(commentNode);
@@ -42,11 +42,14 @@ function likeCommentControl(commentNode) {
                     likesAmountIndicatorControl(commentNode);
                 }
                 else {
-                    throw new Error(gettext("Unexpected error"));  //TODO: Change message                      
+                    let response_body = await response.json();
+
+                    throw new Error(response_body.error) ;                     
                 }
             })
             .catch(error => {
-                alert(error)
+                alert(error);
+                location.reload();
             })
         }
         // No liked yet - save like
@@ -58,9 +61,9 @@ function likeCommentControl(commentNode) {
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
-            .then(response => {
+            .then(async(response) => {
                 // Successful like -> update comment view
-                if (response.status === 204) {
+                if (response.status === 201) {
                     console.log(`comment id: ${commentNode.id.substr(8)} liked successfully`)
                     // Update like button emoji and class
                     updateCommentLikeIcon(commentNode);
@@ -70,11 +73,14 @@ function likeCommentControl(commentNode) {
                     likesAmountIndicatorControl(commentNode);
                 }
                 else {
-                    throw new Error(gettext("Comment doesn't exist or u already liked this comment"));                     
+                    let response_body = await response.json();
+
+                    throw new Error(response_body.error) ;                     
                 }
             })
             .catch(error => {
                 alert(error);
+                location.reload();
             })
         }
             

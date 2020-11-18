@@ -29,9 +29,9 @@ function likePostControl(postNode) {
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
-            .then(response => {
+            .then(async(response) => {
                 // Successful like -> update post view
-                if (response.status === 204) {
+                if (response.status === 201) {
                     console.log(`post id: ${postNode.id.substr(5)} like updated successfully`)
                     // Update like button emoji and class
                     updatePostLikeIcon(postNode);
@@ -42,11 +42,14 @@ function likePostControl(postNode) {
                     likesAmountIndicatorControl(postNode);
                 }
                 else {
-                    throw new Error("Unexpected error")  //TODO: Change message                      
+                    let response_body = await response.json();
+
+                    throw new Error(response_body.error) ;                     
                 }
             })
             .catch(error => {
-                alert(error)
+                alert(error);
+                location.reload();
             })
         }
         // No liked yet - save like
@@ -58,9 +61,9 @@ function likePostControl(postNode) {
                 }),
                 headers: {"X-CSRFToken": csrftoken}
             })
-            .then(response => {
+            .then(async(response) => {
                 // Successful like -> update post view
-                if (response.status === 204) {
+                if (response.status === 201) {
                     console.log(`post id: ${postNode.id.substr(5)} liked successfully`)
                     // Update like button emoji and class
                     updatePostLikeIcon(postNode);
@@ -70,11 +73,14 @@ function likePostControl(postNode) {
                     likesAmountIndicatorControl(postNode);
                 }
                 else {
-                    throw new Error("Post doesn't exist or u already liked this post");                     
+                    let response_body = await response.json();
+
+                    throw new Error(response_body.error) ;                     
                 }
             })
             .catch(error => {
                 alert(error);
+                location.reload();
             })
         }
             
