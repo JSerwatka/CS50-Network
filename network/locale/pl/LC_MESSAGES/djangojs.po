@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 15:06+0100\n"
+"POT-Creation-Date: 2020-11-18 11:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,33 +20,15 @@ msgstr ""
 "%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
 "%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: .\static\network\comment_functions.js:45
-msgid "Unexpected error"
-msgstr ""
-
-#: .\static\network\comment_functions.js:73
-msgid "Comment doesn't exist or u already liked this comment"
-msgstr ""
-
-#: .\static\network\comment_functions.js:107
-#: .\static\network\post_functions.js:107
+#: .\static\network\comment_functions.js:113
+#: .\static\network\post_functions.js:113
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: .\static\network\comment_functions.js:108
-#: .\static\network\post_functions.js:108
+#: .\static\network\comment_functions.js:114
+#: .\static\network\post_functions.js:114
 msgid "Save"
 msgstr "Zapisz"
-
-#: .\static\network\comment_functions.js:149
-#: .\static\network\comment_functions.js:183
-msgid "Comment doesn't exist or user is invalid"
-msgstr ""
-
-#: .\static\network\comment_functions.js:201
-#: .\static\network\post_functions.js:201
-msgid "Something went wrong"
-msgstr ""
 
 #: .\static\network\post-comment_functions.js:164
 #: .\static\network\post-comment_functions.js:167
@@ -55,8 +37,3 @@ msgstr ""
 #: .\static\network\post-comment_functions.js:176
 msgid "Like"
 msgstr "Lubię to"
-
-#: .\static\network\post_functions.js:149
-#: .\static\network\post_functions.js:183
-msgid "Post doesn't exist or user is invalid"
-msgstr ""

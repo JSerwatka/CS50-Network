@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-17 12:06+0100\n"
+"POT-Creation-Date: 2020-11-18 11:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,6 +207,14 @@ msgstr "Masz już konto?"
 msgid "Log In here."
 msgstr "Zaloguj się tutaj"
 
+#: .\templates\network\user_profile.html:14
+msgid "Unfollow"
+msgstr "Przestań obserwować"
+
+#: .\templates\network\user_profile.html:16
+msgid "Follow"
+msgstr "Obserwuj"
+
 #: .\templates\network\user_profile.html:20
 msgid "Edit profile"
 msgstr "Edytuj profil"
@@ -227,14 +235,27 @@ msgstr "O mnie:"
 msgid "Country:"
 msgstr "Państwo:"
 
-#: .\views.py:315
+#: .\views.py:90 .\views.py:111 .\views.py:210 .\views.py:240 .\views.py:262
+msgid "Post or Comment does not exist"
+msgstr "Post lub komentarz nie istnieje"
+
+#: .\views.py:202 .\views.py:236 .\views.py:258
+msgid "Unknown action - you can only like post or comment"
+msgstr "Nieznana akcja - polajkować możesz tylko post lub komentarz"
+
+#: .\views.py:220
+#, python-brace-format
+msgid "Unknown error during GET {action} like "
+msgstr "Nieznany błąd podczas GET {action} like"
+
+#: .\views.py:331
 msgid "Invalid username and/or password."
 msgstr "Nieprawidłowa nazwa użytkownika i/lub hasło"
 
-#: .\views.py:336
+#: .\views.py:352
 msgid "Passwords must match."
 msgstr "Hasła muszą się zgadzać"
 
-#: .\views.py:345
+#: .\views.py:361
 msgid "Username already taken."
 msgstr "Nazwa użytkownika już zajęta"
