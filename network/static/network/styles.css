@@ -265,6 +265,7 @@
 .comment-content {
     max-height: none;
     line-height: 1.5em;
+    overflow-wrap: break-word;
     overflow: hidden;
 }
 
@@ -272,9 +273,9 @@
     max-height: 6em;
 }
 
-.comment-section .form-control {
+/* .comment-section .form-control {
     width: 40%;
-}
+} */
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 

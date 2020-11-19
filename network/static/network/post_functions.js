@@ -105,7 +105,7 @@ function editPostControl(postNode) {
             const contentInnerText = contentNode.textContent.trim();
             
             // Populate content with form to fill
-            modalBody.innerHTML = `<textarea class="new-content form-control" cols="50">${contentInnerText}</textarea>`;
+            modalBody.innerHTML = `<textarea class="new-content form-control">${contentInnerText}</textarea>`;
 
             // After save - update
             saveButton.addEventListener("click", () => {
