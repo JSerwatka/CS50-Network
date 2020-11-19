@@ -118,7 +118,7 @@ function likePanelAnimationControl(node) {
         timeoutVar = setTimeout(() => {
             emojiPanel.classList.remove("like-panel-in");
             emojiPanel.classList.add("hidden");
-        }, 1000)
+        }, 600)
     })
 }
 
