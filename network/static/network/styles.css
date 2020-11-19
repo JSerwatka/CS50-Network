@@ -2,7 +2,6 @@
     --secondary-text: #545557;
 }
 
-
 .hidden {
     display: none;
 }
@@ -100,6 +99,10 @@
 .delete-edit-panel button{ 
     height: 90%;
     margin: 0px 5px;
+}
+
+.modal textarea.new-content {
+    max-width: 100%;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
@@ -269,7 +272,7 @@
     max-height: 6em;
 }
 
-.form-control {
+.comment-section .form-control {
     width: 40%;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

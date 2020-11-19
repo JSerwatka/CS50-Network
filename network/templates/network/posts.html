@@ -10,30 +10,49 @@
         </div>
         <div class="delete-edit-panel">
         {% if user.id == post.user.id %}
-                <button class="edit-button btn btn-light">{% trans "Edit" %}</button>
+                <button type="button" class="edit-button btn btn-light" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}">{% trans "Edit" %}</button>
 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_post_{{ post.id }}">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_post_{{ post.id }}">
                     {% trans "Delete" %}
                 </button>
-            <!-- Modal -->
-            <div class="modal fade" id="modal_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_post_{{ post.id }}_label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="modal_post_{{ post.id }}_label">{% trans "Are you sure?" %}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        {% trans "Are you sure you want to delete this post? This procedure is irreversible!" %}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
-                        <button type="button" class="btn btn-danger">{% trans "Delete" %}</button>
+            <!-- Modals -->
+            <div class="modal fade delete-modal" id="modal_delete_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_delete_post_{{ post.id }}_label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="modal_delete_post_{{ post.id }}_label">{% trans "Are you sure?" %}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            {% trans "Are you sure you want to delete this post? This procedure is irreversible!" %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+                            <button type="button" class="btn btn-danger">{% trans "Delete" %}</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="modal fade edit-modal" id="modal_edit_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_post_{{ post.id }}_label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="modal_edit_post_{{ post.id }}_label">{% trans "What did you really want to say?" %}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans "Close" %}</button>
+                            <button type="button" class="btn btn-primary">{% trans "Save" %}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endif %}

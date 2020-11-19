@@ -89,46 +89,33 @@ function likePostControl(postNode) {
 
 // Controls asynchronous editing of a post
 function editPostControl(postNode) {
-    let editButton = postNode.querySelector(".edit-button")
-    let deleteButton = postNode.querySelector(".delete-edit-panel .btn-danger")
-    if (editButton !== null) {
-        editButton.addEventListener('click', () => {
-            // hide edit/delete button
-            editButton.classList.toggle("hidden");
-            deleteButton.classList.toggle("hidden");
+    let modalDialog = postNode.querySelector(".edit-modal")
+
+    if (modalDialog !== null) {
+        $(modalDialog).on('show.bs.modal', () => {
+            // Get save button and modal body
+            let saveButton = modalDialog.querySelector(".modal-footer > .btn-primary");
+            let modalBody = modalDialog.querySelector(".modal-body");
 
             // Get post id
-            const postID = postNode.id.substr(5)
+            const postID = postNode.id.substr(5);
 
             // Get content of post to be edited
-            let contentNode = postNode.querySelector("div.post-content")
+            let contentNode = postNode.querySelector("div.post-content");
             const contentInnerText = contentNode.textContent.trim();
             
             // Populate content with form to fill
-            contentNode.innerHTML = `
-                <div class="form-group">
-                    <textarea class="new-content form-control">${contentInnerText}</textarea>
-                </div>
-                <div class="form-group">`
-                +    '<button class="btn btn-primary cancel">' + gettext("Cancel") + '</button>'
-                +    '<button class="btn btn-primary save">' + gettext("Save") + '</button>'
-                + '</div>';
-
-            // After cancel - restore orginal post content
-            postNode.querySelector("button.cancel").addEventListener("click", () => {
-                contentNode.innerHTML = contentInnerText;
-
-                // show edit/delete button
-                editButton.classList.toggle("hidden");
-                deleteButton.classList.toggle("hidden");
-            });
+            modalBody.innerHTML = `<textarea class="new-content form-control" cols="50">${contentInnerText}</textarea>`;
 
             // After save - update
-            postNode.querySelector("button.save").addEventListener("click", () => {
+            saveButton.addEventListener("click", () => {
                 // Get content to submit
-                const submittedContent = postNode.querySelector("textarea.new-content").value.trim();
+                const submittedContent = modalBody.querySelector("textarea.new-content").value.trim();
                 
                 let csrftoken = getCookie('csrftoken');
+
+                // Hide modal
+                $(modalDialog).modal('hide');
 
                 // Send PUT request
                 fetch("/post-comment/post", {
@@ -140,14 +127,11 @@ function editPostControl(postNode) {
                     headers: {"X-CSRFToken": csrftoken}
                 })
                 .then(async(response) => {
-                    // Show edit/delete button
-                    editButton.classList.toggle("hidden");
-                    deleteButton.classList.toggle("hidden");
-
                     // if success - update post's content
                     if (response.status === 201) {
+                        showMoreButtonControl(postNode);
                         contentNode.innerHTML = submittedContent;
-                        console.log(`post id: ${postID} edited successfully`)
+                        console.log(`post id: ${postID} edited successfully`);
                     }
                     // if error - show alert and reload the page
                     else {
@@ -167,7 +151,7 @@ function editPostControl(postNode) {
 
 // Controls deleting of a post
 function deletePostControl(postNode) {
-    let deleteButton = postNode.querySelector(".modal-footer > .btn-danger");
+    let deleteButton = postNode.querySelector(".delete-modal .modal-footer > .btn-danger");
     if (deleteButton !== null) {
         deleteButton.addEventListener("click", () => {
             let csrftoken = getCookie('csrftoken');
