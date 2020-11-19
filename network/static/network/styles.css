@@ -11,7 +11,7 @@
 .post {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(5, minmax(40px, auto)) minmax(0px, auto) repeat(2, minmax(40px, auto));
+    grid-template-rows: repeat(3, minmax(40px, auto)) minmax(0px, auto) repeat(2, minmax(40px, auto));
 }
 
 .post-user {
@@ -31,27 +31,27 @@
 
 .post-content {
     grid-column: 1/13;
-    grid-row: 3/6;
+    grid-row: 3/4;
 }
 
 .show-more {
     grid-column: 1/13;
-    grid-row: 6/7;
+    grid-row: 4/5;
 }
 
 .like-data {
     grid-column: 1/7;
-    grid-row: 7/8;
+    grid-row: 5/6;
 }
 
 .comment-data {
     grid-column: 7/13;
-    grid-row: 7/8;
+    grid-row: 5/6;
 }
 
 .like-comment-control {
     grid-column: 1/13;
-    grid-row: 8/9;
+    grid-row: 6/7;
     display: grid;
     grid-template-rows: 80%;
 }
@@ -116,12 +116,13 @@
 .post-content {
     max-height: none;
     line-height: 1.5em;
+    overflow-wrap: break-word;
     overflow: hidden;
     background-color: white;
 }
 
 .post-content.short {
-    max-height: 6em;
+    max-height: 120px;
 }
 
 .show-more {
@@ -199,7 +200,11 @@
 }
 
 .like-button.liked {
-    background: rgba(60, 60, 219, 0.308)
+    background: rgba(60, 60, 219, 0.308);
+}
+
+.like-button.liked:hover {
+    background: rgba(60, 60, 219, 0.208);
 }
 
 .like-button > i {
