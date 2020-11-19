@@ -89,7 +89,7 @@ function likePostControl(postNode) {
 
 // Controls asynchronous editing of a post
 function editPostControl(postNode) {
-    let modalDialog = postNode.querySelector(".edit-modal")
+    let modalDialog = postNode.querySelector(".edit-modal");
 
     if (modalDialog !== null) {
         $(modalDialog).on('show.bs.modal', () => {

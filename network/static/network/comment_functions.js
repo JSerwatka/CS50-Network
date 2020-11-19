@@ -89,45 +89,33 @@ function likeCommentControl(commentNode) {
 
 // Controls asynchronous editing of a comment
 function editCommentControl(commentNode) {
-    let editButton = commentNode.querySelector(".edit-button")
-    let deleteButton = commentNode.querySelector(".delete-edit-panel .btn-danger")
-    if (editButton !== null) {
-        editButton.addEventListener('click', () => {
-            // hide edit/delete button
-            editButton.classList.toggle("hidden");
-            deleteButton.classList.toggle("hidden");
+    let modalDialog = commentNode.querySelector(".edit-modal");
+
+    if (modalDialog !== null) {
+        $(modalDialog).on('show.bs.modal', () => {
+            // Get save button and modal body
+            let saveButton = modalDialog.querySelector(".modal-footer > .btn-primary");
+            let modalBody = modalDialog.querySelector(".modal-body");
 
             // Get comment id
-            const commentID = commentNode.id.substr(8)
+            const commentID = commentNode.id.substr(8);
 
             // Get content of comment to be edited
-            let contentNode = commentNode.querySelector("div.comment-content")
+            let contentNode = commentNode.querySelector("div.comment-content");
             const contentInnerText = contentNode.textContent.trim();
             
             // Populate content with form to fill
-            contentNode.innerHTML = `
-                <div class="form-group">
-                    <textarea class="new-content form-control">${contentInnerText}</textarea>
-                </div>
-                <div class="form-group">`
-                +    '<button class="btn btn-primary cancel">' + gettext("Cancel") + '</button>'
-                +    '<button class="btn btn-primary save">' + gettext("Save") + '</button>'
-                + '</div>';
-            // After cancel - restore orginal comment content
-            commentNode.querySelector("button.cancel").addEventListener("click", () => {
-                contentNode.innerHTML = contentInnerText;
-
-                // Show edit/delete button
-                editButton.classList.toggle("hidden");
-                deleteButton.classList.toggle("hidden");
-            });
+            modalBody.innerHTML = `<textarea class="new-content form-control" cols="50">${contentInnerText}</textarea>`;
 
             // After save - update
-            commentNode.querySelector("button.save").addEventListener("click", () => {
+            saveButton.addEventListener("click", () => {
                 // Get content to submit
-                const submittedContent = commentNode.querySelector("textarea.new-content").value.trim();
+                const submittedContent = modalBody.querySelector("textarea.new-content").value.trim();
                 
                 let csrftoken = getCookie('csrftoken');
+
+                // Hide modal
+                $(modalDialog).modal('hide');
 
                 // Send PUT request
                 fetch("/post-comment/comment", {
@@ -139,15 +127,11 @@ function editCommentControl(commentNode) {
                     headers: {"X-CSRFToken": csrftoken}
                 })
                 .then(async(response) => {
-                    // Show edit/delete button
-                    editButton.classList.toggle("hidden");
-                    deleteButton.classList.toggle("hidden");
-
-
                     // if success - update comment's content
-                    if (response.status === 204) {
+                    if (response.status === 201) {
+                        showMoreButtonControl(commentNode);
                         contentNode.innerHTML = submittedContent;
-                        console.log(`comment id: ${commentID} edited successfully`)
+                        console.log(`comment id: ${commentID} edited successfully`);
                     }
                     // if error - show alert and reload the page
                     else {
