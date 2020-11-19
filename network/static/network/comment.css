@@ -1,0 +1,48 @@
+ /* ------ Comment styles ------ */
+.comment-section {
+    border: 2px solid rgb(51, 146, 190);
+    background-color: rgba(255, 0, 0, 0.219);
+    max-width: 60%;
+    margin: 40px auto;
+}
+
+ .comment {
+    border: 1px solid rgb(96, 214, 66);
+    margin-top: 10px;
+    padding: 25px 10px;
+}
+
+ /* ------ Comment form styles ------ */
+.comment-form-content {
+    display: grid;
+    grid-template-columns: 12fr 1fr;
+    grid-template-rows: minmax(40px, auto);
+}
+
+.comment-form-content textarea {
+    border-radius: 25px;
+}
+
+.comment-form-content button[type="submit"] {
+    border-radius: 10px;
+    justify-self: center;
+    align-self: end;
+    padding: 3px 10px 8px 10px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+.comment-content {
+    max-height: none;
+    line-height: 1.5em;
+    overflow-wrap: break-word;
+    overflow: hidden;
+}
+
+.comment-content.short {
+    max-height: 6em;
+}
+
+/* .comment-section .form-control {
+    width: 40%;
+} */
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

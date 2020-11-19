@@ -3,6 +3,7 @@
 
 <div class="comment" id='comment_{{ comment.id }}'>
     <div class="comment-user">
+        <img class="comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
         <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
     </div>
     <div class="content comment-content short">
@@ -85,7 +86,7 @@
     {% if user.is_authenticated %}
     <div class="like-comment-control">
         <div class="like-panel">
-            <button class="like-button" name="like">Like</button>
+            <button class="like-button" name="like">{% trans "Like" %}</button>
             <div class="emoji-choice hidden">
                 <ul>
                     <i class="em em---1" aria-role="presentation" aria-label="THUMBS UP SIGN" data-name="like"></i>

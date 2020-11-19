@@ -6,6 +6,24 @@
     display: none;
 }
 
+.post-comment-element {
+    max-width: 70%;
+    margin: 30px auto;
+    border: 4px solid black;
+    background-color: rgba(128, 128, 128, 0.336);
+}
+
+/* ------ Language buttons styles ------ */
+.lang-button {
+    border: none;
+    background: transparent;
+}
+
+.grey-out {
+    opacity: 0.35;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
 /* ------ Post grid structure styles ------ */
 .post {
     display: grid;
@@ -69,7 +87,7 @@
  /* ------ Post block styles ------ */
 .post {
     border: 1px solid black;
-    margin: 40px auto;
+    margin: 20px auto;
     max-width: 60%;
     padding: 25px 10px;
     background-color: rgb(78, 207, 207)
@@ -78,7 +96,7 @@
 
 
 /* ------ Post post-user styles ------ */
- .post-profile-picture {
+ .post-profile-picture, .comment-profile-picture {
     border-radius: 50%;
     height: 40px;
     width: 40px;
@@ -254,39 +272,8 @@
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
- /* ------ Comment styles ------ */
-.comment {
-    border: 1px solid rgb(96, 214, 66);
-    margin: 10px;
-    max-width: 60%;
-    padding: 25px 10px;
-}
-
-.comment-content {
-    max-height: none;
-    line-height: 1.5em;
-    overflow-wrap: break-word;
-    overflow: hidden;
-}
-
-.comment-content.short {
-    max-height: 6em;
-}
-
-/* .comment-section .form-control {
-    width: 40%;
-} */
- /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
-/* ------ Language buttons styles ------ */
-.lang-button {
-    border: none;
-    background: transparent;
-}
 
-.grey-out {
-    opacity: 0.35;
-}
- /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
 
