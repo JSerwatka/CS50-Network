@@ -13,29 +13,97 @@
 }
 
  /* ------ Comment form styles ------ */
-.comment-form-content {
+.comment-form-wrapper {
     display: grid;
-    grid-template-columns: 12fr 1fr;
-    grid-template-rows: minmax(40px, auto);
+    grid-template-columns: 50px auto;
+}
+
+.comment-form-wrapper a {
+    justify-self: center;
+}
+
+.comment-form-content {
+    position: relative;
 }
 
 .comment-form-content textarea {
+    min-width: 40px;
     border-radius: 25px;
 }
 
+.comment-form-content svg {
+    fill: rgba(29, 160, 242, 0.7)
+}
+
 .comment-form-content button[type="submit"] {
-    border-radius: 10px;
-    justify-self: center;
-    align-self: end;
-    padding: 3px 10px 8px 10px;
+    position:absolute;
+    bottom:4px;
+    right:10px;
+    background: transparent;
+    border: transparent;
+    border-radius: 20px;
+    padding: 1px 8px 6px 8px;
+    transition: background 0.2s;
+}
+
+.comment-form-content button[type="submit"]:hover {
+    background: rgba(128, 128, 128, 0.15);
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+/* ------ Comment grid structure styles ------ */
+.comment {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.commen-user {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    border: 1px solid red;
+}
+
+.comment-content {
+    grid-column: 2/12;
+    grid-row: 1/2;
+    border: 1px solid red;
+}
+
+.comment .show-more {
+    grid-column: 2/12;
+    grid-row: 2/3;
+    border: 1px solid red;
+}
+
+.comment .like-comment-control {
+    grid-column: 2/4;
+    grid-row: 3/4;
+    border: 1px solid red;
+}
+
+.comment .like-data {
+    grid-column: 4/6;
+    grid-row: 3/4;
+    border: 1px solid red;
+}
+
+.comment-date {
+    grid-column: 6/12;
+    grid-row: 3/4;
+    border: 1px solid red;
+}
+
+
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 .comment-content {
     max-height: none;
     line-height: 1.5em;
     overflow-wrap: break-word;
     overflow: hidden;
+}
+
+.comment-content a{
+    display: block;
 }
 
 .comment-content.short {

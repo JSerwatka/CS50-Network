@@ -13,6 +13,7 @@
     background-color: rgba(128, 128, 128, 0.336);
 }
 
+
 /* ------ Language buttons styles ------ */
 .lang-button {
     border: none;
@@ -36,7 +37,7 @@
     grid-row: 1/2;
 }
 
-.delete-edit-panel {
+.post .delete-edit-panel {
     grid-column: 7/13;
     grid-row: 1/2; 
 }
@@ -51,12 +52,12 @@
     grid-row: 3/4;
 }
 
-.show-more {
+.post .show-more {
     grid-column: 1/13;
     grid-row: 4/5;
 }
 
-.like-data {
+.post .like-data {
     grid-column: 1/7;
     grid-row: 5/6;
 }
@@ -66,19 +67,19 @@
     grid-row: 5/6;
 }
 
-.like-comment-control {
+.post .like-comment-control {
     grid-column: 1/13;
     grid-row: 6/7;
     display: grid;
     grid-template-rows: 80%;
 }
 
-.like-panel {
+.post .like-panel {
     grid-column: 1/7;
     grid-row: 1/2;
 }
 
-.comment-button {
+.post .comment-button {
     grid-column: 7/13;
     grid-row: 1/2;
 }
@@ -96,11 +97,15 @@
 
 
 /* ------ Post post-user styles ------ */
- .post-profile-picture, .comment-profile-picture {
+.post-profile-picture, .comment-profile-picture {
     border-radius: 50%;
     height: 40px;
     width: 40px;
     object-fit: cover;
+}
+
+.post-profile-picture:hover, .comment-profile-picture:hover {
+    opacity: 0.9;
 }
 
 .post-user a {
@@ -110,11 +115,11 @@
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Post delete-edit-panel styles ------ */
-.delete-edit-panel {
+.post .delete-edit-panel {
     justify-self: end;
 }
 
-.delete-edit-panel button{ 
+.post .delete-edit-panel button{ 
     height: 90%;
     margin: 0px 5px;
 }
