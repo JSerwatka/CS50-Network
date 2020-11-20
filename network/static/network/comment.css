@@ -32,7 +32,7 @@
 
 .comment-form-wrapper a {
     justify-self: center;
-    align-self: center;
+    align-self: top;
 }
 
 .comment-form-content {
@@ -42,10 +42,11 @@
 .comment-form-content textarea {
     min-height: 30px;
     border-radius: 25px;
+    padding-right: 30px;
 }
 
 .comment-form-content svg {
-    fill: rgba(29, 160, 242, 0.7)
+    fill:  #282c318a;
 }
 
 .comment-form-content button[type="submit"] {

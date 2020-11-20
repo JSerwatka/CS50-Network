@@ -3,7 +3,9 @@
 
 <div class="comment" id='comment_{{ comment.id }}'>
     <div class="comment-user-image">
-        <img class="round-picture comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
+        <a href="{% url 'network:user-profile' user_id=comment.user.id %}">
+            <img class="round-picture comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
+        </a>
     </div>
     <div class="comment-main">
         <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
@@ -22,7 +24,7 @@
                 </a>
               
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{ comment.id }}">
-                  <button class="dropdown-item" data-toggle="modal" data-target="#modal_edit_comment_{{ post.id }}">{% trans "Edit" %}</button>
+                  <button class="dropdown-item" data-toggle="modal" data-target="#modal_edit_comment_{{ comment.id }}">{% trans "Edit" %}</button>
                   <button class="dropdown-item" data-toggle="modal" data-target="#modal_delete_comment_{{ comment.id }}">{% trans "Delete" %}</button>
                 </div>
             </div>
@@ -49,11 +51,11 @@
             </div>
         </div>
         
-        <div class="modal fade edit-modal" id="modal_edit_comment_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_comment_{{ post.id }}_label" aria-hidden="true">
+        <div class="modal fade edit-modal" id="modal_edit_comment_{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_edit_comment_{{ comment.id }}_label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="modal_edit_comment_{{ post.id }}_label">{% trans "What did you really want to say?" %}</h5>
+                    <h5 class="modal-title" id="modal_edit_comment_{{ comment.id }}_label">{% trans "What did you really want to say?" %}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
