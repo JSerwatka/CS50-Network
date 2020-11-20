@@ -32,6 +32,7 @@
 }
 
 .show-more {
+    padding: 10px 0px;
     justify-self: center;
     align-self: center;
     font-family: var(--secondary-text-family);

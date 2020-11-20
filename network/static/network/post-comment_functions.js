@@ -60,7 +60,7 @@ function updateLikeCounter(node) {
         node.querySelector("span.like-counter").textContent = `+${additionalLikes}`;
     }
     else {
-        node.querySelector("span.like-counter").textContent = "0"
+        node.querySelector("span.like-counter").textContent = ""
     }
 }
 
