@@ -125,7 +125,13 @@ function likePanelAnimationControl(node) {
 // Show show-more button if post's content overflowing
 function showMoreButtonControl(node) {
     let content = node.querySelector(".content")
-    let showMore = content.nextElementSibling
+    let showMore;
+    if (content.classList.contains("post-content")){
+        showMore = content.nextElementSibling;
+    }
+    else {
+        showMore = content.parentElement.nextElementSibling;
+    }
 
     let isOverflowing = (content.clientWidth < content.scrollWidth)
                         || (content.clientHeight < content.scrollHeight); 
