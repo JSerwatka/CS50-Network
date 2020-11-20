@@ -4,20 +4,32 @@
 <div class="comment" id='comment_{{ comment.id }}'>
     <div class="comment-user">
         <img class="comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
-        <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
     </div>
     <div class="content comment-content short">
+        <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
         {{ comment.content}}
     </div>
     <div class="show-more hidden">{% trans "Show more" %}</div>
     {% if user.id == comment.user.id %}
         <div class="delete-edit-panel">
-            <button type="button" class="edit-button btn btn-light" data-toggle="modal" data-target="#modal_edit_comment_{{ post.id }}">{% trans "Edit" %}</button>
+            <div class="dropdown">
+                <a class="btn" href="#" role="button" id="dropdownMenuLink_{{ comment.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                </svg>
+                </a>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{ comment.id }}">
+                  <button class="dropdown-item" data-toggle="modal" data-target="#modal_edit_comment_{{ post.id }}">{% trans "Edit" %}</button>
+                  <button class="dropdown-item" data-toggle="modal" data-target="#modal_delete_comment_{{ comment.id }}">{% trans "Delete" %}</button>
+                </div>
+            </div>
+            <!-- <button type="button" class="edit-button btn btn-light" data-toggle="modal" data-target="#modal_edit_comment_{{ post.id }}">{% trans "Edit" %}</button> -->
     
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_comment_{{ comment.id }}">
+            <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_comment_{{ comment.id }}">
                 {% trans "Delete" %}
-            </button>
+            </button> -->
         </div>
         
         <!-- Modal -->
@@ -61,7 +73,7 @@
         </div>
     {% endif %}
     <div class="comment-date">
-        {{comment.date|timesince}} {% trans "ago" %}
+        {{comment.date|timesince|upto:',' }} {% trans "ago" %}
     </div>
     <div class="like-data">
         <ul class="emoji-list">
