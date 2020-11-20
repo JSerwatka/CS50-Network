@@ -5,7 +5,7 @@
 <div class="post-comment-element">
     <div class="post" id='post_{{ post.id }}'>
         <div class="post-user">
-            <img class="post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
+            <img class="round-picture post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
             <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
         </div>
         <div class="delete-edit-panel">
@@ -109,7 +109,7 @@
     <div class="comment-section">
         <div class="comment-form-wrapper">
             <a href="{% url 'network:user-profile' user_id=user.id %}">
-                <img class="comment-profile-picture" src="{{ user.profile.image.url }}" title={{ user }} alt="profile picture">
+                <img class="round-picture comment-profile-picture" src="{{ user.profile.image.url }}" title={{ user }} alt="profile picture">
             </a>
             <form action="{% url 'network:post-comment' action='comment' %}" method="post">
                 {% csrf_token %}
@@ -126,8 +126,6 @@
         </div>
         {% for comment in post.comments.all %}
             {% include "network/comments.html"%}
-        {% empty %}
-            {% trans "No posts yet" %}
         {% endfor %}
         
     </div>

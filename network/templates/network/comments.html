@@ -3,13 +3,13 @@
 
 <div class="comment" id='comment_{{ comment.id }}'>
     <div class="comment-user-image">
-        <img class="comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
+        <img class="round-picture comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
     </div>
-    <div class="comment-user-link">
+    <div class="comment-main">
         <a href="{% url 'network:user-profile' user_id=comment.user.id %}">{{ comment.user }}</a>
-    </div>
-    <div class="content comment-content short">
-        {{ comment.content}}
+        <div class="content comment-content short">
+            {{ comment.content}}
+        </div>
     </div>
     <div class="show-more hidden">{% trans "Show more" %}</div>
     {% if user.id == comment.user.id %}
