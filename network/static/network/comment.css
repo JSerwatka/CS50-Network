@@ -33,6 +33,7 @@
 
 .comment-form-wrapper a {
     justify-self: center;
+    align-self: center;
 }
 
 .comment-form-content {
@@ -67,15 +68,14 @@
     border: 1px solid red;
 }
 
-.comment-user-link {
-    grid-column: 2/12;
-    grid-row: 1/2;
+.delete-edit-panel {
+    grid-column: 12/13;
     border: 1px solid red;
 }
 
-.comment-content {
+.comment-main {
     grid-column: 2/12;
-    grid-row: 2/3;
+    grid-row: 1/3;
     border: 1px solid red;
 }
 
@@ -103,6 +103,35 @@
     border: 1px solid red;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Comment comment-user-image styles ------ */
+.comment-user-image {
+    justify-self: center;
+}
+
+.comment-profile-picture {
+    height: 30px;
+    width: 30px;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Comment comment-main styles ------ */
+.comment-main {
+    padding: 10px;
+    border-radius: 18px;
+    background-color: rgb(240, 242, 245);
+    font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+}
+
+.comment-main a {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: black;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
 
  /* ------ Comment delete-edit-panel styles ------ */
 .delete-edit-panel {

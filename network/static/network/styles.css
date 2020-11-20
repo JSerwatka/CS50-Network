@@ -13,6 +13,22 @@
     background-color: rgba(128, 128, 128, 0.336);
 }
 
+.round-picture {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.content {
+    max-height: none;
+    line-height: 1.5em;
+    overflow-wrap: break-word;
+    overflow: hidden;
+}
+
+.content.short {
+    max-height: 120px;
+}
+
 
 /* ------ Language buttons styles ------ */
 .lang-button {
@@ -97,11 +113,9 @@
 
 
 /* ------ Post post-user styles ------ */
-.post-profile-picture, .comment-profile-picture {
-    border-radius: 50%;
+.post-profile-picture {
     height: 40px;
     width: 40px;
-    object-fit: cover;
 }
 
 .post-profile-picture:hover, .comment-profile-picture:hover {
@@ -140,15 +154,7 @@
 
 /* ------ Post post-content styles ------ */
 .post-content {
-    max-height: none;
-    line-height: 1.5em;
-    overflow-wrap: break-word;
-    overflow: hidden;
     background-color: white;
-}
-
-.post-content.short {
-    max-height: 120px;
 }
 
 .show-more {
