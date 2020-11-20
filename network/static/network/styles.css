@@ -1,11 +1,12 @@
 :root {
     --secondary-text: #545557;
+    --secondary-text-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .hidden {
     display: none;
 }
-
+/* ------ post, comment styles ------ */
 .post-comment-element {
     max-width: 70%;
     margin: 30px auto;
@@ -28,6 +29,18 @@
 .content.short {
     max-height: 120px;
 }
+
+.show-more {
+    justify-self: center;
+    align-self: center;
+    font-family: var(--secondary-text-family);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: underline;
+    color: black;
+    cursor: pointer;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
 /* ------ Language buttons styles ------ */
@@ -145,9 +158,9 @@
 
 /* ------ Post post-date styles ------ */
 .post-date {
-    font-family: Helvetica, sans-serif;
-    font-size: 0.8em;
     align-self: center;
+    font-family: var(--secondary-text-family);
+    font-size: 0.8em;
     color: var(--secondary-text)
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
@@ -157,13 +170,6 @@
     background-color: white;
 }
 
-.show-more {
-    justify-self: center;
-    align-self: center;
-    text-decoration: underline;
-    color: blue;
-    cursor: pointer;
-}
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Post like-data styles ------ */
@@ -216,37 +222,34 @@
 .like-comment-control button {
     background: transparent;
     border: none;
-}
-
-.like-comment-control button {
     border-radius: 20px;
 }
 
-.like-comment-control button:hover {
+.post .like-comment-control button:hover {
     background: rgba(99, 98, 98, 0.233);
 }
 
+/* Like panel */
 .post .like-button {
     width: 100%;
     height: 100%;
 }
 
-.like-button.liked {
+.post .like-button.liked {
     background: rgba(60, 60, 219, 0.308);
 }
 
-.like-button.liked:hover {
+.post .like-button.liked:hover {
     background: rgba(60, 60, 219, 0.208);
+}
+
+.like-comment-control ul {
+    margin: 0px;
+    padding: 0px;
 }
 
 .like-button > i {
     margin-right: 15px;
-}
-
-/* Like panel */
-.like-comment-control ul {
-    margin: 0px;
-    padding: 0px;
 }
 
 .emoji-choice {
@@ -259,6 +262,7 @@
     animation: like-panel-in 0.5s ease-out forwards;
     
 }
+
 
 /* Emoji */
 .emoji-choice i.em:hover {

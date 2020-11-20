@@ -120,8 +120,7 @@
     padding: 10px;
     border-radius: 18px;
     background-color: rgb(240, 242, 245);
-    font-family: "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
-    font-weight: 400;
+    font-family: var(---secondary-text-family);
 }
 
 .comment-main a {
@@ -130,15 +129,6 @@
     font-weight: 600;
     color: black;
 }
-/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
-
-
- /* ------ Comment delete-edit-panel styles ------ */
-.delete-edit-panel {
-    justify-self: right;
-}
-
- /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 .comment-content {
     max-height: none;
@@ -147,13 +137,42 @@
     overflow: hidden;
 }
 
-.comment-content a{
-    display: block;
-}
-
 .comment-content.short {
     max-height: 6em;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Comment delete-edit-panel styles ------ */
+.delete-edit-panel {
+    justify-self: right;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Comment post-date styles ------ */
+
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Comment like-data styles ------ */
+
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Comment like-comment-control styles ------ */
+.comment .like-panel {
+    display: inline;
+}
+
+.comment .like-button {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(---secondary-text);
+}
+
+.comment .like-panel:hover .like-button {
+    text-decoration: underline;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
 
 /* .comment-section .form-control {
     width: 40%;

@@ -4,8 +4,8 @@ function likeCommentControl(commentNode) {
     let element = commentNode.querySelector(".like-panel")
     // Handle like comment
     element.addEventListener('click', (event) => {
-        let emojiType;
         let csrftoken = getCookie('csrftoken');
+        let emojiType;
 
         // Look for event's emoji type
         // Check if like button is a target
@@ -16,7 +16,7 @@ function likeCommentControl(commentNode) {
         else if (typeof event.target.dataset.name === "string"){
             emojiType = event.target.dataset.name;
         }  
-        // Something is a target
+        // Something else is a target
         else {
             return false;
         }
