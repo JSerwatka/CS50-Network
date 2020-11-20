@@ -14,19 +14,18 @@
 /* ------ Comment styles ------ */
 .comment-section {
     border: 2px solid rgb(51, 146, 190);
-    background-color: rgba(255, 0, 0, 0.219);
+    background-color: white;
     max-width: 60%;
-    margin: 40px auto;
+    margin: 0px auto 20px auto;
 }
 
  .comment {
-    border: 1px solid rgb(96, 214, 66);
-    margin-top: 10px;
     padding: 25px 10px;
 }
 
  /* ------ Comment form styles ------ */
 .comment-form-wrapper {
+    margin: 30px 40px;
     display: grid;
     grid-template-columns: 50px auto;
 }
@@ -41,7 +40,7 @@
 }
 
 .comment-form-content textarea {
-    min-width: 40px;
+    min-height: 30px;
     border-radius: 25px;
 }
 
@@ -56,51 +55,53 @@
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+ /* ------ Comment separator styles ------ */
+.comment-separation {
+    margin: 0px auto;
+    width: 80%;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
 /* ------ Comment grid structure styles ------ */
 .comment {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(2, auto) minmax(25px, auto) auto;
 }
 
 .comment-user-image {
     grid-column: 1/2;
     grid-row: 1/2;
-    border: 1px solid red;
 }
 
 .delete-edit-panel {
     grid-column: 12/13;
-    border: 1px solid red;
+    grid-row: 1/3;
 }
 
 .comment-main {
     grid-column: 2/12;
     grid-row: 1/3;
-    border: 1px solid red;
 }
 
 .comment .show-more {
     grid-column: 2/12;
     grid-row: 3/4;
-    border: 1px solid red;
 }
 
 .comment .like-comment-control {
     grid-column: 2/6;
     grid-row: 4/5;
-    border: 1px solid red;
 }
 
 .comment .like-data {
     grid-column: 6/9;
     grid-row: 4/5;
-    border: 1px solid red;
 }
 
 .comment-date {
     grid-column: 9/12;
     grid-row: 4/5;
-    border: 1px solid red;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
@@ -144,17 +145,29 @@
 
  /* ------ Comment delete-edit-panel styles ------ */
 .delete-edit-panel {
-    justify-self: right;
+    justify-self: center;
+    align-self: center;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
  /* ------ Comment post-date styles ------ */
-
+ .comment-date {
+    font-size: 0.8rem;
+    font-weight: 300;
+    justify-self: end;
+ }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
 /* ------ Comment like-data styles ------ */
+.comment .like-data .em {
+    height: 1.3rem;
+    width: 1.3rem;
+}
 
+.comment .like-counter {
+    font-size: 0.9em;
+}
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Comment like-comment-control styles ------ */
@@ -170,6 +183,15 @@
 
 .comment .like-panel:hover .like-button {
     text-decoration: underline;
+}
+
+.comment .like-button.liked {
+    color: rgba(236, 45, 45, 0.774);
+}
+
+.comment .like-button .em {
+    height: 1.3rem;
+    width: 1.3rem;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 

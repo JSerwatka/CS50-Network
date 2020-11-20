@@ -107,6 +107,10 @@
     </div>
     {% if user.is_authenticated %}
     <div class="comment-section">
+        {% for comment in post.comments.all %}
+            {% include "network/comments.html"%}
+            <hr class="comment-separation">
+        {% endfor %}
         <div class="comment-form-wrapper">
             <a href="{% url 'network:user-profile' user_id=user.id %}">
                 <img class="round-picture comment-profile-picture" src="{{ user.profile.image.url }}" title={{ user }} alt="profile picture">
@@ -124,10 +128,6 @@
                 </div>
             </form>
         </div>
-        {% for comment in post.comments.all %}
-            {% include "network/comments.html"%}
-        {% endfor %}
-        
     </div>
     {% endif %}
 </div>

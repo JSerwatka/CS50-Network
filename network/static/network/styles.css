@@ -1,5 +1,6 @@
 :root {
-    --secondary-text: #545557;
+    /* --secondary-text: #545557; */
+    --secondary-text: rgb(101, 103, 107);
     --secondary-text-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
@@ -36,10 +37,14 @@
     font-family: var(--secondary-text-family);
     font-size: 0.82rem;
     font-weight: 600;
-    text-decoration: underline;
     color: black;
     cursor: pointer;
 }
+
+.show-more:hover {
+    text-decoration: underline;
+}
+
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
