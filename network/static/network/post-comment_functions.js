@@ -139,7 +139,7 @@ function showMoreButtonControl(node) {
 
     let isOverflowing = (content.clientWidth < content.scrollWidth)
                         || (content.clientHeight < content.scrollHeight); 
-                    
+
     // Text overflowing -> show show-more button and handle click event
     if (isOverflowing) {
         showMore.classList.remove("hidden")
@@ -156,15 +156,18 @@ function showMoreButtonControl(node) {
     }
 }
 
-// Control showing and hidding comments
-// function showHideComments(postNode) {
-//     let commentButton = postNode.querySelector(".comment-button");
-//     let commentSection = postNode.nextElementSibling
+// Force to show "show more" button if overflowing in commnets
+// Bootstap's collapse prevents content property from running
+function showHideComments(postNode) {
+    let commentButton = postNode.querySelector(".comment-button");
+    let commentSection = postNode.nextElementSibling
     
-//     commentButton.addEventListener("click", () => {
-//         commentSection.classList.toggle("hidden")
-//     })
-// }
+    $(commentSection).on('shown.bs.collapse', () => {
+        commentSection.querySelectorAll(".comment").forEach(commentNode => {
+            showMoreButtonControl(commentNode);
+        })
+    })
+}
 
 function emojiNameToHtml(emojiType) {
     let emojiHtml;
