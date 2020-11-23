@@ -198,6 +198,11 @@
     color: rgba(236, 45, 45, 0.774);
 }
 
+
+.comment .like-button > i {
+    margin-right: 10px;
+}
+
 .comment .like-button .em {
     height: 1.3rem;
     width: 1.3rem;
