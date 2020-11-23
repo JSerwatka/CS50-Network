@@ -16,9 +16,7 @@
 
 /* ------ Comment styles ------ */
 .comment-section {
-    margin: 0px auto 20px auto;
-    background-color: white;
-    max-width: 60%;
+    margin: 0px auto;
 }
 
  .comment {
