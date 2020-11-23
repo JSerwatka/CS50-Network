@@ -16,10 +16,9 @@
 
 /* ------ Comment styles ------ */
 .comment-section {
-    border: 2px solid rgb(51, 146, 190);
+    margin: 0px auto 20px auto;
     background-color: white;
     max-width: 60%;
-    margin: 0px auto 20px auto;
 }
 
  .comment {
@@ -207,10 +206,4 @@
     height: 1.3rem;
     width: 1.3rem;
 }
- /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
-
-
-/* .comment-section .form-control {
-    width: 40%;
-} */
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

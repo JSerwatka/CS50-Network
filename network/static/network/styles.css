@@ -122,10 +122,9 @@
 
  /* ------ Post block styles ------ */
 .post {
-    border: 1px solid black;
-    margin: 20px auto;
+    margin: 0px auto;
     max-width: 60%;
-    padding: 25px 10px;
+    padding: 25px 20px;
     background-color: white;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
@@ -166,17 +165,18 @@
 
 /* ------ Post post-date styles ------ */
 .post-date {
-    align-self: center;
+    align-self: top;
     font-family: var(--secondary-text-family);
     font-size: 0.8em;
     font-weight: 350;
+    padding-top: 8px;
     color: var(--secondary-text)
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Post post-content styles ------ */
 .post-content {
-    padding: 5px 0px 20px 0px;
+    padding-bottom: 30px;
     font-size: 1.4em;
 }
 
@@ -278,7 +278,6 @@
     
 }
 
-
 /* Emoji */
 .emoji-choice i.em:hover {
     transform: scale(1.4);
@@ -296,7 +295,7 @@
      100% {
         background: rgba(128, 128, 128, 0.671);
         opacity: 1;
-        top: -32px;
+        top: -43px;
      }
  }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
