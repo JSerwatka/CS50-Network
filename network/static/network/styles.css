@@ -279,6 +279,10 @@ div.body {
     white-space: nowrap;
 }
 
+.emoji-choice i {
+    margin-left: 3px;
+}
+
 .like-panel-in {
     animation: like-panel-in 0.5s ease-out forwards;
     
