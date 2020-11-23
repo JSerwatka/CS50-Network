@@ -270,6 +270,7 @@
     padding: 8px 10px;
     border-radius: 20px;
     position: absolute;
+    white-space: nowrap;
 }
 
 .like-panel-in {

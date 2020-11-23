@@ -94,17 +94,17 @@
 }
 
 .comment .like-comment-control {
-    grid-column: 2/6;
+    grid-column: 2/5;
     grid-row: 4/5;
 }
 
 .comment .like-data {
-    grid-column: 6/9;
+    grid-column: 5/8;
     grid-row: 4/5;
 }
 
 .comment-date {
-    grid-column: 9/12;
+    grid-column: 8/12;
     grid-row: 4/5;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
@@ -164,6 +164,11 @@
 
 
 /* ------ Comment like-data styles ------ */
+.comment .like-data {
+    justify-self: center;
+    white-space: nowrap;
+}
+
 .comment .like-data .em {
     height: 1.3rem;
     width: 1.3rem;
