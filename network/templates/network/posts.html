@@ -8,14 +8,22 @@
             <img class="round-picture post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
             <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
         </div>
-        <div class="delete-edit-panel">
         {% if user.id == post.user.id %}
-                <button type="button" class="edit-button btn btn-light" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}">{% trans "Edit" %}</button>
+            <div class="delete-edit-panel">
+                <div class="dropdown">
+                    <a class="btn icon-button" href="#" role="button" id="dropdownMenuLink_{{ post.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </a>
+                
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{ post.id }}">
+                    <button class="dropdown-item" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}">{% trans "Edit" %}</button>
+                    <button class="dropdown-item" data-toggle="modal" data-target="#modal_delete_post_{{ post.id }}">{% trans "Delete" %}</button>
+                    </div>
+                </div>
+            </div>
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_post_{{ post.id }}">
-                    {% trans "Delete" %}
-                </button>
             <!-- Modals -->
             <div class="modal fade delete-modal" id="modal_delete_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_delete_post_{{ post.id }}_label" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -56,7 +64,6 @@
                 </div>
             </div>
         {% endif %}
-        </div>
         <div class="post-date">
             {% trans "Posted: " %} {{post.date|timesince}} {% trans "ago" %}
         </div>

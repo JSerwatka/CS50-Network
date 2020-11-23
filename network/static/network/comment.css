@@ -145,7 +145,7 @@
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
  /* ------ Comment delete-edit-panel styles ------ */
-.delete-edit-panel {
+.comment .delete-edit-panel {
     justify-self: center;
     align-self: center;
 }

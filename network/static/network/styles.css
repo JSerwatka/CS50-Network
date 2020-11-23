@@ -7,6 +7,7 @@
 .hidden {
     display: none;
 }
+
 /* ------ post, comment styles ------ */
 .post-comment-element {
     max-width: 70%;
@@ -45,7 +46,6 @@
 .show-more:hover {
     text-decoration: underline;
 }
-
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
@@ -68,12 +68,12 @@
 }
 
 .post-user {
-    grid-column: 1/7;
+    grid-column: 1/12;
     grid-row: 1/2;
 }
 
 .post .delete-edit-panel {
-    grid-column: 7/13;
+    grid-column: 12/13;
     grid-row: 1/2; 
 }
 
@@ -126,7 +126,7 @@
     margin: 20px auto;
     max-width: 60%;
     padding: 25px 10px;
-    background-color: rgb(78, 207, 207)
+    background-color: white;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
@@ -149,7 +149,8 @@
 
 /* ------ Post delete-edit-panel styles ------ */
 .post .delete-edit-panel {
-    justify-self: end;
+    justify-self: center;
+    align-self: center;
 }
 
 .post .delete-edit-panel button{ 
@@ -167,13 +168,15 @@
     align-self: center;
     font-family: var(--secondary-text-family);
     font-size: 0.8em;
+    font-weight: 350;
     color: var(--secondary-text)
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Post post-content styles ------ */
 .post-content {
-    background-color: white;
+    padding: 5px 0px 20px 0px;
+    font-size: 1.4em;
 }
 
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
