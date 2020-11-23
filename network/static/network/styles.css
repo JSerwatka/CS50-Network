@@ -214,10 +214,10 @@ div.body {
     display: inline;
     position: absolute;
     top: -30px;
-    left: 6px;
-    padding: 1px 3px;
-    background: rgba(231, 161, 56, 0.5);
-    border-radius: 10px;
+    left: 2px;
+    padding: 0px 8px 0px 7px;
+    background: rgba(190, 214, 233, 0.5);
+    border-radius: 20px;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
