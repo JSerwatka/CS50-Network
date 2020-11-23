@@ -1,5 +1,3 @@
-/* TODO: like panel animation after 0.3s */
-
 :root {
     /* --secondary-text: #545557; */
     --secondary-text: rgb(101, 103, 107);
@@ -11,14 +9,23 @@
     display: none;
 }
 
-div.body {
+body {
     background-color: #F0F2F5;
 }
 
+/* ------ Post form styles ------ */
+    .post-form-wrapper {
+        margin: 40px auto 60px auto;
+        max-width: 70%;
+        background-color: #F0F2F5;
+    }
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
 /* ------ post, comment styles ------ */
 .post-comment-element {
-    max-width: 70%;
     margin: 30px auto;
+    max-width: 70%;
     padding: 5px;
     border-radius: 10px;
     border: 1px solid #cac7c785;
