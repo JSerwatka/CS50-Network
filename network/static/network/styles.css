@@ -2,6 +2,7 @@
     /* --secondary-text: #545557; */
     --secondary-text: rgb(101, 103, 107);
     --secondary-text-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    --hover-color: rgba(128, 128, 128, 0.15);
 }
 
 .hidden {
@@ -106,7 +107,6 @@
     grid-column: 1/13;
     grid-row: 6/7;
     display: grid;
-    grid-template-rows: 80%;
 }
 
 .post .like-panel {
@@ -183,8 +183,8 @@
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Post like-data styles ------ */
-.like-data {
-    align-self: center;
+.post .like-data {
+    align-self: top;
 }
 
 .emoji-list {
@@ -193,10 +193,11 @@
 
 .emoji-list > i {
     position: relative;
+    margin-right: 3px;
 }
 
 .like-counter {
-    margin-left: 5px;
+    margin-left: 2px;
     font-size: 0.9em;
     font-weight: 380;
     color: var(--secondary-text);
@@ -215,7 +216,7 @@
 
  /* ------ Post comment-data styles ------ */
  .comment-data {
-     align-self: center;
+     align-self: top;
      justify-self: end;
      font-size: 0.9em;
      font-weight: 380;
@@ -225,6 +226,11 @@
 
 /* TODO: different widths of comment/like buttons fix*/
 /* ------ Post like-comment-control styles ------ */
+.post .like-comment-control {
+    border-top: 1px solid  rgba(128, 128, 128, 0.438);
+    border-bottom: 1px solid  rgba(128, 128, 128, 0.438);
+}
+
 .like-comment-control {
     position: relative;
 }
@@ -232,11 +238,11 @@
 .like-comment-control button {
     background: transparent;
     border: none;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 
 .post .like-comment-control button:hover {
-    background: rgba(99, 98, 98, 0.233);
+    background: var(--hover-color);
 }
 
 /* Like panel */
@@ -245,12 +251,10 @@
     height: 100%;
 }
 
+/* TODO: change to one style for post and comment */
 .post .like-button.liked {
-    background: rgba(60, 60, 219, 0.308);
-}
-
-.post .like-button.liked:hover {
-    background: rgba(60, 60, 219, 0.208);
+    color: rgba(236, 45, 45, 0.774);
+    font-weight: 500;
 }
 
 .like-comment-control ul {

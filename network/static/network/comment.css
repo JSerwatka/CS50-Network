@@ -10,7 +10,7 @@
 }
 
 .icon-button:hover {
-    background: rgba(128, 128, 128, 0.15);
+    background: var(--hover-color);
 }
 
 
