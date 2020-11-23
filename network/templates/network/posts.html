@@ -113,7 +113,7 @@
         {% endif %}
     </div>
     {% if user.is_authenticated %}
-    <div class="comment-section">
+    <div class="comment-section hidden">
         {% for comment in post.comments.all %}
             {% include "network/comments.html"%}
             <hr class="comment-separation">

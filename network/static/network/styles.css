@@ -244,7 +244,7 @@ div.body {
 .like-comment-control button {
     background: transparent;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 .post .like-comment-control button:hover {
