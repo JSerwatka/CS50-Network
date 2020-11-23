@@ -51,9 +51,11 @@
 }
 
 .comment-form-content button[type="submit"] {
-    position:absolute;
-    bottom:4px;
-    right:10px;
+    position: absolute;
+    padding: 3px 7px 6px 7px;
+    border-radius: 20px;
+    bottom: 2px;
+    right: 10px;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
@@ -195,7 +197,6 @@
 .comment .like-button.liked {
     color: rgba(236, 45, 45, 0.774);
 }
-
 
 .comment .like-button > i {
     margin-right: 10px;
