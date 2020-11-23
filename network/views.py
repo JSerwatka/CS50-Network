@@ -286,6 +286,7 @@ def following(request):
 
     return render(request, "network/index.html", {
         "form": None,
+        "comment_form": CreateCommentForm(auto_id=False),
         "page_obj": page_obj,
         "add_post_available": False
     })

@@ -92,7 +92,7 @@
             <span class="like-counter"></span>
         </div>
         <div class="comment-data">
-            <span class="comment-count">Komentarzy: {{post.comments.all.count}}</span>
+            <span class="comment-count">{% trans "Comments:" %} {{post.comments.all.count}}</span>
         </div>
         {% if user.is_authenticated %}
         <div class="like-comment-control">
