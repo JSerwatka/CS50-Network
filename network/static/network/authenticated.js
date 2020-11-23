@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         likesAmountIndicatorControl(postNode);
         likePanelAnimationControl(postNode);
         showMoreButtonControl(postNode);
-        showHideComments(postNode);
+        // showHideComments(postNode);
     });
 
     // Init comments

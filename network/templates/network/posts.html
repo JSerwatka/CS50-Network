@@ -108,12 +108,12 @@
                     </ul>
                 </div>
             </div>
-            <button class="comment-button">{% trans "Comments" %}</button>
+            <button class="comment-button" data-toggle="collapse" data-target="#post_{{ post.id }} ~ .comment-section" aria-expanded="false" aria-controls="comment-section">{% trans "Comments" %}</button>
         </div>
         {% endif %}
     </div>
     {% if user.is_authenticated %}
-    <div class="comment-section hidden">
+    <div class="comment-section collapse multi-collapse">
         {% for comment in post.comments.all %}
             {% include "network/comments.html"%}
             <hr class="comment-separation">
