@@ -27,7 +27,7 @@
 
  /* ------ Comment form styles ------ */
 .comment-form-wrapper {
-    margin: 30px 40px;
+    padding: 30px 40px;
     display: grid;
     grid-template-columns: 50px auto;
 }
