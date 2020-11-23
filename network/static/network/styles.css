@@ -153,9 +153,9 @@
     align-self: center;
 }
 
-.post .delete-edit-panel button{ 
-    height: 90%;
-    margin: 0px 5px;
+.post .icon-button {
+    padding: 5px 6px;
+    border-radius: 20px;
 }
 
 .modal textarea.new-content {

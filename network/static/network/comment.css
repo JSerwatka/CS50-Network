@@ -1,9 +1,12 @@
 .icon-button {
     background: transparent;
     border: transparent;
-    border-radius: 20px;
-    padding: 1px 8px 6px 8px;
     transition: background 0.2s;
+}
+
+.comment .icon-button {
+    padding: 1px 6px 4px 6px;
+    border-radius: 20px;
 }
 
 .icon-button:hover {
