@@ -104,18 +104,22 @@ function likesAmountIndicatorControl(node) {
 function likePanelAnimationControl(node) {
     let likePanel = node.querySelector(".like-panel")
     const emojiPanel = likePanel.querySelector(".emoji-choice");
-    let timeoutVar;
+    let timeoutOut;
+    let timeoutIn;
 
     // On hover show like-panel
     likePanel.addEventListener("mouseover", () => {
-        clearTimeout(timeoutVar)
-        emojiPanel.classList.remove("hidden");
-        emojiPanel.classList.add("like-panel-in");
+        clearTimeout(timeoutOut)
+        timeoutIn = setTimeout(() => {
+            emojiPanel.classList.remove("hidden");
+            emojiPanel.classList.add("like-panel-in");
+        }, 400)
     })
 
     // On hover out hide like-panel after 1s
     likePanel.addEventListener("mouseout", () => {
-        timeoutVar = setTimeout(() => {
+        clearTimeout(timeoutIn)
+        timeoutOut = setTimeout(() => {
             emojiPanel.classList.remove("like-panel-in");
             emojiPanel.classList.add("hidden");
         }, 600)
