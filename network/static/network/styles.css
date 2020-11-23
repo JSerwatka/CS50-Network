@@ -1,3 +1,5 @@
+/* TODO: like panel animation after 0.3s */
+
 :root {
     /* --secondary-text: #545557; */
     --secondary-text: rgb(101, 103, 107);
@@ -229,7 +231,6 @@ div.body {
  }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* TODO: different widths of comment/like buttons fix*/
 /* ------ Post like-comment-control styles ------ */
 .post .like-comment-control {
     border-top: 1px solid  rgba(128, 128, 128, 0.438);

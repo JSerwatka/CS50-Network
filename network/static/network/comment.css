@@ -25,7 +25,8 @@
 
  /* ------ Comment form styles ------ */
 .comment-form-wrapper {
-    padding: 30px 40px;
+    margin: 30px auto;
+    max-width: 90%;
     display: grid;
     grid-template-columns: 50px auto;
 }
@@ -66,7 +67,7 @@
 /* ------ Comment grid structure styles ------ */
 .comment {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: minmax(50px, 0.7fr) repeat(11, 1fr);
     grid-template-rows: repeat(2, auto) minmax(25px, auto) auto;
 }
 
