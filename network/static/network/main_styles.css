@@ -1,23 +1,23 @@
 :root {
-    /* --secondary-text: #545557; */
     --secondary-text: rgb(101, 103, 107);
     --secondary-text-family: "Segoe UI", Helvetica, Arial, sans-serif;
     --hover-color: rgba(128, 128, 128, 0.15);
 }
 
+/* ------ Main styles ------ */
 html {
     position: relative;
     min-height: 100%;
 }
 
-/* ------ Body styles ------ */
 body {
     background-color: #F0F2F5;
     margin: 0 0 180px;
 }
- /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 
+/* ------ Additional classes ------ */
 .hidden {
     display: none;
 }
@@ -26,6 +26,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
 }
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ------ Language buttons styles ------ */
 .lang-button {

@@ -1,0 +1,77 @@
+.info-card {
+    margin: 0px auto;
+    padding: 15px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 12px -2px rgba(173,173,173,0.8);
+    max-width: 430px;
+}
+
+.profile-icon {
+    fill: rgb(99, 99, 99);
+    width: 1.8em;
+    height: 1.8em;
+}
+
+
+.user-profile {
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 21%, rgba(215,215,215,1) 47%, rgba(180,180,180,1) 77%, rgba(158,158,158,1) 100%);
+}
+
+/* PROFILE PICTURE */
+.profile-picture {
+    position: relative;
+    margin: 0px auto 35px auto;
+    border-radius: 10px;
+    background: #acb6e5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #acb6e5, #86fde8); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #acb6e5, #86fde8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    max-width: 100%;
+    min-height: 300px;
+}
+
+.profile-picture img {
+    position: absolute;
+    border: 3px solid #f6f6f6;
+    left: 50%;
+    bottom: -30px;
+    margin-left:-103px;
+    height: 200px;
+    width: 200px;
+}
+
+/* USERNAME */
+.profile-username {
+    text-align: center;
+    font-size: 1.7em;
+    font-weight: 700;
+}
+
+/* FOLLOWING */
+.profile-following {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    background: rgb(255 216 107 / 80%);
+}
+.profile-following .follow-text {
+    margin-left: 5px;
+}
+
+/* BIO */
+.bio h4 {
+    margin-bottom: 20px;
+    text-align: center;
+    color:  rgb(58, 57, 57);
+}
+
+.bio div {
+    margin: 10px 0px;
+}
+
+.bio span {
+    margin-left: 10px;
+    color: rgb(26, 25, 25);
+}
