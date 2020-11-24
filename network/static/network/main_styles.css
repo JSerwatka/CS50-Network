@@ -28,3 +28,16 @@ body {
     opacity: 0.35;
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Paginator styles ------ */
+.page-nav .pagination {
+    padding-top: 15px;
+    margin-bottom: 0px;
+}
+
+.page-nav .current-page {
+    padding: 10px 0px;
+    text-align: center;
+    color: var(--secondary-text)
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
