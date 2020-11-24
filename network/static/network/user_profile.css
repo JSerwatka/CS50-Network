@@ -1,5 +1,4 @@
 .info-card {
-    margin: 0px auto;
     padding: 15px;
     border-radius: 10px;
     background: white;
@@ -13,21 +12,23 @@
     height: 1.8em;
 }
 
-
 .user-profile {
     background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 21%, rgba(215,215,215,1) 47%, rgba(180,180,180,1) 77%, rgba(158,158,158,1) 100%);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 21%, rgba(215,215,215,1) 47%, rgba(180, 180, 180, 0.836) 77%, rgba(158, 158, 158, 0.842) 100%);
+    padding-bottom: 25px;
 }
 
 /* PROFILE PICTURE */
+/* TODO: give proper width of profile picture bg */
 .profile-picture {
     position: relative;
     margin: 0px auto 35px auto;
-    border-radius: 10px;
+    border-radius: 0px 0px 10px 10px;
     background: #acb6e5; /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #acb6e5, #86fde8); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #acb6e5, #86fde8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
-    max-width: 100%;
+    /* max-width: 100%; */
+    max-width: 1100px;
     min-height: 300px;
 }
 
@@ -48,9 +49,21 @@
     font-weight: 700;
 }
 
+/* BUTTONS */
+.profile-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.profile-buttons svg {
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: 5px;
+}
+
 /* FOLLOWING */
 .profile-following {
-    margin-bottom: 20px;
+    margin: 30px auto 20px auto;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-evenly;
@@ -60,7 +73,15 @@
     margin-left: 5px;
 }
 
+.profile-following .follow-count {
+    font-weight: 500;
+}
+
 /* BIO */
+.bio {
+    margin: 0px auto;
+}
+
 .bio h4 {
     margin-bottom: 20px;
     text-align: center;
