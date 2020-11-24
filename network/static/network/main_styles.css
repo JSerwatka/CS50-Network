@@ -5,6 +5,19 @@
     --hover-color: rgba(128, 128, 128, 0.15);
 }
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+/* ------ Body styles ------ */
+body {
+    background-color: #F0F2F5;
+    margin: 0 0 180px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
 .hidden {
     display: none;
 }
@@ -12,10 +25,6 @@
 .round-picture {
     border-radius: 50%;
     object-fit: cover;
-}
-
-body {
-    background-color: #F0F2F5;
 }
 
 /* ------ Language buttons styles ------ */
@@ -30,6 +39,13 @@ body {
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
  /* ------ Paginator styles ------ */
+.page-nav {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    bottom: 0px;
+}
+
 .page-nav .pagination {
     padding-top: 15px;
     margin-bottom: 0px;
