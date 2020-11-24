@@ -5,17 +5,25 @@
 <div class="post-comment-element">
     <div class="post" id='post_{{ post.id }}'>
         <div class="post-user">
-            <img class="post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
+            <img class="round-picture post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
             <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
         </div>
-        <div class="delete-edit-panel">
         {% if user.id == post.user.id %}
-                <button type="button" class="edit-button btn btn-light" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}">{% trans "Edit" %}</button>
+            <div class="delete-edit-panel">
+                <div class="dropdown">
+                    <a class="btn icon-button" href="#" role="button" id="dropdownMenuLink_{{ post.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="rgb(101, 103, 107)" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                    </a>
+                
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink_{{ post.id }}">
+                    <button class="dropdown-item" data-toggle="modal" data-target="#modal_edit_post_{{ post.id }}">{% trans "Edit" %}</button>
+                    <button class="dropdown-item" data-toggle="modal" data-target="#modal_delete_post_{{ post.id }}">{% trans "Delete" %}</button>
+                    </div>
+                </div>
+            </div>
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_delete_post_{{ post.id }}">
-                    {% trans "Delete" %}
-                </button>
             <!-- Modals -->
             <div class="modal fade delete-modal" id="modal_delete_post_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_delete_post_{{ post.id }}_label" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -56,7 +64,6 @@
                 </div>
             </div>
         {% endif %}
-        </div>
         <div class="post-date">
             {% trans "Posted: " %} {{post.date|timesince}} {% trans "ago" %}
         </div>
@@ -85,7 +92,7 @@
             <span class="like-counter"></span>
         </div>
         <div class="comment-data">
-            <span class="comment-count">Komentarzy: {{post.comments.all.count}}</span>
+            <span class="comment-count">{% trans "Comments:" %} {{post.comments.all.count}}</span>
         </div>
         {% if user.is_authenticated %}
         <div class="like-comment-control">
@@ -101,27 +108,33 @@
                     </ul>
                 </div>
             </div>
-            <button class="comment-button">{% trans "Comments" %}</button>
+            <button class="comment-button" data-toggle="collapse" data-target="#post_{{ post.id }} ~ .comment-section" aria-expanded="false" aria-controls="comment-section">{% trans "Comments" %}</button>
         </div>
         {% endif %}
     </div>
     {% if user.is_authenticated %}
-    <div class="comment-section hidden">
-        <form action="{% url 'network:post-comment' action='comment' %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ comment_form.content}}
-            </div>
-            <input type="hidden" name="postId" value={{ post.id }}>
-            <input class="btn btn-primary" type="submit" value='{% trans "Comment" %}'>
-        </form>
-
+    <div class="comment-section collapse multi-collapse">
         {% for comment in post.comments.all %}
             {% include "network/comments.html"%}
-        {% empty %}
-            {% trans "No posts yet" %}
+            <hr class="comment-separation">
         {% endfor %}
-        
+        <div class="comment-form-wrapper">
+            <a href="{% url 'network:user-profile' user_id=user.id %}">
+                <img class="round-picture comment-profile-picture" src="{{ user.profile.image.url }}" title={{ user }} alt="profile picture">
+            </a>
+            <form action="{% url 'network:post-comment' action='comment' %}" method="post">
+                {% csrf_token %}
+                <div class="comment-form-content">
+                    {{ comment_form.content}}
+                    <button type="submit" class="icon-button">
+                        <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-chat-fill" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+                        </svg>
+                    </button>
+                    <input type="hidden" name="postId" value={{ post.id }}>
+                </div>
+            </form>
+        </div>
     </div>
     {% endif %}
 </div>

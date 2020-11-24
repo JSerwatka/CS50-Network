@@ -60,7 +60,7 @@ function updateLikeCounter(node) {
         node.querySelector("span.like-counter").textContent = `+${additionalLikes}`;
     }
     else {
-        node.querySelector("span.like-counter").textContent = "0"
+        node.querySelector("span.like-counter").textContent = ""
     }
 }
 
@@ -104,18 +104,22 @@ function likesAmountIndicatorControl(node) {
 function likePanelAnimationControl(node) {
     let likePanel = node.querySelector(".like-panel")
     const emojiPanel = likePanel.querySelector(".emoji-choice");
-    let timeoutVar;
+    let timeoutOut;
+    let timeoutIn;
 
     // On hover show like-panel
     likePanel.addEventListener("mouseover", () => {
-        clearTimeout(timeoutVar)
-        emojiPanel.classList.remove("hidden");
-        emojiPanel.classList.add("like-panel-in");
+        clearTimeout(timeoutOut)
+        timeoutIn = setTimeout(() => {
+            emojiPanel.classList.remove("hidden");
+            emojiPanel.classList.add("like-panel-in");
+        }, 400)
     })
 
     // On hover out hide like-panel after 1s
     likePanel.addEventListener("mouseout", () => {
-        timeoutVar = setTimeout(() => {
+        clearTimeout(timeoutIn)
+        timeoutOut = setTimeout(() => {
             emojiPanel.classList.remove("like-panel-in");
             emojiPanel.classList.add("hidden");
         }, 600)
@@ -125,11 +129,17 @@ function likePanelAnimationControl(node) {
 // Show show-more button if post's content overflowing
 function showMoreButtonControl(node) {
     let content = node.querySelector(".content")
-    let showMore = content.nextElementSibling
+    let showMore;
+    if (content.classList.contains("post-content")){
+        showMore = content.nextElementSibling;
+    }
+    else {
+        showMore = content.parentElement.nextElementSibling;
+    }
 
     let isOverflowing = (content.clientWidth < content.scrollWidth)
                         || (content.clientHeight < content.scrollHeight); 
-                    
+
     // Text overflowing -> show show-more button and handle click event
     if (isOverflowing) {
         showMore.classList.remove("hidden")
@@ -146,13 +156,16 @@ function showMoreButtonControl(node) {
     }
 }
 
-// Control showing and hidding comments
+// Force to show "show more" button if overflowing in commnets
+// Bootstap's collapse prevents content property from running
 function showHideComments(postNode) {
     let commentButton = postNode.querySelector(".comment-button");
     let commentSection = postNode.nextElementSibling
     
-    commentButton.addEventListener("click", () => {
-        commentSection.classList.toggle("hidden")
+    $(commentSection).on('shown.bs.collapse', () => {
+        commentSection.querySelectorAll(".comment").forEach(commentNode => {
+            showMoreButtonControl(commentNode);
+        })
     })
 }
 

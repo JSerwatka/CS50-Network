@@ -1,0 +1,43 @@
+:root {
+    /* --secondary-text: #545557; */
+    --secondary-text: rgb(101, 103, 107);
+    --secondary-text-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    --hover-color: rgba(128, 128, 128, 0.15);
+}
+
+.hidden {
+    display: none;
+}
+
+.round-picture {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+body {
+    background-color: #F0F2F5;
+}
+
+/* ------ Language buttons styles ------ */
+.lang-button {
+    border: none;
+    background: transparent;
+}
+
+.grey-out {
+    opacity: 0.35;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Paginator styles ------ */
+.page-nav .pagination {
+    padding-top: 15px;
+    margin-bottom: 0px;
+}
+
+.page-nav .current-page {
+    padding: 10px 0px;
+    text-align: center;
+    color: var(--secondary-text)
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

@@ -4,14 +4,17 @@
 
 {% block body %}
     {% if user.is_authenticated and add_post_available %}
-    <form action="{% url 'network:post-comment' action='post' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ post_form.content}}
+        <div class="post-form-wrapper">
+            <form action="{% url 'network:post-comment' action='post' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ post_form.content}}
+                </div>
+                <input class="btn btn-primary" type="submit" value='{% trans "Post" %}'>
+            </form>
         </div>
-        <input class="btn btn-primary" type="submit" value='{% trans "Post" %}'>
-    </form>
     {% endif %}
+
     {% for post in page_obj.object_list %}
         {% include "network/posts.html"%}
     {% empty %}
