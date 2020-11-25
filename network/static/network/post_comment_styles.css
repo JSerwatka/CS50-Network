@@ -76,7 +76,7 @@
 .post {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(3, minmax(40px, auto)) minmax(0px, auto) repeat(2, minmax(40px, auto));
+    grid-template-rows: repeat(3, minmax(40px, auto)) minmax(0px, auto) minmax(40px, auto) minmax(0px, auto);
 }
 
 .post-user {
@@ -328,7 +328,6 @@
     width: 1.3em;
 }
 
-/* TODO: czy usunąć? */
 .comment .like-counter {
     font-size: 0.9em;
 }
@@ -393,6 +392,7 @@
     background: transparent;
     border: none;
     border-radius: 7px;
+    padding: 5.5px 0px;
 }
 
 /* Like panel */
@@ -513,10 +513,8 @@
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-
  
 /* ------ Media queries ------ */
-
 @media screen and (max-width: 1500px) {
     .post-comment-element, .post-form-wrapper {
         max-width: 50%;
