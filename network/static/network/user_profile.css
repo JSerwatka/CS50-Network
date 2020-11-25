@@ -23,11 +23,12 @@
     position: relative;
     margin: 0px auto 35px auto;
     border-radius: 0px 0px 10px 10px;
-    background: #6db784; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #6db784, #99e0f7); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #6db784, #99e0f7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: rgb(109,183,132);
+    background: linear-gradient(90deg, rgba(109,183,132,1) 0%, rgba(153,224,247,1) 26%, rgba(153,179,247,1) 57%, rgba(216,153,247,1) 82%, rgba(247,153,175,1) 100%);
+    background-size: 200%;
     max-width: 1000px;
     min-height: 300px;
+    animation: bg-animation 12s both cubic-bezier(.3,.11,1,.89) infinite alternate;
 }
 
 .profile-picture img {
@@ -38,6 +39,15 @@
     margin-left:-103px;
     height: 200px;
     width: 200px;
+}
+
+@keyframes bg-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
