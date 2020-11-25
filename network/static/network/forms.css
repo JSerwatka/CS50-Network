@@ -26,6 +26,21 @@
     max-width: 100% !important;
 }
 
+/* country-field */
+.country-field {
+    position: relative;
+    padding-right: 40px;
+}
+
+.edit-profile-form .country-select-flag {
+    width: 1.3em;
+    height: 0.8em;
+    position: absolute;
+    right: 3px;
+    top: 7px;
+}
+
+/* submit button */
 .edit-profile-form input[type="submit"] {
     float: right;
 }
