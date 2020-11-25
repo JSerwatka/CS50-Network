@@ -331,7 +331,11 @@ def login_view(request):
                 "message": _("Invalid username and/or password.")
             })
     else:
-        return render(request, "network/login.html")
+        # Show login panel only for not login users
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("network:index"))
+        else:
+            return render(request, "network/login.html")
 
 @login_required(login_url="network:login")
 def logout_view(request):
@@ -363,4 +367,8 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("network:index"))
     else:
-        return render(request, "network/register.html")
+        # Show register panel only for not login users
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("network:index"))
+        else:
+            return render(request, "network/register.html")
