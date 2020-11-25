@@ -1,3 +1,4 @@
+/* ------ Additional classes ------ */
 .info-card {
     padding: 15px;
     border-radius: 10px;
@@ -11,24 +12,29 @@
     width: 1.8em;
     height: 1.8em;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+
+/* ------ Main wrapper styles ------ */
 .user-profile {
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 21%, rgba(215,215,215,1) 47%, rgba(180, 180, 180, 0.836) 77%, rgba(158, 158, 158, 0.842) 100%);
     padding-bottom: 25px;
+    background: #3E5151;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #DECBA4, #3E5151);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #ffffff, #c1f7f7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    box-shadow: 0px 0px 12px -2px rgba(173,173,173,0.8);
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* PROFILE PICTURE */
-/* TODO: give proper width of profile picture bg */
+
+/* ------ Profile picture styles ------ */
 .profile-picture {
     position: relative;
     margin: 0px auto 35px auto;
     border-radius: 0px 0px 10px 10px;
-    background: #acb6e5; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #acb6e5, #86fde8); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #acb6e5, #86fde8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
-    /* max-width: 100%; */
-    max-width: 1100px;
+    background: #6db784; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #6db784, #99e0f7); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #6db784, #99e0f7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    max-width: 1000px;
     min-height: 300px;
 }
 
@@ -41,15 +47,19 @@
     height: 200px;
     width: 200px;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* USERNAME */
+
+/* ------ Username styles ------ */
 .profile-username {
     text-align: center;
     font-size: 1.7em;
     font-weight: 700;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* BUTTONS */
+
+/* ------ Edit/follow buttons styles ------ */
 .profile-buttons {
     margin-top: 10px;
     text-align: center;
@@ -60,8 +70,10 @@
     height: 1.1em;
     margin-right: 5px;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* FOLLOWING */
+
+/* ------ Following data styles ------ */
 .profile-following {
     margin: 30px auto 20px auto;
     display: flex;
@@ -76,8 +88,11 @@
 .profile-following .follow-count {
     font-weight: 500;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* BIO */
+
+
+/* ------ Bio card styles ------ */
 .bio {
     margin: 0px auto;
 }
@@ -96,3 +111,13 @@
     margin-left: 10px;
     color: rgb(26, 25, 25);
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Media queries ------ */
+@media screen and (max-width: 1017px) {
+    .profile-picture {
+        border-radius: 0px;
+    }
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
