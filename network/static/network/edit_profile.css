@@ -1,0 +1,29 @@
+.edit-profile {
+    margin: 20px auto 0px auto;
+    max-width: 60%;
+}
+
+.edit-profile-form {
+    margin-top: 40px;
+    padding: 30px;
+    max-width: 100% !important;
+}
+
+.edit-profile-form input[type="submit"] {
+    float: right;
+}
+
+
+/* ------ Media queries ------ */
+@media screen and (max-width: 950px) {
+    .edit-profile {
+        max-width: 70%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .edit-profile {
+        max-width: 100%;
+    }
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

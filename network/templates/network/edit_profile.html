@@ -4,65 +4,68 @@
 
 {% block extra_css %}
     {{ form.media.css }}
+    <link href="{% static 'network/edit_profile.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<!-- based on https://stackoverflow.com/a/14647770 -->
-{% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
+<div class="edit-profile">
+    <!-- based on https://stackoverflow.com/a/14647770 -->
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
             <div class="alert alert-danger">
                 <strong>{{ error|escape }}</strong>
             </div>
         {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-<div class="alert alert-danger hidden" id="file-size-error">
-    <strong>{% blocktranslate %}Image file exceeds {{ max_file_size }} MB size limit{% endblocktranslate %}</strong>
-</div>
-<div class="alert alert-danger hidden" id="file-type-error">
-    <strong>{% trans "File must be type image" %}</strong>
-</div>
-
-<div class="create-listing-form">
-    <form action="{% url 'network:edit-profile'%}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.name.label }}
-            {{ form.name }}
-        </div>
-        <div class="form-group">
-            <!-- date-picker based on: https://github.com/monim67/django-flatpickr -->
-            {{ form.date_of_birth.label }}
-            {{ form.date_of_birth }}
-        </div>
-        <div class="form-group">
-            {{ form.about.label }}
-            {{ form.about }}
-        </div>
-        <div class="form-group">
-            {{ form.country.label }}
-            {{ form.country }}
-        </div>
-        <div class="form-group">
-            {{ form.image.label }}
-            <div class="custom-file">
-                <input type="file" name="image" class="custom-file-input" accept="image/*" id="id_image">
-                {% if LANGUAGE_CODE == "pl" %}
-                    <label class="custom-file-label" data-browse="Wybierz" for="id_image" data-default="Wybierz plik">Wybierz plik</label>
-                {% else %}
-                    <label class="custom-file-label" data-browse="Browse" for="id_image" data-default="Choose file">Choose file</label>
-                {% endif %}
+    {% endif %}
+    <div class="alert alert-danger hidden" id="file-size-error">
+        <strong>{% blocktranslate %}Image file exceeds {{ max_file_size }} MB size limit{% endblocktranslate %}</strong>
+    </div>
+    <div class="alert alert-danger hidden" id="file-type-error">
+        <strong>{% trans "File must be type image" %}</strong>
+    </div>
+    
+    <div class="edit-profile-form create-listing-form info-card">
+        <form action="{% url 'network:edit-profile'%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.label }}
+                {{ form.name }}
             </div>
-        </div>
-        <input class="btn btn-primary" type="submit" value={% trans "Submit" %}>
-        <button class="btn btn-primary" name="cancel" value="clicked">{% trans "Cancel" %}</button></a>  
-    </form>
+            <div class="form-group">
+                <!-- date-picker based on: https://github.com/monim67/django-flatpickr -->
+                {{ form.date_of_birth.label }}
+                {{ form.date_of_birth }}
+            </div>
+            <div class="form-group">
+                {{ form.about.label }}
+                {{ form.about }}
+            </div>
+            <div class="form-group">
+                {{ form.country.label }}
+                {{ form.country }}
+            </div>
+            <div class="form-group">
+                {{ form.image.label }}
+                <div class="custom-file">
+                    <input type="file" name="image" class="custom-file-input" accept="image/*" id="id_image">
+                    {% if LANGUAGE_CODE == "pl" %}
+                        <label class="custom-file-label" data-browse="Wybierz" for="id_image" data-default="Wybierz plik">Wybierz plik</label>
+                    {% else %}
+                        <label class="custom-file-label" data-browse="Browse" for="id_image" data-default="Choose file">Choose file</label>
+                    {% endif %}
+                </div>
+            </div>
+            <button class="btn btn-secondary" name="cancel" value="clicked">{% trans "Cancel" %}</button></a>  
+            <input class="btn btn-success" type="submit" value={% trans "Submit" %}>
+        </form>
+    </div>
 </div>
 {% endblock %}
 
