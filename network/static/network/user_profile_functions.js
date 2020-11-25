@@ -12,16 +12,27 @@ function imgModal() {
     let modalImg = document.querySelector(".img-modal .modal-content");
     let captionText = document.getElementById("modal-img-caption");
     img.onclick = function(){
+        // Disable main scroll bar
+        document.body.style.overflow = "hidden";
+
+        // Show modal
         modal.style.display = "block";
+
+        // Get img info
         modalImg.src = this.src;
         captionText.innerHTML = this.alt;
     }
     
-    // Get the element that closes the modal
-    let closeButton = document.querySelector(".modal-close");
-    
-    // When the user clicks on close (x), close the modal
-    closeButton.onclick = function() {
-        modal.style.display = "none";
-    }
+    // When the user clicks on close (x) or outside photo, close the modal
+    modal.addEventListener('click', (event) => {
+        let closeButton = document.querySelector(".modal-close");
+
+        if (event.target === modal || event.target === closeButton) {
+            // Enable main scroll bar
+            document.body.style.overflow = "auto";
+
+            // Hide modal
+            modal.style.display = "none";
+        }
+    })
 }
