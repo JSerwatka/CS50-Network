@@ -347,14 +347,19 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
-        if password != confirmation:
+
+        # Ensure no blank fields
+        if  (not username) or (not email) or (not password):
+            return render(request, "network/register.html", {
+                "message": _("You must fill out all fields.")
+            }) 
+        # Ensure password matches confirmation
+        elif password != confirmation:
             return render(request, "network/register.html", {
                 "message": _("Passwords must match.")
-            })
+            }) 
 
         # Attempt to create new user and its profile
         try:
