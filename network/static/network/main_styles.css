@@ -36,10 +36,52 @@ body {
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
+
+/* ------ Navbar styles ------ */
+/* Main grid */
+.nav-grid {
+    display:grid!important;
+    grid-template-columns: 100px 5fr 90px;
+    grid-auto-rows: minmax(56px, auto);
+}
+
+/* Network link */
+.nav-grid .network-link{
+    padding-top: 11px;
+    justify-self: end;
+    font-size: 1.3em;
+    font-weight: 1.3em;
+    color: rgba(0,0,0, 0.5);
+}
+
+.nav-grid .network-link:hover {
+    color: rgba(0,0,0,.7)
+}
+
+/* Navbar */
+.nav-grid .navbar-toggler {
+    margin: 0px auto;
+}
+
+.nav-grid .navbar-collapse li {
+    text-align: center;
+}
+
+/* Language buttons */
+.choose-lang {
+    padding-top: 11px;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
 /* ------ Language buttons styles ------ */
 .lang-button {
     border: none;
     background: transparent;
+}
+
+.lang-button:hover {
+    opacity: 0.6;
 }
 
 .grey-out {
