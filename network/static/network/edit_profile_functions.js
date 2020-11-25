@@ -1,4 +1,3 @@
-  
 document.addEventListener('DOMContentLoaded', function() {
     uploadImageValidation();
 });
@@ -35,3 +34,4 @@ function uploadImageValidation() {
         }
     });
 } 
+

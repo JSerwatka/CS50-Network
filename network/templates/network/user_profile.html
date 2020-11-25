@@ -9,7 +9,16 @@
 {% block body %}
     <div class="user-profile">
         <div class="profile-picture">
-            <img src="{{ user_data.profile.image.url }}" class="round-picture">
+            <img src="{{ user_data.profile.image.url }}" alt="{{ user_data.username }}" class="round-picture">
+        </div>
+        <!-- Image Modal -->
+        <div class="img-modal">
+            <!-- Close Button -->
+            <span class="modal-close">&times;</span>
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content fade-in" id="img01">
+            <!-- Modal Caption (Image Text) -->
+            <div id="modal-img-caption" class="fade-in"></div>
         </div>
         <div class="profile-username">
             {{ user_data.username }}
@@ -131,6 +140,7 @@
 {% endblock %}
 
 {% block script %}
+        <script src="{% static 'network/user_profile_functions.js' %}"></script>
         <script src="{% static 'network/post-comment_functions.js' %}"></script>
         <script src="{% static 'network/post_functions.js' %}"></script>
         <script src="{% static 'network/comment_functions.js' %}"></script>
