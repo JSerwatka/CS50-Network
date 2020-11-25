@@ -1,28 +1,33 @@
 {% extends "network/layout.html" %}
+{% load static %}
 {% load i18n %}
 
+{% block extra_css %}
+    <link href="{% static 'network/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+
 {% block body %}
-
-    <h2>{% trans "Login" %}</h2>
-
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
-
-    <form action="{% url 'network:login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder='{% trans "Username" %}'>
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder='{% trans "Password" %}'>
-        </div>
-        {% if request.GET.next %}
-            <input type="hidden" name="next" value="{{ request.GET.next }}">
+    <div class="login-wrapper info-card">
+        <h2>{% trans "Login" %}</h2>
+    
+        {% if message %}
+            <div>{{ message }}</div>
         {% endif %}
-        <input class="btn btn-primary" type="submit" value='{% trans "Login" %}'>
-    </form>
-
-    {% trans "Don't have an account?" %} <a href="{% url 'network:register' %}">{% trans "Register here." %}</a>
-
+    
+        <form action="{% url 'network:login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="username" placeholder='{% trans "Username" %}' required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder='{% trans "Password" %}' required>
+            </div>
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
+            <input class="btn btn-primary" type="submit" value='{% trans "Login" %}'>
+        </form>
+        {% trans "Don't have an account?" %} <a href="{% url 'network:register' %}">{% trans "Register here." %}</a>
+    </div>
 {% endblock %}

@@ -1,32 +1,38 @@
 {% extends "network/layout.html" %}
+{% load static %}
 {% load i18n %}
+
+{% block extra_css %}
+    <link href="{% static 'network/forms.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
 {% load i18n %}
-
-    <h2>{% trans "Register" %}</h2>
-
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
-
-    <form action="{% url 'network:register' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input class="form-control" autofocus type="text" name="username" placeholder='{% trans "Username" %}'>
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder='{% trans "Email Address" %}'>
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder='{% trans "Password" %}'>
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder='{% trans "Confirm Password" %}'>
-        </div>
-        <input class="btn btn-primary" type="submit" value='{% trans "Register" %}'>
-    </form>
-
-    {% trans "Already have an account?" %} <a href="{% url 'network:login' %}"> {% trans "Log In here." %}</a>
-
+    <div class="register-wrapper info-card">
+        <h2>{% trans "Register" %}</h2>
+    
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+    
+        <form action="{% url 'network:register' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="username" placeholder='{% trans "Username" %}' required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder='{% trans "Email Address" %}' required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder='{% trans "Password" %}' required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmation" placeholder='{% trans "Confirm Password" %}' required>
+            </div>
+            <input class="btn btn-primary" type="submit" value='{% trans "Register" %}'>
+        </form>
+        <!-- <span class="log-register-info"> -->
+            {% trans "Already have an account?" %} <a href="{% url 'network:login' %}"> {% trans "Log In here." %}</a>
+        <!-- </span> -->
+    </div>
 {% endblock %}
