@@ -1,7 +1,7 @@
 /* ------ Post and comment wrapper styles ------ */
 .post-comment-element {
     margin: 30px auto;
-    max-width: 70%;
+    max-width: 40%;
     padding: 5px;
     border-radius: 10px;
     border: 1px solid #cac7c785;
@@ -31,7 +31,7 @@
 /* Post */
 .post-form-wrapper {
     margin: 40px auto 60px auto;
-    max-width: 70%;
+    max-width: 40%;
     background-color: #F0F2F5;
 }
 
@@ -299,7 +299,7 @@
     justify-self: center;
     align-self: center;
     font-family: var(--secondary-text-family);
-    font-size: 0.82rem;
+    font-size: 0.82em;
     font-weight: 600;
     color: black;
     cursor: pointer;
@@ -324,8 +324,8 @@
 }
 
 .comment .like-data .em {
-    height: 1.3rem;
-    width: 1.3rem;
+    height: 1.3em;
+    width: 1.3em;
 }
 
 /* TODO: czy usunąć? */
@@ -417,7 +417,7 @@
 }
 
 .comment .like-button {
-    font-size: 0.9rem;
+    font-size: 0.9em;
     font-weight: 500;
     color: var(---secondary-text);
 }
@@ -435,8 +435,8 @@
 }
 
 .comment .like-button .em {
-    height: 1.3rem;
-    width: 1.3rem;
+    height: 1.3em;
+    width: 1.3em;
 }
 
 /*** Both ***/
@@ -512,3 +512,55 @@
     background: var(--hover-color);
 }
  /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+ 
+/* ------ Media queries ------ */
+
+@media screen and (max-width: 1500px) {
+    .post-comment-element, .post-form-wrapper {
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .post-comment-element, .post-form-wrapper {
+        max-width: 60%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .post-comment-element, .post-form-wrapper {
+        max-width: 70%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .post-comment-element {
+        font-size: 0.95em;
+        line-height: 0.95em;
+    }
+
+    .post-comment-element, .post-form-wrapper {
+        max-width: 85%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .post-comment-element {
+        max-width: 95%;
+    }
+
+    .post-form-wrapper {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .post-comment-element {
+        max-width: 100%;
+        font-size: 0.9em;
+        line-height: 0.9em;
+    }
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

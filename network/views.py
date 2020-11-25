@@ -17,6 +17,7 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
 # TODO: add comments
+# TODO: edit-button for small screens show dropdown on left
 
 def index(request):
     # Get all posts
