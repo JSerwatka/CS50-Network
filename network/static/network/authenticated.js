@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         likePanelAnimationControl(postNode);
         showMoreButtonControl(postNode);
         showHideComments(postNode);
+        settingsDropdownControl(postNode);
     });
 
     // Init comments
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         likesAmountIndicatorControl(commentNode);
         likePanelAnimationControl(commentNode);
         showMoreButtonControl(commentNode);
+        settingsDropdownControl(commentNode);
     });
 
     window.addEventListener("resize", () => {

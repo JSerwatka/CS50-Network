@@ -1,3 +1,16 @@
+function settingsDropdownControl(node) {
+    let dropdownElement = node.querySelector(".delete-edit-panel > .dropdown");
+
+    $(window).on("resize", () => {
+        if (window.innerWidth < 800) {
+            dropdownElement.classList.add("dropleft");
+        }
+        else {
+            dropdownElement.classList.remove("dropleft");
+        }
+    })
+}
+
 
 // Adds emoji to like data panel
 function updateEmojiList(node, newEmojiType, previousEmojiType=null) {
