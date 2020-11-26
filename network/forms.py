@@ -1,12 +1,21 @@
-from django import forms
-from .models import  Post, Comment, UserProfile
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 from flatpickr import DatePickerInput
 from django_countries.widgets import CountrySelectWidget
 
+from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.conf import settings
+
+from .models import  Post, Comment, UserProfile
+
 class CreatePostForm(forms.ModelForm):
+    """
+    Form for creating posts (based on Post model)
+
+    fields:
+    * content - post's inner text
+    """
+
     content = forms.CharField(label="Description", widget=forms.Textarea(attrs={
                                     'placeholder': _("What are you thinking about?"),
                                     'autofocus': 'autofocus',
@@ -20,6 +29,13 @@ class CreatePostForm(forms.ModelForm):
         fields = ["content"]
 
 class CreateCommentForm(forms.ModelForm):
+    """
+    Form for creating comments (based on Comment model)
+
+    fields:
+    * content - comment's inner text
+    """
+
     content = forms.CharField(widget=forms.Textarea(attrs={
                                     'placeholder': _("Write a comment..."),
                                     'rows': '1',
@@ -32,6 +48,17 @@ class CreateCommentForm(forms.ModelForm):
         fields = ["content"]
 
 class CreateUserProfileForm(forms.ModelForm):
+    """
+    Form for editing user profile (based on UserProfile model)
+
+    fields:
+    * name - user's name
+    * date_of_birth - user's birth date
+    * about - additional info about the user
+    * country - user's birth place
+    * image - user's profile photo
+    """
+
     date_of_birth = forms.DateField(required=False, label=_("Date of birth: "), widget=DatePickerInput(
         options = {
             "altFormat": "d F Y",
@@ -40,8 +67,9 @@ class CreateUserProfileForm(forms.ModelForm):
         },
     ))
 
-    # Check if image doesn't exceed max file size
     def clean_image(self):
+        """ Check if image doesn't exceed max file size """
+
         image = self.cleaned_data.get('image')
 
         if "default.png" not in image:

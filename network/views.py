@@ -17,9 +17,10 @@ from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
 # TODO: add comments
-# TODO: edit-button for small screens show dropdown on left
 
 def index(request):
+    """ View: Show all posts """
+
     # Get all posts
     all_posts = Post.objects.order_by("-date").all()
 
@@ -37,6 +38,8 @@ def index(request):
 
 @login_required(login_url="network:login")
 def post_comment(request, action):
+    """ View: Controls saving a new post/comment (only POST) """
+
     if request.method == "POST":
         if action == "post":
             form = CreatePostForm(request.POST)
@@ -57,12 +60,12 @@ def post_comment(request, action):
             if form.is_valid():
                 # Get all data from the form
                 content = form.cleaned_data["content"]
-                
+
                 # Get commented post
                 try:
                     post = Post.objects.get(pk=request.POST.get('postId'))
                 except Post.DoesNotExist:
-                    return HttpResponse(status=404) #TODO: update error
+                    return HttpResponse(status=404)
 
                 # Save the record
                 comment = Comment(
@@ -71,8 +74,8 @@ def post_comment(request, action):
                     post = post
                 )
                 comment.save()
-                
-        # Go back to place from which the request came
+
+        # Go back to the place from which the request came
         return HttpResponseRedirect(request.headers['Referer'])
 
     if request.method == "PUT":
@@ -105,7 +108,7 @@ def post_comment(request, action):
                 object_to_delete = Post.objects.get(pk=body.get('id'), user=request.user)
             else:
                 object_to_delete = Comment.objects.get(pk=body.get('id'), user=request.user)
-        except (Post.DoesNotExist, Comment.DoesNotExist): 
+        except (Post.DoesNotExist, Comment.DoesNotExist):
             return JsonResponse({
                 "error": _("Post or Comment does not exist")
             }, status=404)
@@ -117,6 +120,9 @@ def post_comment(request, action):
 
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
+    """ View: Shows requested user profile and the user's posts """
+
+
     user_data = User.objects.get(pk=user_id)
     posts = user_data.posts.order_by("-date").all()
 
@@ -142,6 +148,8 @@ def user_profile(request, user_id):
 
 @login_required(login_url="network:login")
 def edit_profile(request):
+    """ View: Controls editing of user profile's data """
+
     if request.method == "POST":
         # Cancel edit -> go back to the profile
         if request.POST.get("cancel") == "clicked":
@@ -187,15 +195,17 @@ def edit_profile(request):
 
 @login_required(login_url="network:login")
 def like(request, action, action_id):
+    """ View: Controls all actions regarding liking """
+
     if request.method == "GET":
         # Check if like exists and send back info
         try:
             if action == "post":
                 post = Post.objects.get(pk=action_id)
-                like = Like.objects.get(user=request.user, post=post)
+                like_obj = Like.objects.get(user=request.user, post=post)
             elif action == "comment":
                 comment = Comment.objects.get(pk=action_id)
-                like = Like.objects.get(user=request.user, comment=comment)
+                like_obj = Like.objects.get(user=request.user, comment=comment)
             else:
                 return JsonResponse({
                     "error": _("Unknown action - you can only like post or comment")
@@ -212,7 +222,7 @@ def like(request, action, action_id):
         else:
             return JsonResponse({
                 "like": "True",
-                "emojiType": [emoji_tuple[1] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[0] == like.emoji_type][0]
+                "emojiType": [emoji_tuple[1] for emoji_tuple in Like.LIKE_TYPE_CHOICES if emoji_tuple[0] == like_obj.emoji_type][0]
             }, status=200)
         # Something went wrong
         return JsonResponse({
@@ -226,11 +236,11 @@ def like(request, action, action_id):
         try:
             if action == "post":
                 post = Post.objects.get(pk=action_id)
-                like = Like(user=request.user, post=post, emoji_type=emoji_type)
+                like_obj = Like(user=request.user, post=post, emoji_type=emoji_type)
             elif action == "comment":
                 comment = Comment.objects.get(pk=action_id)
-                like = Like(user=request.user, comment=comment, emoji_type=emoji_type)
-            else: 
+                like_obj = Like(user=request.user, comment=comment, emoji_type=emoji_type)
+            else:
                 return JsonResponse({
                     "error": _("Unknown action - you can only like post or comment")
                 }, status=400)
@@ -239,7 +249,7 @@ def like(request, action, action_id):
                 "error": _("Post or Comment does not exist")
             }, status=404)
 
-        like.save()
+        like_obj.save()
         return HttpResponse(status=201)
 
     elif request.method == "PUT":
@@ -262,7 +272,7 @@ def like(request, action, action_id):
             }, status=404)
 
         # Update emoji only if it's different
-        if (old_like.emoji_type != emoji_number):
+        if old_like.emoji_type != emoji_number:
             old_like.emoji_type = emoji_number
             old_like.save()
 
@@ -271,6 +281,8 @@ def like(request, action, action_id):
 
 @login_required(login_url="network:login")
 def following(request):
+    """ View: Show users' posts that current user follows"""
+
     current_user = User.objects.get(pk=request.user.id)
 
     # Get all posts from users that current user follows
@@ -292,6 +304,8 @@ def following(request):
 
 @login_required(login_url="network:login")
 def follow_unfollow(request, user_id):
+    """ View: Controls following/unfollowing users (only POST) """
+
     # Nested try/except helps to reduce db queries by one
     if request.method == "POST":
         try:
@@ -300,7 +314,7 @@ def follow_unfollow(request, user_id):
             try:
                 user_to_follow = User.objects.get(pk=user_id)
             except User.DoesNotExist:
-                return HttpResponse(status=404) #TODO: render error msg
+                return HttpResponse(status=404)
             else:
                 new_follow_obj = Following(user=request.user, user_followed=user_to_follow)
                 new_follow_obj.save()
@@ -310,6 +324,8 @@ def follow_unfollow(request, user_id):
         return HttpResponseRedirect(reverse("network:user-profile", args=[user_id]))
 
 def login_view(request):
+    """ View: Controls logging in """
+
     if request.method == "POST":
         # Attempt to sign user in
         username = request.POST["username"]
@@ -320,10 +336,12 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            # If user tried to enter login_required page - go there after login            
+            # If user tried to enter login_required page - go there after login
             if "next" in request.POST:
                 request_args =  request.POST.get("next")[1:].split('/')
-                return HttpResponseRedirect(reverse("network:" + request_args[0], args=request_args[1:]))
+                return HttpResponseRedirect(reverse(
+                        "network:" + request_args[0], args=request_args[1:]
+                       ))
             else:
                 return HttpResponseRedirect(reverse("network:index"))
         else:
@@ -339,11 +357,15 @@ def login_view(request):
 
 @login_required(login_url="network:login")
 def logout_view(request):
+    """ View: Controls logging out """
+
     logout(request)
     return HttpResponseRedirect(reverse("network:index"))
 
 
 def register(request):
+    """ View: Controls registering """
+
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
@@ -354,12 +376,12 @@ def register(request):
         if  (not username) or (not email) or (not password):
             return render(request, "network/register.html", {
                 "message": _("You must fill out all fields.")
-            }) 
+            })
         # Ensure password matches confirmation
         elif password != confirmation:
             return render(request, "network/register.html", {
                 "message": _("Passwords must match.")
-            }) 
+            })
 
         # Attempt to create new user and its profile
         try:

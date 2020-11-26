@@ -39,6 +39,8 @@ def image_transpose_exif(img):
         return functools.reduce(type(img).transpose, seq, img)
 
 def resize_image(img_path, height, width):
+    """ Resizes the img and blocks its rotation """
+
     img = Image.open(img_path)
     img = image_transpose_exif(img)
 

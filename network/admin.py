@@ -25,7 +25,6 @@ class LikeAdmin(admin.ModelAdmin):
     """Contains Like model admin page config"""
     list_display = ("id", "user", "post", "comment")
 
-
 admin.site.register(User, UserAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
