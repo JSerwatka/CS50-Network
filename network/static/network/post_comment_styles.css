@@ -575,8 +575,8 @@
 @media screen and (max-width: 550px) {
     .post-comment-element {
         max-width: 100%;
-        font-size: 0.9em;
-        line-height: 0.9em;
+        font-size: 0.93em;
+        line-height: 0.93em;
     }
 
     @keyframes like-panel-in {
