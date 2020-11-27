@@ -16,8 +16,6 @@ from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
 
-# TODO: add comments
-
 def index(request):
     """ View: Show all posts """
 
@@ -276,7 +274,6 @@ def like(request, action, action_id):
             old_like.save()
 
         return HttpResponse(status=201)
-
 
 @login_required(login_url="network:login")
 def following(request):

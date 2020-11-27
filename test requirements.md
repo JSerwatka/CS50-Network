@@ -18,18 +18,38 @@
 
 ## Views
 ### login
-* status_code = 200
-* create user and try to login with its data
-    * check if user logged in
-    * test *next* redirection
-* check redirection to *index* for logged users
-* check invalid password behaviour -> context with correct error msg (force language setting first)
-* check user duplicate behaviour -> context with correct error msg
+* GET
+    * status_code = 200
+    * check redirection to *index* for logged users
+
+* POST
+    * status_code = 200?
+    * create user and try to login with its data
+        * check if user logged in
+        * test *next* redirection
+    * check invalid password behaviour -> context with correct error msg (force language setting first)
+    * check user duplicate behaviour -> context with correct error msg
 
 ### logout
 * status_code = ?
 * check user logged-in? -> logout -> user logged-out?
 * check redirection to index
+
+### Register
+* GET
+    * status_code = 200
+    * check redirection to *index* for logged users
+* POST
+    * status_code = ?
+    * username, email, password empty test -> correct error msg
+    * password != confirmation test -> correct error msg
+    * user already exists
+        1. create user
+        2. try to create user with the same username
+        3. check if correct error msg
+    * correct register 
+        * status_code = ?
+        * check redirection to *index*
 
 ### index
 * status_code = 200
@@ -149,3 +169,5 @@
     * check if new following deleted
     * check if redirection is corrent
     * check status_code
+
+# Frontend
