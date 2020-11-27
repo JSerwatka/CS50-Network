@@ -122,7 +122,6 @@ def post_comment(request, action):
 def user_profile(request, user_id):
     """ View: Shows requested user profile and the user's posts """
 
-
     user_data = User.objects.get(pk=user_id)
     posts = user_data.posts.order_by("-date").all()
 
@@ -355,7 +354,7 @@ def login_view(request):
         else:
             return render(request, "network/login.html")
 
-@login_required(login_url="network:login")
+
 def logout_view(request):
     """ View: Controls logging out """
 
