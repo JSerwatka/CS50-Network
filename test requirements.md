@@ -86,6 +86,7 @@
         3. make sure that the post/comment has not been deleted
 
 ### user-profile
+* login-required test
 * status_code = 200
 * no posts -> page_obj context = <page 1 of 1>
 * 11 posts -> page_obj context = <page 1 of 2>
@@ -94,6 +95,7 @@
 * follow 5 users -> make sure that correct number is visible on front end
 
 ### edit-profile
+* login-required test
 * GET
     * status_code = 200?
     * auto populate form with user data
@@ -108,6 +110,7 @@
 
 
 ### like
+* login-required test
 * GET
     * send unknown action and correct id
         * check if status_code = 400
@@ -128,6 +131,7 @@
             * *emojiType* is correct
 
 * POST
+* login-required test
     * send unknown action and correct id
         * check if status_code = 400
         * check if error msg correct
@@ -153,12 +157,14 @@
             3. check if correct emoji type saved
 
 ### following
+* login-required test
 * status_code = 200
 * no posts -> page_obj context = <page 1 of 1>
 * 11 posts -> page_obj context = <page 1 of 2>
 * 2 posts: by followed user and another -> make sure only followed is visible
 
 ### follow-unfollow
+* login-required test
 * status_code = ?
 * follow user that doesn't exist -> 404 response
 * follow user that doesn exist
@@ -171,3 +177,151 @@
     * check status_code
 
 # Frontend
+
+## post
+**Setup**
+1. create user 
+2. populate user-profile with data
+3. login user
+4. create post
+5. create several comments to this post
+
+### index view
+* create post with short text with form and send it -> check if exists
+
+#### index view, following, user_profile
+* Posts
+    * check post's content -> equal to post created
+
+    * click on post's creator text test
+        1. click on post's creator
+        2. check if redirection to correct user profile works
+
+    * edit post tests
+        * post's creator = current user
+            1. check if edit/delete panel is not hidden
+            2. click on edit post
+            3. change text
+            4. check if post's content has changed
+        * post's creator != current user
+            1. check if edit/delete panel is hidden
+        
+    * delete post tests
+        1. check if edit/delete panel is not hidden
+        2. click on delete post
+        3. check if post's content got deleted
+
+    * long text post test
+        1. create second post with long text
+        2. check if short text post's *show more* button is hidden
+        3. check if long text post's *show more* button is not hidden
+
+    * one like post test
+        1. like post
+        2. check if new like exists and have correct emoji (database)
+        3. check if new like exists and have correct emoji (like-data)
+        4. check if new like has data-count = 1
+        5. check if like-counter is empty
+    
+    * change like post test
+        1. like post
+        2. change like to different emoji
+        3. check if old like doesn't exist (database)
+        4. check if old like doesn't exist (like-data)
+        5. check if new like exists and have correct emoji (database)
+        6. check if new like exists and have correct emoji (like-data)
+        7. check if new like has data-count = 1
+
+    * the same emoji twice test
+        1. like post
+        2. like post with the same emoji from a different accout
+        3. make sure emoji has has data-count = 2
+        4. check if like-counter = +1
+    
+    * emoji in correct order
+        1. like post
+        2. like post with different emoji
+        3. like post with the same emoji (2.) 
+        4. make sure that emoji (2.) is first in like-data panel
+    
+    * comment-data test
+        1. check if comment-count = Comments: 3 (force english)
+
+    * comment button test
+        1. click comment button
+        2. check if comment-section has show class
+
+* Comments
+    * create comment with form -> check if comment exists
+
+    * check comment's content -> equal to comment created
+
+    * click on comment's creator text test
+        1. click on comment's creator
+        2. check if redirection to correct user profile works
+
+    * click on comment's creator image test
+        1. click on comment's creator
+        2. check if redirection to correct user profile works
+
+    * edit comment tests
+        * comment's creator = current user
+            1. check if edit/delete panel is not hidden
+            2. click on edit comment
+            3. change text
+            4. check if comment's content has changed
+        * comment's creator != current user
+            1. check if edit/delete panel is hidden
+        
+    * delete comment tests
+        1. check if edit/delete panel is not hidden
+        2. click on delete comment
+        3. check if comment's content got deleted
+
+    * long text comment test
+        1. create second comment with long text
+        2. check if short text comment's *show more* button is hidden
+        3. check if long text comment's *show more* button is not hidden
+
+    * one like comment test
+        1. like comment
+        2. check if new like exists and have correct emoji (database)
+        3. check if new like exists and have correct emoji (like-data)
+        4. check if new like has data-count = 1
+        5. check if like-counter is empty
+    
+    * change like comment test
+        1. like comment
+        2. change like to different emoji
+        3. check if old like doesn't exist (database)
+        4. check if old like doesn't exist (like-data)
+        5. check if new like exists and have correct emoji (database)
+        6. check if new like exists and have correct emoji (like-data)
+        7. check if new like has data-count = 1
+
+    * the same emoji twice test
+        1. like comment
+        2. like comment with the same emoji from a different accout
+        3. make sure emoji has has data-count = 2
+        4. check if like-counter = +1
+    
+    * emoji in correct order
+        1. like comment
+        2. like comment with different emoji
+        3. like comment with the same emoji (2.) 
+        4. make sure that emoji (2.) is first in like-data panel
+
+### user-profile
+* check if following data are corrent
+    1. follow user by 5 users
+    2. follow 2 users
+    3. check if user following data is correct
+
+* check if bio info are correct (force english)
+
+* check if follow/unfollow logic works
+    1. create new user
+    2. follow the user
+    3. check if user followed
+    4. unfollow the user
+    5. check if user is unfollowed

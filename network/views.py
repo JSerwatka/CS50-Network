@@ -115,7 +115,6 @@ def post_comment(request, action):
         object_to_delete.delete()
         return HttpResponse(status=204)
 
-
 @login_required(login_url="network:login")
 def user_profile(request, user_id):
     """ View: Shows requested user profile and the user's posts """
