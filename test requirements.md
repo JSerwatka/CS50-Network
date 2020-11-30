@@ -1,13 +1,13 @@
 # Backend
 
-## Models
-### User
+## ~~Models~~
+### ~~User~~
 * ~~Create new user -> create new profile test~~
 
-### User Profile
+### ~~User Profile~~
 * ~~new profile created -> create default image test~~
 
-### Like
+### ~~Like~~
 * ~~multiple likes on one comment/post by the same user test~~
 
 
@@ -17,26 +17,26 @@
 
 
 ## Views
-### login
+### ~~login~~
 * ~~GET~~
     * ~~status_code = 200~~
     * ~~check redirection to *index* for logged users~~
 
-* POST
+* ~~POST~~
     * ~~create user and try to login with its data~~
         * ~~check if user logged in~~
         * ~~test *next* redirection~~
     * ~~check invalid password behaviour -> context with correct error msg (force language setting first)~~
 
-### logout
-* status_code = ?
-* check user logged-in? -> logout -> user logged-out?
-* check redirection to index
+### ~~logout~~
+* ~~status_code = 302~~
+* ~~check user logged-in? -> logout -> user logged-out?~~
+* ~~check redirection to index after logout~~
 
 ### Register
-* GET
-    * status_code = 200
-    * check redirection to *index* for logged users
+* ~~GET~~
+    * ~~status_code = 200~~
+    * ~~check redirection to *index* for logged users~~
 * POST
     * status_code = ?
     * username, email, password empty test -> correct error msg

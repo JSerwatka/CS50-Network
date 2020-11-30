@@ -11,30 +11,6 @@ from .models import *
 #TODO: Post - editied by somebody else test
 #TODO: Post - incorrect id test
 
-'''
-class TestTest(TestCase):
-
-    def test_sprawdzanie_dzialania(self):
-        """ sprawdzam działanie testów """
-
-        user = User.objects.create_user('temporary', 'temporary@gmail.com', 'temporary')
-        c = Client()
-        # d = Client()
-        # d_login = auth.get_user(d)
-        # print(d_login.is_authenticated)
-
-        # c_login = auth.get_user(c)
-        # print(c_login.is_authenticated)
-
-        # c.login(username='temporary', password="temporary")
-        # c_login = auth.get_user(c)
-        # print(c_login.is_authenticated)
-        # print(c.get('/following'))
-        response = c.post('/login', {'username': 'fred', 'password': 'secret'})
-        print(response.context["message"])
-        self.assertEqual(200, 200, "it is equal")
-'''
-
 class ModelsTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="test", password="test")
@@ -87,13 +63,8 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.url, '/')
 
     # Login view - POST
-    def test_post_login_status_code(self):
-        """ 
-            Create user and try to login with its data
-            * check if user logged out -> login
-            * test next redirection 
-            * check if user logged in
-        """
+    def test_post_login_correct_user(self):
+        """ Check login basic behaviour - status code, redirection, login status """
         # Get user logged out info
         c_logged_out = auth.get_user(self.c)
         # Try to login
@@ -111,3 +82,40 @@ class ViewsTestCase(TestCase):
         response = self.c.post('/login', {'username': 'test', 'password': '123'})
 
         self.assertEqual(response.context["message"], "Invalid username and/or password.")
+
+    # Logout view
+    def test_logout_view(self):
+        """ Check all logout behaviour - status code, redirection, login status """
+        # Login user
+        self.c.login(username='test', password="test")
+        # Get user logged in info
+        c_logged_in = auth.get_user(self.c)
+        # Try to logout
+        response = self.c.get('/logout')
+        # Get user logged out info
+        c_logged_out = auth.get_user(self.c)
+
+        self.assertTrue(c_logged_in.is_authenticated)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+        self.assertFalse(c_logged_out.is_authenticated)
+
+    # Register view - GET
+    def test_get_register_status_code(self):
+        """ Make sure status code for GET register is 200 """
+        response = self.c.get("/register")
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_register_correct_redirection(self):
+        """ Check redirection to index for logged users """
+        # Login user
+        self.c.login(username='test', password="test")
+        # Get response
+        response = self.c.get('/register')
+        # Check redirect status code and redirection url
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+
+    # Register view - POST
+    
+    """ Check register basic behaviour - status code, redirection, login status, new profile created """
