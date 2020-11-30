@@ -60,13 +60,11 @@
 * ~~login-required test~~
 * ~~GET method not allowed test -> status_code == 405~~
 
-* POST
-    * status_code = ?
-    * post post/comment
-        1. create a form
-        2. post to post-comment/post v post-comment/comment
-        3. check if post exists
-        4. check if redirect to request source view occurs (comment only)
+* ~~POST~~
+    * ~~post post/comment~~
+        1. ~~post to post-comment/post v post-comment/comment~~
+        2. ~~check if post exists~~
+        3. ~~check if redirection url and status code is correct~~
 * PUT
     * status_code = 201
     * edit post/comment

@@ -48,12 +48,12 @@ class ViewsTestCase(TestCase):
         self.c = Client()
 
     # Login view - GET
-    def test_get_login_status_code(self):
+    def test_GET_login_status_code(self):
         """ Make sure status code for GET login is 200 """
         response = self.c.get("/login")
         self.assertEqual(response.status_code, 200)
     
-    def test_get_login_correct_redirection(self):
+    def test_GET_login_correct_redirection(self):
         """ Check redirection to index for logged users """
         # Login user
         self.c.login(username='test', password="test")
@@ -64,7 +64,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.url, '/')
 
     # Login view - POST
-    def test_post_login_correct_user(self):
+    def test_POST_login_correct_user(self):
         """ Check login basic behaviour - status code, redirection, login status """
         # Get user logged out info
         c_logged_out = auth.get_user(self.c)
@@ -78,7 +78,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.url, '/')
         self.assertTrue(c_logged_in.is_authenticated)
 
-    def test_post_login_invalid_password(self):
+    def test_POST_login_invalid_password(self):
         """ Check invalid password login behaviour """
         response = self.c.post('/login', {'username': 'test', 'password': '123'})
 
@@ -102,12 +102,12 @@ class ViewsTestCase(TestCase):
         self.assertFalse(c_logged_out.is_authenticated)
 
     # Register view - GET
-    def test_get_register_status_code(self):
+    def test_GET_register_status_code(self):
         """ Make sure status code for GET register is 200 """
         response = self.c.get("/register")
         self.assertEqual(response.status_code, 200)
 
-    def test_get_register_correct_redirection(self):
+    def test_GET_register_correct_redirection(self):
         """ Check redirection to index for logged users """
         # Login user
         self.c.login(username='test', password="test")
@@ -118,7 +118,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.url, '/')
 
     # Register view - POST
-    def test_post_register_correct(self):
+    def test_POST_register_correct(self):
         """ Check register basic behaviour - status code, redirection, login status, new profile created """   
         # Get user logged out info
         c_logged_out = auth.get_user(self.c)
@@ -140,7 +140,7 @@ class ViewsTestCase(TestCase):
         self.assertTrue(c_registered.is_authenticated)
         self.assertEqual(new_user.count(), 1)
 
-    def test_post_register_empty_username(self):
+    def test_POST_register_empty_username(self):
         """ If username empty -> make sure error msg is correct """ 
         # Try to register
         response = self.c.post('/register', {
@@ -152,7 +152,7 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.context['message'], "You must fill out all fields.")
 
-    def test_post_register_empty_email(self):
+    def test_POST_register_empty_email(self):
         """ If email empty -> make sure error msg is correct """ 
         # Try to register
         response = self.c.post('/register', {
@@ -164,7 +164,7 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.context['message'], "You must fill out all fields.")
 
-    def test_post_register_empty_password(self):
+    def test_POST_register_empty_password(self):
         """ If password empty -> make sure error msg is correct """ 
         # Try to register
         response = self.c.post('/register', {
@@ -176,7 +176,7 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.context['message'], "You must fill out all fields.")
 
-    def test_post_register_passwords_dont_match(self):
+    def test_POST_register_passwords_dont_match(self):
         """ If password != confirmation -> make sure error msg is correct """ 
         # Try to register
         response = self.c.post('/register', {
@@ -188,7 +188,7 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.context['message'], "Passwords must match.")
 
-    def test_post_register_username_taken(self):
+    def test_POST_register_username_taken(self):
         """ If user already exists -> make sure error msg is correct """ 
         # Try to register
         response = self.c.post('/register', {
@@ -238,15 +238,45 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/login?next=/post-comment/post")
 
-    def test_post_comment_get_request(self):
+    def test_GET_post_comment(self):
         """ Make sure reponse status code for GET request is 405 (method not allowed) """
-        self.c.login(username='test', password="test")
+        self.c.login(username="test", password="test")
         response = self.c.get('/post-comment/post')
 
         self.assertEqual(response.status_code, 405)
 
     # Post-comment view - POST
+    def test_POST_post_comment_create_post(self):
+        """ Create a post -> check if post exists and if user is redirected to HTTP_REFERER url """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Post a post
+        response = self.c.post('/post-comment/post', {"content": "post create test"}, HTTP_REFERER='/')
+
+        self.assertEqual(Post.objects.filter(content="post create test").count(), 1)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+
+    def test_POST_post_comment_create_comment(self):
+        """ Create a comment -> check if comment exists and if user is redirected to HTTP_REFERER url """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+
+        # Post a comment on this post
+        response = self.c.post('/post-comment/comment', {
+            "content": "comment create test",
+            'postId': post.id
+            }, HTTP_REFERER='/')
+
+        self.assertEqual(Comment.objects.filter(content="comment create test").count(), 1)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
         
     # Post-comment view - PUT
+    
     # Post-comment view - DELETE
 
