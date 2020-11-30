@@ -65,6 +65,7 @@
         1. ~~post to post-comment/post v post-comment/comment~~
         2. ~~check if post exists~~
         3. ~~check if redirection url and status code is correct~~
+    * ~~check comment on non-existing post status code (404)~~
 * PUT
     * status_code = 201
     * edit post/comment

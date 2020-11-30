@@ -275,8 +275,23 @@ class ViewsTestCase(TestCase):
         self.assertEqual(Comment.objects.filter(content="comment create test").count(), 1)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/')
-        
+
+    def test_POST_post_comment_post_doesnt_exist(self):
+        """ Create a comment on post that doesn't exist -> check response_status and make sure that it is not in db"""
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Post a comment on this post
+        response = self.c.post('/post-comment/comment', {
+            "content": "comment create test",
+            'postId': 1
+            }, HTTP_REFERER='/')
+
+        self.assertEqual(Comment.objects.filter(content="comment create test").count(), 0)
+        self.assertEqual(response.status_code, 404)
+
     # Post-comment view - PUT
+
     
     # Post-comment view - DELETE
 
