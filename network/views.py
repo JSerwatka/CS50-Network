@@ -15,6 +15,7 @@ from django.conf import settings
 from .models import User, Post, Comment, Like, Following, UserProfile
 from .forms import CreatePostForm, CreateCommentForm, CreateUserProfileForm
 
+#TODO: custom 404 page
 
 def index(request):
     """ View: Show all posts """

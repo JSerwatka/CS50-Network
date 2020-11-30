@@ -2,13 +2,13 @@
 
 ## Models
 ### User
-* Create new user -> create new profile test
+* ~~Create new user -> create new profile test~~
 
 ### User Profile
-* new profile created -> create default image test
+* ~~new profile created -> create default image test~~
 
 ### Like
-* multiple likes one one comment/post by the same user test
+* ~~multiple likes on one comment/post by the same user test~~
 
 
 ## Forms
@@ -18,9 +18,9 @@
 
 ## Views
 ### login
-* GET
-    * status_code = 200
-    * check redirection to *index* for logged users
+* ~~GET~~
+    * ~~status_code = 200~~
+    * ~~check redirection to *index* for logged users~~
 
 * POST
     * status_code = 200?
@@ -312,12 +312,12 @@
         4. make sure that emoji (2.) is first in like-data panel
 
 ### user-profile
-* check if following data are corrent
+* check if following data is correct
     1. follow user by 5 users
     2. follow 2 users
     3. check if user following data is correct
 
-* check if bio info are correct (force english)
+* check if bio info is correct (force english)
 
 * check if follow/unfollow logic works
     1. create new user
