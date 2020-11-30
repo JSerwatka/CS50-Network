@@ -220,18 +220,6 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['page_obj'].paginator.num_pages, 2)
 
-    def test_index_posts_order(self):
-        """ Make sure page object has posts in correct order (from newest to oldest) """
-        post_1 = Post.objects.create(user=self.user, content="test")
-        post_2 = Post.objects.create(user=self.user, content="test_2")
-
-        response = self.c.get('/')
-        # Get post list
-        post_list = response.context['page_obj'].object_list
-
-        self.assertEqual(post_list[0].content, "test_2")
-        self.assertEqual(post_list[1].content, "test")
-
     # Post-comment view 
     def test_post_comment_login_required(self):
         """ Make sure login required restriction works -> redirect to login """
@@ -321,7 +309,7 @@ class ViewsTestCase(TestCase):
         post = Post.objects.create(user=self.user, content="test")
         # Create a comment
         old_comment = Comment.objects.create(user=self.user, post=post, content="old content")
-        # Edit post's content
+        # Edit comment's content
         response = self.c.put('/post-comment/comment', json.dumps({
             "id": old_comment.id,
             "content": "new content"
@@ -334,11 +322,11 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_PUT_post_comment_post_doesnt_exist(self):
-        """ Test an attempt to edit post that doesn't exist -> error and 404 status code """
+        """ Test an attempt to edit a post that doesn't exist -> error and 404 status code """
         # Login user
         self.c.login(username="test", password="test")
 
-        # Edit post's content
+        # Try to edit post's content
         response = self.c.put('/post-comment/post', json.dumps({
             "id": 1,
             "content": "new content"
@@ -348,11 +336,11 @@ class ViewsTestCase(TestCase):
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
     
     def test_PUT_post_comment_comment_doesnt_exist(self):
-        """ Test an attempt to edit comment that doesn't exist -> error and 404 status code """
+        """ Test an attempt to edit a comment that doesn't exist -> error and 404 status code """
         # Login user
         self.c.login(username="test", password="test")
 
-        # Edit post's content
+        # Try to edit comment's content
         response = self.c.put('/post-comment/comment', json.dumps({
             "id": 1,
             "content": "new content"
@@ -362,7 +350,66 @@ class ViewsTestCase(TestCase):
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
 
     # Post-comment view - DELETE
-    def test_PUT_post_comment_delete_post(self):
+    def test_DELETE_post_comment_delete_post(self):
+        """ Test deleting of a post """
         # Login user
         self.c.login(username="test", password="test")
 
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Get posts count before delete request
+        posts_count_before_delete = Post.objects.all().count()
+
+        # Delete the post
+        response = self.c.delete('/post-comment/post', json.dumps({"id": post.id}))
+
+        # Get posts count after delete request
+        posts_count_after_delete = Post.objects.all().count()
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(posts_count_before_delete, 1)
+        self.assertEqual(posts_count_after_delete, 0)
+
+    def test_DELETE_post_comment_delete_comment(self):
+        """ Test deleting of a comment """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Create a comment
+        Comment.objects.create(user=self.user, post=post, content="test")
+        # Get comments count before delete request
+        comments_count_before_delete = Comment.objects.all().count()
+
+        # Delete the post
+        response = self.c.delete('/post-comment/post', json.dumps({"id": post.id}))
+
+        # Get comments count after delete request
+        comments_count_after_delete = Comment.objects.all().count()
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(comments_count_before_delete, 1)
+        self.assertEqual(comments_count_after_delete, 0)
+
+    def test_DELETE_post_comment_post_doesnt_exist(self):
+        """ Test an attempt to delete a post that doesn't exist -> error and 404 status code """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Try to delete a post
+        response = self.c.delete('/post-comment/post', json.dumps({"id": 1}))
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+    
+    def test_DELETE_post_comment_comment_doesnt_exist(self):
+        """ Test an attempt to delete a comment that doesn't exist -> error and 404 status code """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Try to delete a comment
+        response = self.c.delete('/post-comment/comment', json.dumps({"id": 1}))
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")

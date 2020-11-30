@@ -54,9 +54,8 @@
 * ~~status_code = 200~~
 * ~~no posts -> 1 page available~~
 * ~~11 posts -> 2 pages available~~
-* ~~create 2 posts -> check if in correct order~~
 
-### post-comment
+### ~~post-comment~~
 * ~~login-required test~~
 * ~~GET method not allowed test -> status_code == 405~~
 
@@ -69,20 +68,19 @@
 * ~~PUT~~
     * ~~status_code = 201~~
     * ~~edit post/comment~~
-        1. ~~send request's body with new data~~
+        1. ~~send request with new data~~
         2. ~~check if post's or comment's content has changed~~
-    * incorrect id
-        1. send incorrect post's or comment's id
-        2. check if status_code is 404 and error msg is correct
-* DELETE
-    * status_code = 204
-    * delete post/comment
-        1. send request's body with post's or comment's id
-        2. check if post's or comment's got deleted
-    * incorrect id
-        1. send incorrect post's or comment's id
-        2. check if status_code is 404 and error msg is correct
-        3. make sure that the post/comment has not been deleted
+    * ~~incorrect post/comment id~~
+        1. ~~send incorrect post's or comment's id~~
+        2. ~~check if status_code is 404 and error msg is correct~~
+* ~~DELETE~~
+    * ~~status_code = 204~~
+    * ~~delete post/comment~~
+        1. ~~send request with post's or comment's id~~
+        2. ~~check if post or comment got deleted~~
+    * ~~incorrect id~~
+        1. ~~send incorrect post's or comment's id~~
+        2. ~~check if status_code is 404 and error msg is correct~~
 
 ### user-profile
 * login-required test
