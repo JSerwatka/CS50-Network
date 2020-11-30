@@ -37,7 +37,7 @@
 * ~~GET~~
     * ~~status_code = 200~~
     * ~~check redirection to *index* for logged users~~
-* POST
+* ~~POST~~
     * ~~status_code = 200~~
     * ~~username, email, password empty test -> correct error msg~~
     * ~~password != confirmation test -> correct error msg~~
@@ -51,10 +51,10 @@
         * ~~check if new user exists~~
 
 ### index
-* status_code = 200
-* no posts -> page_obj context = <page 1 of 1>
-* 11 posts -> page_obj context = <page 1 of 2>
-* 2 posts -> on frontend in correct order (from newest to oldest)
+* ~~status_code = 200~~
+* ~~no posts -> 1 page available~~
+* ~~11 posts -> 2 pages available~~
+* ~~create 2 posts -> check if in correct order~~
 
 ### post-comment
 * login-required test
@@ -187,6 +187,7 @@
 
 ### index view
 * create post with short text with form and send it -> check if exists
+* check if posts in correct order (from newest to oldest)
 
 #### index view, following, user_profile
 * Posts

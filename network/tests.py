@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.conf import settings
 from django.db import IntegrityError
 
+from selenium import webdriver
 
 from .models import *
 
@@ -198,3 +199,32 @@ class ViewsTestCase(TestCase):
             })
 
         self.assertEqual(response.context['message'], "Username already taken.")
+
+    # Index view
+    def test_index_1_page(self):
+        """ Make sure status code is correct and 1 page is displayed """
+        response = self.c.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['page_obj'].paginator.num_pages, 1)
+
+    def test_index_2_pages(self):
+        """ Make sure status code is correct and 2 pages are displayed """
+        for _ in range(11):
+            Post.objects.create(user=self.user, content="test")
+
+        response = self.c.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['page_obj'].paginator.num_pages, 2)
+
+    def test_index_posts_order(self):
+        """ Make sure page object has posts in correct order (from newest to oldest) """
+        post_1 = Post.objects.create(user=self.user, content="test")
+        post_2 = Post.objects.create(user=self.user, content="test_2")
+
+        response = self.c.get('/')
+        post_list = response.context['page_obj'].object_list
+
+        self.assertEqual(post_list[0].content, "test_2")
+        self.assertEqual(post_list[1].content, "test")
