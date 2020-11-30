@@ -45,7 +45,7 @@
         1. ~~create user~~
         2. ~~try to create user with the same username~~
         3. ~~check if correct error msg~~
-    * ~~correct register ~~
+    * ~~correct register~~
         * ~~status_code = 302~~
         * ~~check redirection to *index*~~
         * ~~check if new user exists~~
@@ -66,15 +66,11 @@
         2. ~~check if post exists~~
         3. ~~check if redirection url and status code is correct~~
     * ~~check comment on non-existing post status code (404)~~
-* PUT
-    * status_code = 201
-    * edit post/comment
-        1. send request's body with new data
-        2. check if post's or comment's content has changed
-    * incorrect id
-        1. send incorrect post's or comment's id
-        2. check if status_code is dź 404 and error msg is correct
-        3. make sure that the post/comment has not changed
+* ~~PUT~~
+    * ~~status_code = 201~~
+    * ~~edit post/comment~~
+        1. ~~send request's body with new data~~
+        2. ~~check if post's or comment's content has changed~~
 * DELETE
     * status_code = 204
     * delete post/comment

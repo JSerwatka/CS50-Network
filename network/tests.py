@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db import IntegrityError
 
 from selenium import webdriver
+import json
+
 
 from .models import *
 
@@ -284,14 +286,51 @@ class ViewsTestCase(TestCase):
         # Post a comment on this post
         response = self.c.post('/post-comment/comment', {
             "content": "comment create test",
-            'postId': 1
+            "postId": 1
             }, HTTP_REFERER='/')
 
         self.assertEqual(Comment.objects.filter(content="comment create test").count(), 0)
         self.assertEqual(response.status_code, 404)
 
     # Post-comment view - PUT
+    def test_PUT_post_comment_edit_post(self):
+        """ Test editing of a post """
+        # Login user
+        self.c.login(username="test", password="test")
 
-    
+        # Create a post
+        old_post = Post.objects.create(user=self.user, content="old content")
+        # Edit post's content
+        response = self.c.put('/post-comment/post', json.dumps({
+            "id": old_post.id,
+            "content": "new content"
+        }))
+        # Get the post after editing
+        new_post = Post.objects.get(pk=old_post.id)
+
+        self.assertEqual(old_post.content, "old content")
+        self.assertEqual(new_post.content, "new content")
+        self.assertEqual(response.status_code, 201)
+
+    def test_PUT_post_comment_edit_comment(self):
+        """ Test editing of a comment """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Create a comment
+        old_comment = Comment.objects.create(user=self.user, post=post, content="old content")
+        # Edit post's content
+        response = self.c.put('/post-comment/comment', json.dumps({
+            "id": old_comment.id,
+            "content": "new content"
+        }))
+        # Get the comment after editing
+        new_comment = Comment.objects.get(pk=old_comment.id)
+
+        self.assertEqual(old_comment.content, "old content")
+        self.assertEqual(new_comment.content, "new content")
+        self.assertEqual(response.status_code, 201)
+
     # Post-comment view - DELETE
-
