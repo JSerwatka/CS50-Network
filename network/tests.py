@@ -117,5 +117,24 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.url, '/')
 
     # Register view - POST
-    
-    """ Check register basic behaviour - status code, redirection, login status, new profile created """
+    def test_post_register_correct(self):
+        """ Check register basic behaviour - status code, redirection, login status, new profile created """   
+        # Get user logged out info
+        c_logged_out = auth.get_user(self.c)
+        # Try to login
+        response = self.c.post('/register', {
+            'username': 'correct',
+            'email': 'correct@gmail.com',
+            'password': 'correct',
+            'confirmation': 'correct'
+            })
+        # Get user registered info
+        c_registered = auth.get_user(self.c)
+        # Get the new user
+        new_user = User.objects.filter(username='correct')
+
+        self.assertFalse(c_logged_out.is_authenticated)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+        self.assertTrue(c_registered.is_authenticated)
+        self.assertEqual(new_user.count(), 1)
