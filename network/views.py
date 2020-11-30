@@ -39,6 +39,10 @@ def index(request):
 def post_comment(request, action):
     """ View: Controls saving a new post/comment (only POST) """
 
+    # Get not allowed
+    if request.method == "GET":
+        return HttpResponse(status=405)
+
     if request.method == "POST":
         if action == "post":
             form = CreatePostForm(request.POST)
