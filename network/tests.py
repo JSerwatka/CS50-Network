@@ -57,7 +57,7 @@ class ViewsTestCase(TestCase):
         """ Check redirection to index for logged users """
         # Login user
         self.c.login(username='test', password="test")
-        # Get response
+        # Get the response
         response = self.c.get('/login')
         # Check redirect status code and redirection url
         self.assertEqual(response.status_code, 302)
@@ -224,7 +224,29 @@ class ViewsTestCase(TestCase):
         post_2 = Post.objects.create(user=self.user, content="test_2")
 
         response = self.c.get('/')
+        # Get post list
         post_list = response.context['page_obj'].object_list
 
         self.assertEqual(post_list[0].content, "test_2")
         self.assertEqual(post_list[1].content, "test")
+
+    # Post-comment view 
+    def test_post_comment_login_required(self):
+        """ Make sure login required restriction works -> redirect to login """
+        response = self.c.post('/post-comment/post')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/login?next=/post-comment/post")
+
+    def test_post_comment_get_request(self):
+        """ Make sure reponse status code for GET request is 405 (method not allowed) """
+        self.c.login(username='test', password="test")
+        response = self.c.get('/post-comment/post')
+
+        self.assertEqual(response.status_code, 405)
+
+    # Post-comment view - POST
+        
+    # Post-comment view - PUT
+    # Post-comment view - DELETE
+

@@ -33,7 +33,7 @@
 * ~~check user logged-in? -> logout -> user logged-out?~~
 * ~~check redirection to index after logout~~
 
-### Register
+### ~~Register~~
 * ~~GET~~
     * ~~status_code = 200~~
     * ~~check redirection to *index* for logged users~~
@@ -50,14 +50,16 @@
         * ~~check redirection to *index*~~
         * ~~check if new user exists~~
 
-### index
+### ~~index~~
 * ~~status_code = 200~~
 * ~~no posts -> 1 page available~~
 * ~~11 posts -> 2 pages available~~
 * ~~create 2 posts -> check if in correct order~~
 
 ### post-comment
-* login-required test
+* ~~login-required test~~
+* ~~GET method not allowed test -> status_code == 405~~
+
 * POST
     * status_code = ?
     * post post/comment
