@@ -23,12 +23,10 @@
     * ~~check redirection to *index* for logged users~~
 
 * POST
-    * status_code = 200?
-    * create user and try to login with its data
-        * check if user logged in
-        * test *next* redirection
-    * check invalid password behaviour -> context with correct error msg (force language setting first)
-    * check user duplicate behaviour -> context with correct error msg
+    * ~~create user and try to login with its data~~
+        * ~~check if user logged in~~
+        * ~~test *next* redirection~~
+    * ~~check invalid password behaviour -> context with correct error msg (force language setting first)~~
 
 ### logout
 * status_code = ?

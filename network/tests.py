@@ -1,6 +1,8 @@
 from django.test import TestCase, Client
 from django.contrib import auth
+from django.conf import settings
 from django.db import IntegrityError
+
 
 from .models import *
 
@@ -62,10 +64,13 @@ class FormsTestCase(TestCase):
 
 class ViewsTestCase(TestCase):
     def setUp(self):
+        # Force english translation
+        settings.LANGUAGE_CODE = 'en'
+
         self.user = User.objects.create_user(username="test", password="test")
         self.c = Client()
 
-    # Login view
+    # Login view - GET
     def test_get_login_status_code(self):
         """ Make sure status code for GET login is 200 """
         response = self.c.get("/login")
@@ -80,3 +85,29 @@ class ViewsTestCase(TestCase):
         # Check redirect status code and redirection url
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/')
+
+    # Login view - POST
+    def test_post_login_status_code(self):
+        """ 
+            Create user and try to login with its data
+            * check if user logged out -> login
+            * test next redirection 
+            * check if user logged in
+        """
+        # Get user logged out info
+        c_logged_out = auth.get_user(self.c)
+        # Try to login
+        response = self.c.post('/login', {'username': 'test', 'password': 'test'})
+        # Get user logged in info
+        c_logged_in = auth.get_user(self.c)
+
+        self.assertFalse(c_logged_out.is_authenticated)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/')
+        self.assertTrue(c_logged_in.is_authenticated)
+
+    def test_post_login_invalid_password(self):
+        """ Check invalid password login behaviour """
+        response = self.c.post('/login', {'username': 'test', 'password': '123'})
+
+        self.assertEqual(response.context["message"], "Invalid username and/or password.")
