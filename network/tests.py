@@ -121,7 +121,7 @@ class ViewsTestCase(TestCase):
         """ Check register basic behaviour - status code, redirection, login status, new profile created """   
         # Get user logged out info
         c_logged_out = auth.get_user(self.c)
-        # Try to login
+        # Try to register
         response = self.c.post('/register', {
             'username': 'correct',
             'email': 'correct@gmail.com',
@@ -138,3 +138,63 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.url, '/')
         self.assertTrue(c_registered.is_authenticated)
         self.assertEqual(new_user.count(), 1)
+
+    def test_post_register_empty_username(self):
+        """ If username empty -> make sure error msg is correct """ 
+        # Try to register
+        response = self.c.post('/register', {
+            'username': '',
+            'email': 'correct@gmail.com',
+            'password': 'correct',
+            'confirmation': 'correct'
+            })
+
+        self.assertEqual(response.context['message'], "You must fill out all fields.")
+
+    def test_post_register_empty_email(self):
+        """ If email empty -> make sure error msg is correct """ 
+        # Try to register
+        response = self.c.post('/register', {
+            'username': 'correct',
+            'email': '',
+            'password': 'correct',
+            'confirmation': 'correct'
+            })
+
+        self.assertEqual(response.context['message'], "You must fill out all fields.")
+
+    def test_post_register_empty_password(self):
+        """ If password empty -> make sure error msg is correct """ 
+        # Try to register
+        response = self.c.post('/register', {
+            'username': 'correct',
+            'email': 'correct@gmail.com',
+            'password': '',
+            'confirmation': ''
+            })
+
+        self.assertEqual(response.context['message'], "You must fill out all fields.")
+
+    def test_post_register_passwords_dont_match(self):
+        """ If password != confirmation -> make sure error msg is correct """ 
+        # Try to register
+        response = self.c.post('/register', {
+            'username': 'correct',
+            'email': 'correct@gmail.com',
+            'password': 'test',
+            'confirmation': 'correct'
+            })
+
+        self.assertEqual(response.context['message'], "Passwords must match.")
+
+    def test_post_register_username_taken(self):
+        """ If user already exists -> make sure error msg is correct """ 
+        # Try to register
+        response = self.c.post('/register', {
+            'username': 'test',
+            'email': 'test@gmail.com',
+            'password': 'test',
+            'confirmation': 'test'
+            })
+
+        self.assertEqual(response.context['message'], "Username already taken.")

@@ -38,16 +38,17 @@
     * ~~status_code = 200~~
     * ~~check redirection to *index* for logged users~~
 * POST
-    * status_code = ?
-    * username, email, password empty test -> correct error msg
-    * password != confirmation test -> correct error msg
-    * user already exists
-        1. create user
-        2. try to create user with the same username
-        3. check if correct error msg
-    * correct register 
-        * status_code = ?
-        * check redirection to *index*
+    * ~~status_code = 200~~
+    * ~~username, email, password empty test -> correct error msg~~
+    * ~~password != confirmation test -> correct error msg~~
+    * ~~user already exists~~
+        1. ~~create user~~
+        2. ~~try to create user with the same username~~
+        3. ~~check if correct error msg~~
+    * ~~correct register ~~
+        * ~~status_code = 302~~
+        * ~~check redirection to *index*~~
+        * ~~check if new user exists~~
 
 ### index
 * status_code = 200
