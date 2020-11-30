@@ -333,4 +333,36 @@ class ViewsTestCase(TestCase):
         self.assertEqual(new_comment.content, "new content")
         self.assertEqual(response.status_code, 201)
 
+    def test_PUT_post_comment_post_doesnt_exist(self):
+        """ Test an attempt to edit post that doesn't exist -> error and 404 status code """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Edit post's content
+        response = self.c.put('/post-comment/post', json.dumps({
+            "id": 1,
+            "content": "new content"
+        }))
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+    
+    def test_PUT_post_comment_comment_doesnt_exist(self):
+        """ Test an attempt to edit comment that doesn't exist -> error and 404 status code """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Edit post's content
+        response = self.c.put('/post-comment/comment', json.dumps({
+            "id": 1,
+            "content": "new content"
+        }))
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+
     # Post-comment view - DELETE
+    def test_PUT_post_comment_delete_post(self):
+        # Login user
+        self.c.login(username="test", password="test")
+

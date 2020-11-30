@@ -71,6 +71,9 @@
     * ~~edit post/comment~~
         1. ~~send request's body with new data~~
         2. ~~check if post's or comment's content has changed~~
+    * incorrect id
+        1. send incorrect post's or comment's id
+        2. check if status_code is 404 and error msg is correct
 * DELETE
     * status_code = 204
     * delete post/comment
@@ -78,7 +81,7 @@
         2. check if post's or comment's got deleted
     * incorrect id
         1. send incorrect post's or comment's id
-        2. check if status_code is dź 404 and error msg is correct
+        2. check if status_code is 404 and error msg is correct
         3. make sure that the post/comment has not been deleted
 
 ### user-profile
