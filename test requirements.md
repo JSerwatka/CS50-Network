@@ -91,19 +91,14 @@
 * ~~follow by 5 users -> make sure that correct number is send as a context~~
 * ~~follow 5 users -> make sure that correct number is send as a context~~
 
-### edit-profile
-* login-required test
-* GET
-    * status_code = 200?
-    * auto populate form with user data
-        1. add user profile info
-        2. make a request
-        3. check if form has correct info 
-* POST
-    * post form test
-        * send form and check if user profile got updated
-        * status_code = ?
-        *  check if redirection is corrent
+### ~~edit-profile~~
+* ~~login-required test~~
+* ~~GET~~
+    * ~~status_code = 200~~
+* ~~POST~~
+    * ~~send form and check if user profile got updated~~
+    * ~~status_code = 302~~
+    * ~~check if redirection works correctly~~
 
 
 ### like
@@ -190,9 +185,6 @@
 #### index view, following, user_profile
 * Posts
     * check post's content -> equal to post created
-
-    * follow by 5 users -> make sure that correct number is visible on front end
-    * follow 5 users -> make sure that correct number is visible on front end
 
     * click on post's creator text test
         1. click on post's creator
@@ -326,3 +318,9 @@
     3. check if user followed
     4. unfollow the user
     5. check if user is unfollowed
+
+### edit-profile
+    * auto populate form with user data
+        1. add user profile info
+        2. make a request
+        3. check if form has correct info 

@@ -2,10 +2,12 @@ from django.test import TestCase, Client
 from django.contrib import auth
 from django.conf import settings
 from django.db import IntegrityError
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from selenium import webdriver
 import json
-
+import os
+from datetime import datetime
 
 from .models import *
 
@@ -517,3 +519,65 @@ class ViewsTestCase(TestCase):
         response = self.c.get(f'/user-profile/{self.user.id}')
 
         self.assertEqual(response.context["following"].count(), 5)
+
+    # Edit-profile view
+    def test_edit_profile_login_required(self):
+        """ Make sure login required restriction works -> redirect to login """
+        response = self.c.post('/edit-profile')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/login?next=/edit-profile")
+
+    # Edit-profile view - GET
+    def test_GET_edit_profile_status_code(self):
+        """ Make sure reponse status code for GET request is 200 (logged user) """
+        self.c.login(username="test", password="test")
+        response = self.c.get('/edit-profile')
+
+        self.assertEqual(response.status_code, 200)
+
+    # Edit-profile view - POST
+    def test_POST_edit_profile(self):
+        """ Test full POST request -> update all user profile data and redirect to current user profile """
+        self.c.login(username="test", password="test")
+
+        # Get test image path
+        test_img_path = os.path.join(settings.MEDIA_ROOT, 'profile_pics', 'test.jpg')
+
+        # Open the image
+        with open(test_img_path, "rb") as infile:
+            # create SimpleUploadedFile object from the image
+            img_file = SimpleUploadedFile("test.jpg", infile.read())
+
+            # Send the POST request
+            response = self.c.post('/edit-profile', {
+                "name": "Tom",
+                "date_of_birth": "2000-12-20",
+                "about": "My name is Tom",
+                "country": "PL",
+                "image": img_file
+            })
+
+        # Get the new user profile data
+        new_user_profile = UserProfile.objects.get(user=self.user)
+
+        # Prepare image file path to comparison
+        # 1. Normalize it
+        new_img_path = os.path.normpath(new_user_profile.image.path)
+        # 2. Get the last part of the path and discard django's additional chars
+        img_name = os.path.basename(new_img_path).split("_")[0]
+
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f'/user-profile/{self.user.id}')
+        self.assertEqual(new_user_profile.name, "Tom")
+        self.assertEqual(new_user_profile.date_of_birth.strftime("%Y-%m-%d"), "2000-12-20")
+        self.assertEqual(new_user_profile.about, "My name is Tom")
+        self.assertEqual(new_user_profile.country, "PL")
+        self.assertEqual(img_name, "test")
+
+        # Delete new image file
+        if os.path.exists(new_img_path):
+            os.remove(new_img_path)
+
+
