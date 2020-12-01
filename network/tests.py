@@ -262,7 +262,7 @@ class ViewsTestCase(TestCase):
         response = self.c.post('/post-comment/comment', {
             "content": "comment create test",
             'postId': post.id
-            }, HTTP_REFERER='/')
+        }, HTTP_REFERER='/')
 
         self.assertEqual(Comment.objects.filter(content="comment create test").count(), 1)
         self.assertEqual(response.status_code, 302)
@@ -277,7 +277,7 @@ class ViewsTestCase(TestCase):
         response = self.c.post('/post-comment/comment', {
             "content": "comment create test",
             "postId": 1
-            }, HTTP_REFERER='/')
+        }, HTTP_REFERER='/')
 
         self.assertEqual(Comment.objects.filter(content="comment create test").count(), 0)
         self.assertEqual(response.status_code, 404)
@@ -652,7 +652,7 @@ class ViewsTestCase(TestCase):
         # Login user
         self.c.login(username="test", password="test")
 
-        response = self.c.get(f'/like/tost/1')
+        response = self.c.get('/like/tost/1')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(
@@ -664,7 +664,7 @@ class ViewsTestCase(TestCase):
         # Login user
         self.c.login(username="test", password="test")
 
-        response = self.c.get(f'/like/post/1')
+        response = self.c.get('/like/post/1')
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
@@ -674,7 +674,93 @@ class ViewsTestCase(TestCase):
         # Login user
         self.c.login(username="test", password="test")
 
-        response = self.c.get(f'/like/comment/1')
+        response = self.c.get('/like/comment/1')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+
+
+    # Like view - POST
+    def test_POST_like_post_correct(self):
+        """ Check correct like creation on a post using POST request """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+
+        # Post a like
+        response = self.c.post(f'/like/post/{post.id}',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        # Get the like
+        created_like = post.likes.all()
+
+        self.assertEqual(response.status_code, 201)
+        # Make sure only one like created
+        self.assertEqual(created_like.count(), 1)
+        # Mak sure like's emoji type is dislike
+        self.assertEqual(created_like[0].emoji_type, 2)
+
+    def test_POST_like_comment_correct(self):
+        """ Check correct like creation on a comment using POST request """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Create a comment
+        comment = Comment.objects.create(user=self.user, post=post, content="test")
+
+        # Post a like
+        response = self.c.post(f'/like/comment/{comment.id}',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        # Get the like
+        created_like = comment.likes.all()
+
+        self.assertEqual(response.status_code, 201)
+        # Make sure only one like created
+        self.assertEqual(created_like.count(), 1)
+        # Mak sure like's emoji type is dislike
+        self.assertEqual(created_like[0].emoji_type, 2)
+
+    def test_POST_like_unknown_action(self):
+        """ Send unknown action in the url -> check if status code and error msg correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.post('/like/tost/1',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            json.loads(response.content)["error"], "Unknown action - you can only like post or comment"
+        )
+    
+    def test_POST_like_post_doesnt_exist(self):
+        """  Try to like a post that doesn't exist -> check if status code and response correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.post('/like/post/1',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+
+    def test_POST_like_comment_doesnt_exist(self):
+        """  Try to like a post that doesn't exist -> check if status code and response correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.post('/like/comment/1',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
