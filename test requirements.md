@@ -133,19 +133,19 @@
         * ~~status_code = 201~~
         * ~~like exists with proper emoji_type~~
 
-* PUT
+* ~~PUT~~
+    * ~~check correct like editing~~
+        * ~~status_code = 201~~
+        * ~~like exists with proper emoji_type~~
+            1. ~~create a like with one emoji_type~~
+            2. ~~request for emoji_type change~~
+            3. ~~check if correct emoji type saved~~
     * ~~send unknown action and correct id~~
         * ~~check if status_code = 400~~
         * ~~check if error msg correct~~
     * ~~send correct action but post/comment doesn't exist~~
         * ~~check if status_code = 400~~
         * ~~check if error msg correct~~
-    * check correct like editing
-        * status_code = 201
-        * like exists with proper emoji_type
-            1. create a like with one emoji_type
-            2. request for emoji_type change
-            3. check if correct emoji type saved
 
 ### following
 * login-required test

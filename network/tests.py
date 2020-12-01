@@ -754,11 +754,100 @@ class ViewsTestCase(TestCase):
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
 
     def test_POST_like_comment_doesnt_exist(self):
-        """  Try to like a post that doesn't exist -> check if status code and response correct """
+        """  Try to like a comment that doesn't exist -> check if status code and response correct """
         # Login user
         self.c.login(username="test", password="test")
 
         response = self.c.post('/like/comment/1',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+    
+    # Like view - PUT
+    def test_PUT_like_post_correct(self):
+        """ Check correct like editing on a post using PUT request """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Crete a like
+        Like.objects.create(user=self.user, post=post, emoji_type=2)
+
+        # Change the like
+        response = self.c.put(f'/like/post/{post.id}',
+                                json.dumps({"emojiType": "smile"}),
+                                content_type="application/json")
+
+        # Get the like
+        created_like = post.likes.all()
+
+        self.assertEqual(response.status_code, 201)
+        # Make sure only one like created
+        self.assertEqual(created_like.count(), 1)
+        # Mak sure like's emoji type is dislike
+        self.assertEqual(created_like[0].emoji_type, 3)
+
+    def test_PUT_like_comment_correct(self):
+        """ Check correct like editing on a comment using PUT request """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Create a comment
+        comment = Comment.objects.create(user=self.user, post=post, content="test")
+        # Crete a like
+        Like.objects.create(user=self.user, comment=comment, emoji_type=2)
+
+        # Post a like
+        response = self.c.put(f'/like/comment/{comment.id}',
+                                json.dumps({"emojiType": "smile"}),
+                                content_type="application/json")
+
+        # Get the like
+        created_like = comment.likes.all()
+
+        self.assertEqual(response.status_code, 201)
+        # Make sure only one like created
+        self.assertEqual(created_like.count(), 1)
+        # Mak sure like's emoji type is dislike
+        self.assertEqual(created_like[0].emoji_type, 3)
+
+    def test_PUT_like_unknown_action(self):
+        """ Send unknown action in the url -> check if status code and error msg correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.put('/like/tost/1',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            json.loads(response.content)["error"], "Unknown action - you can only like post or comment"
+        )
+    
+    def test_PUT_like_post_doesnt_exist(self):
+        """  Try to change a like on a post that doesn't exist -> check if status code and response correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.put('/like/post/1',
+                                json.dumps({"emojiType": "dislike"}),
+                                content_type="application/json")
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+
+    def test_PUT_like_comment_doesnt_exist(self):
+        """  Try to like change a like on a comment that doesn't exist -> check if status code and response correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.put('/like/comment/1',
                                 json.dumps({"emojiType": "dislike"}),
                                 content_type="application/json")
 
