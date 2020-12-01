@@ -433,7 +433,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_user_profile_1_page(self):
-        """ Make sure 1 page is displayed """
+        """ Make sure 1 page of posts is displayed """
         # Login user
         self.c.login(username="test", password="test")
 
@@ -442,7 +442,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.context['page_obj'].paginator.num_pages, 1)
 
     def test_user_profile_2_pages(self):
-        """ Make sure status 2 pages are displayed """
+        """ Make sure status 2 pages of posts are displayed """
         # Login user
         self.c.login(username="test", password="test")
 
@@ -853,3 +853,85 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+    
+    # Following view
+    def test_following_login_required(self):
+        """ Make sure login required restriction works -> redirect to login """
+        response = self.c.post('/following')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/login?next=/following')
+    
+    def test_GET_following_status_code(self):
+        """ Make sure status code for GET user profile is 200 (logged in user) """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get('/following')
+        self.assertEqual(response.status_code, 200)
+
+    def test_following_1_page(self):
+        """ Make sure 1 page of posts is displayed """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a user
+        new_user = User.objects.create_user(username="1", password="1")
+
+        # Create posts by user which is not followed
+        for _ in range(11):
+            Post.objects.create(user=new_user, content="test")
+
+        response = self.c.get('/following')
+
+        self.assertEqual(response.context['page_obj'].paginator.num_pages, 1)
+    
+    def test_following_2_pages(self):
+        """ Make sure status 2 pages of posts are displayed """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create 3 users, follow them and create 5 posts for each user
+        for i in range(3):
+            new_user = User.objects.create_user(username=str(i), password=str(i))
+
+            Following.objects.create(
+                user=self.user,
+                user_followed=new_user
+            )
+
+            for _ in range(5):
+                Post.objects.create(user=new_user, content="test")      
+
+        response = self.c.get('/following')
+
+        self.assertEqual(response.context['page_obj'].paginator.num_pages, 2)
+
+    def test_following_show_only_users_posts(self):
+        """ Make sure only posts created by the followed user are visible """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a second user
+        user_2 = User.objects.create_user(username="test_2", password="test_2")
+        # Follow the new user
+        Following.objects.create(user=self.user, user_followed=user_2)
+
+        # Create user's post
+        Post.objects.create(user=self.user, content="user")
+        # Create user_2's post
+        post_user_2 = Post.objects.create(user=user_2, content="user_2")
+
+        # Get all posts
+        all_posts = Post.objects.all()
+
+        response = self.c.get('/following')
+
+        # Get context paginator posts
+        post_list = response.context['page_obj'].object_list
+
+        self.assertEqual(all_posts.count(), 2)
+        # Following - check if only one post exists
+        self.assertEqual(len(post_list), 1)
+        # Following - check if post's author is user_2
+        self.assertEqual(post_list[0].user, post_user_2.user)

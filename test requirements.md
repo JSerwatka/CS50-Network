@@ -147,12 +147,12 @@
         * ~~check if status_code = 400~~
         * ~~check if error msg correct~~
 
-### following
-* login-required test
-* status_code = 200
-* no posts -> page_obj context = <page 1 of 1>
-* 11 posts -> page_obj context = <page 1 of 2>
-* 2 posts: by followed user and another -> make sure only followed is visible
+### ~~following~~
+* ~~login-required test~~
+* ~~status_code = 200~~
+* ~~no posts -> 1 page available~~
+* ~~11 posts -> 2 pages available~~
+* ~~Make sure only followed users posts are visible~~
 
 ### follow-unfollow
 * login-required test
