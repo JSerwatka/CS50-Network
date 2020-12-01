@@ -413,3 +413,107 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+
+    # User-profile view
+    def test_user_profile_login_required(self):
+        """ Make sure login required restriction works -> redirect to login """
+        response = self.c.post(f'/user-profile/{self.user.id}')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"/login?next=/user-profile/{self.user.id}")
+    
+    def test_GET_user_profile_status_code(self):
+        """ Make sure status code for GET user profile is 200 (logged in user) """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get(f'/user-profile/{self.user.id}')
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_profile_1_page(self):
+        """ Make sure 1 page is displayed """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get(f'/user-profile/{self.user.id}')
+
+        self.assertEqual(response.context['page_obj'].paginator.num_pages, 1)
+
+    def test_user_profile_2_pages(self):
+        """ Make sure status 2 pages are displayed """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create posts (more than can be on 1 page)
+        for _ in range(11):
+            Post.objects.create(user=self.user, content="test")
+
+        response = self.c.get(f'/user-profile/{self.user.id}')
+
+        self.assertEqual(response.context['page_obj'].paginator.num_pages, 2)
+
+    def test_user_profile_show_only_users_posts(self):
+        """ Make sure only posts created by the currently viewed user are visible """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a second user
+        user_2 = User.objects.create_user(username="test_2", password="test_2")
+
+        # Create user's post
+        post_user = Post.objects.create(user=self.user, content="user")
+        # Create user_2's post
+        post_user_2 = Post.objects.create(user=user_2, content="user_2")
+
+        # Get all posts count
+        all_posts = Post.objects.all()
+
+        # Get response from user and user_2 profile
+        response = self.c.get(f'/user-profile/{self.user.id}')
+        response_user_2 = self.c.get(f'/user-profile/{user_2.id}')
+
+        # Get context paginator posts
+        post_list_user = response.context['page_obj'].object_list
+        post_list_user_2 = response_user_2.context['page_obj'].object_list
+
+        self.assertEqual(all_posts.count(), 2)
+        # User profile - check if only one post exists
+        self.assertEqual(post_list_user.count(), 1)
+        # User profile - check if post's author is user
+        self.assertEqual(post_list_user[0].user, post_user.user)
+        # User_2 profile - check if only one post exists
+        self.assertEqual(post_list_user_2.count(), 1)
+        # User_2 profile - check if post's author is user_2
+        self.assertEqual(post_list_user_2[0].user, post_user_2.user)
+    
+    def test_user_profile_followers(self):
+        """ Follow by 5 users -> make sure that correct number is send as a context """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create 5 users
+        for i in range(5):
+            Following.objects.create(
+                user=User.objects.create_user(username=str(i), password=str(i)),
+                user_followed=self.user
+            )
+
+        response = self.c.get(f'/user-profile/{self.user.id}')
+
+        self.assertEqual(response.context["followers"].count(), 5)
+    
+    def test_user_profile_following(self):
+        """ Follow 5 users -> make sure that correct number is send as a context """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create 5 users
+        for i in range(5):
+            Following.objects.create(
+                user=self.user,
+                user_followed=User.objects.create_user(username=str(i), password=str(i))
+            )
+
+        response = self.c.get(f'/user-profile/{self.user.id}')
+
+        self.assertEqual(response.context["following"].count(), 5)

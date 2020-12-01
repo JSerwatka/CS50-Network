@@ -82,14 +82,14 @@
         1. ~~send incorrect post's or comment's id~~
         2. ~~check if status_code is 404 and error msg is correct~~
 
-### user-profile
-* login-required test
-* status_code = 200
-* no posts -> page_obj context = <page 1 of 1>
-* 11 posts -> page_obj context = <page 1 of 2>
-* 2 posts: by this user and another -> make sure only current is visible
-* follow by 5 users -> make sure that correct number is visible on front end
-* follow 5 users -> make sure that correct number is visible on front end
+### ~~user-profile~~
+* ~~login-required test~~
+* ~~status_code = 200~~
+* ~~no posts ->  1 page available~~
+* ~~11 posts ->  2 pages available~~
+* ~~2 posts: by this user and another -> make sure only current is visible~~
+* ~~follow by 5 users -> make sure that correct number is send as a context~~
+* ~~follow 5 users -> make sure that correct number is send as a context~~
 
 ### edit-profile
 * login-required test
@@ -190,6 +190,9 @@
 #### index view, following, user_profile
 * Posts
     * check post's content -> equal to post created
+
+    * follow by 5 users -> make sure that correct number is visible on front end
+    * follow 5 users -> make sure that correct number is visible on front end
 
     * click on post's creator text test
         1. click on post's creator
