@@ -531,6 +531,7 @@ class ViewsTestCase(TestCase):
     # Edit-profile view - GET
     def test_GET_edit_profile_status_code(self):
         """ Make sure reponse status code for GET request is 200 (logged user) """
+        # Login user
         self.c.login(username="test", password="test")
         response = self.c.get('/edit-profile')
 
@@ -539,6 +540,7 @@ class ViewsTestCase(TestCase):
     # Edit-profile view - POST
     def test_POST_edit_profile(self):
         """ Test full POST request -> update all user profile data and redirect to current user profile """
+        # Login user
         self.c.login(username="test", password="test")
 
         # Get test image path
@@ -581,3 +583,98 @@ class ViewsTestCase(TestCase):
             os.remove(new_img_path)
 
 
+    # Like view
+    def test_like_login_required(self):
+        """ Make sure login required restriction works -> redirect to login """
+        response = self.c.post('/like/post/1')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/login?next=/like/post/1")
+
+    # Like view - GET
+    def test_GET_like_post_correct(self):
+        """ Create a like on a post -> check if GET request gives correct info (like exists and its emoji type) """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Crete a like
+        Like.objects.create(user=self.user, post=post, emoji_type=2)
+
+        response = self.c.get(f'/like/post/{post.id}')
+
+        # Get JSON reponse
+        json_response = json.loads(response.content)
+        response_emoji_type = [emoji_num for emoji_num, emoji_str in Like.LIKE_TYPE_CHOICES if emoji_str == json.loads(response.content)["emojiType"]][0]
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response["like"], "True")
+        self.assertEqual(response_emoji_type, 2)
+
+    def test_GET_like_comment_correct(self):
+        """ Create a like on a comment -> check if GET request gives correct info (like exists and its emoji type) """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+        # Create a comment
+        comment = Comment.objects.create(user=self.user, post=post, content="test")
+        # Crete a like
+        Like.objects.create(user=self.user, comment=comment, emoji_type=2)
+
+        response = self.c.get(f'/like/comment/{comment.id}')
+
+        # Get JSON reponse
+        json_response = json.loads(response.content)
+        response_emoji_type = [emoji_num for emoji_num, emoji_str in Like.LIKE_TYPE_CHOICES if emoji_str == json.loads(response.content)["emojiType"]][0]
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_response["like"], "True")
+        self.assertEqual(response_emoji_type, 2)
+
+    def test_GET_like_doesnt_exist(self):
+        """ Try to get a like that doesn't exist -> check if status code and response correct  """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="test")
+
+        response = self.c.get(f'/like/post/{post.id}')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)["like"], "False")
+
+    def test_GET_like_unknown_action(self):
+        """ Send unknown action in the url -> check if status code and error msg correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get(f'/like/tost/1')
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            json.loads(response.content)["error"], "Unknown action - you can only like post or comment"
+        )
+
+    def test_GET_like_post_doesnt_exist(self):
+        """  Try to like a post that doesn't exist -> check if status code and response correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get(f'/like/post/1')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")
+
+    def test_GET_like_comment_doesnt_exist(self):
+        """  Try to like a post that doesn't exist -> check if status code and response correct """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get(f'/like/comment/1')
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.content)["error"], "Post or Comment does not exist")

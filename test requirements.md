@@ -57,7 +57,7 @@
 
 ### ~~post-comment~~
 * ~~login-required test~~
-* ~~GET method not allowed test -> status_code == 405~~
+* ~~GET method not allowed test -> status_code = 405~~
 
 * ~~POST~~
     * ~~post post/comment~~
@@ -102,28 +102,27 @@
 
 
 ### like
-* login-required test
-* GET
-    * send unknown action and correct id
-        * check if status_code = 400
-        * check if error msg correct
-    * send correct action but like doesn't exist
-        * check if status_code = 200
-        * check if *like* = *False*
-    * send correct action but post/comment doesn't exist
-        * check if status_code = 400
-        * check if error msg correct
-    * check correct like get
-        1. create a post/comment
-        2. create a like 
-        3. send get request
-        4. check if:
-            * status_code = 200
-            * *like* = *True*
-            * *emojiType* is correct
+* ~~login-required test~~
+* ~~GET~~
+    * ~~check correct like get~~
+        1. ~~create a post/comment~~
+        2. ~~create a like ~~
+        3. ~~send GET request~~
+        4. ~~check if:~~
+            * ~~status_code = 200~~
+            * ~~*like* = *True*~~
+            * ~~*emojiType* is correct~~
+    * ~~send correct action but like doesn't exist~~
+        * ~~check if status_code = 200~~
+        * ~~check if *like* = *False*~~
+    * ~~send unknown action~~
+        * ~~check if status_code = 400~~
+        * ~~check if error msg correct~~
+    * ~~send correct action but post/comment doesn't exist~~
+        * ~~check if status_code = 400~~
+        * ~~check if error msg correct~~
 
 * POST
-* login-required test
     * send unknown action and correct id
         * check if status_code = 400
         * check if error msg correct
