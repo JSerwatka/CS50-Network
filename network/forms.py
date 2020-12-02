@@ -69,7 +69,6 @@ class CreateUserProfileForm(forms.ModelForm):
 
     def clean_image(self):
         """ Check if image doesn't exceed max file size """
-
         image = self.cleaned_data.get('image')
 
         if "default.png" not in image:

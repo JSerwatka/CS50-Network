@@ -305,7 +305,9 @@ def following(request):
 @login_required(login_url="network:login")
 def follow_unfollow(request, user_id):
     """ View: Controls following/unfollowing users (only POST) """
-
+    # GET method is not allowed
+    if request.method == "GET":
+        return HttpResponse(status=405)
     # Nested try/except helps to reduce db queries by one
     if request.method == "POST":
         try:

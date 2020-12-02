@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 
 from .models import *
+from .forms import CreateUserProfileForm
 
 # Create your tests here.
 #TODO: Models test
@@ -40,8 +41,22 @@ class ModelsTestCase(TestCase):
             Like.objects.create(user=self.user, post=self.post, emoji_type=2)
 
 class FormsTestCase(TestCase):
-    # TODO
-    pass
+    def test_user_profile_form_img_too_big(self):
+        """ Check if error occures for too big photo """
+        # Get test image path
+        test_img_path = os.path.join(settings.MEDIA_ROOT, 'profile_pics', 'test_too_big.jpg')
+
+        # Open the image
+        with open(test_img_path, "rb") as infile:
+            # create SimpleUploadedFile object from the image
+            img_file = SimpleUploadedFile("test_too_big.jpg", infile.read())
+
+            form = CreateUserProfileForm(files={"image": img_file})
+        
+        self.assertFalse(form.is_valid())
+        # Make sure that the correct error msg is in form's errors
+        self.assertIn(f"Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit", form.errors["image"])
+
 
 class ViewsTestCase(TestCase):
     def setUp(self):
@@ -935,3 +950,62 @@ class ViewsTestCase(TestCase):
         self.assertEqual(len(post_list), 1)
         # Following - check if post's author is user_2
         self.assertEqual(post_list[0].user, post_user_2.user)
+
+    # Follow-unfollow view
+    def test_follow_unfollow_login_required(self):
+        """ Make sure login required restriction works -> redirect to login """
+        response = self.c.post('/follow-unfollow/2')
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/login?next=/follow-unfollow/2')
+    
+    def test_GET_follow_unfollow(self):
+        """ Make sure status code for GET user profile is 405 (method not allowed) """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        response = self.c.get("/follow-unfollow/1")
+
+        self.assertEqual(response.status_code, 405)
+
+    def test_POST_follow_unfollow_correct(self):
+        """ Try to follow and unfollow a user -> check if it works and redirection is successful """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Create a new user
+        new_user = User.objects.create_user(username="1", password="2")
+
+        # Follow the user
+        response_follow = self.c.post(f'/follow-unfollow/{new_user.id}')
+        # Get users that the current user follow
+        user_followed = self.user.following.all()
+        
+        # Make sure that the user's following count is 1
+        self.assertEqual(user_followed.count(), 1)
+        # Make sure that the followed user is new_user
+        self.assertEqual(user_followed[0].user_followed.id, new_user.id)
+        # Make sure redirection is successful
+        self.assertEqual(response_follow.status_code, 302)
+        self.assertEqual(response_follow.url, f'/user-profile/{new_user.id}')
+
+        # Send request for the second time = unfollow the user
+        response_unfollow = self.c.post(f'/follow-unfollow/{new_user.id}')
+        # Check if user is unfollowed
+        user_unfollowed = self.user.following.all()
+ 
+        # Make sure that the user is no longer followed after the second request
+        self.assertEqual(user_unfollowed.count(), 0)
+        # Make sure redirection is successful
+        self.assertEqual(response_unfollow.status_code, 302)
+        self.assertEqual(response_unfollow.url, f'/user-profile/{new_user.id}')
+    
+    def test_POST_follow_unfollow_user_doesnt_exist(self):
+        """ Follow a user that doesn't exist -> 404 response """
+        # Login user
+        self.c.login(username="test", password="test")
+
+        # Try to follow a user that doesn't exist
+        response = self.c.post('/follow-unfollow/9')
+
+        self.assertEqual(response.status_code, 404)

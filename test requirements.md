@@ -11,12 +11,13 @@
 * ~~multiple likes on one comment/post by the same user test~~
 
 
-## Forms
-### CreateUserProfileForm
-* form z image > 5MB -> after cleaned_data -> Validation Error occurs?
+## ~~Forms~~
+### ~~CreateUserProfileForm~~
+* ~~try to upload too big photo to the form ~~
+    * ~~check if the form is invalid~~
+    * ~~check if the correct message is rendered~~
 
-
-## Views
+## ~~Views~~
 ### ~~login~~
 * ~~GET~~
     * ~~status_code = 200~~
@@ -155,17 +156,20 @@
 * ~~Make sure only followed users posts are visible~~
 
 ### follow-unfollow
-* login-required test
-* status_code = ?
-* follow user that doesn't exist -> 404 response
-* follow user that doesn exist
-    * check if new following exist
-    * check if redirection is corrent
-    * check status_code
-* try to follow for the second time
-    * check if new following deleted
-    * check if redirection is corrent
-    * check status_code
+* ~~login-required test~~
+* ~~GET~~
+    * ~~status_code = 405~~
+* ~~POST:~~ 
+    * ~~correct follow/unfollow user action~~
+        * ~~make first follow request~~
+        * ~~check if following exists ~~
+        * ~~check if redirection is successful~~
+        * ~~check status_code~~
+        * ~~make second follow request (unfollow)~~
+        * ~~make sure user doesn't exist~~
+        * ~~check if redirection is successful~~
+        * ~~check status_code~~
+    * ~~follow a user that doesn't exist -> 404 response~~
 
 # Frontend
 
