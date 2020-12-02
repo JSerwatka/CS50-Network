@@ -9,6 +9,11 @@ import json
 import os
 from datetime import datetime
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
+import time
 
 from .models import *
 from .forms import CreateUserProfileForm
@@ -1009,6 +1014,79 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-# class FronEndTest(StaticLiveServerTestCase):
-#     def test_foo(self):
-#         self.assertEqual(1, 0)
+class FronEndTest(StaticLiveServerTestCase):
+    def setUp(self):
+        # Create a user
+        self.user = User.objects.create_user(username="test", password="password")
+        self.c = Client()
+
+        # Populate the user-profile with data
+        user_profile = self.user.profile
+        user_profile.name = "Tom"
+        user_profile.date_of_birth = "2000-12-20"
+        user_profile.about = "My name is Tom"
+        user_profile.country = "PL"
+        user_profile.save()
+
+        # Create a post
+        post = Post.objects.create(user=self.user, content="post 1")
+        # Create comments
+        for i in range(3):
+            Comment.objects.create(user=self.user, post=post, content=f"comment {i}")
+
+        # Create chromedirver path
+        project_dir = os.path.abspath(os.getcwd())
+        chromedriver_dir = os.path.join(project_dir, "chromedriver", "chromedriver.exe")
+        # Set language to english
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
+        self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
+
+        super(FronEndTest, self).setUp()
+
+    def tearDown(self):
+        # Close browser after testing
+        # self.browser.quit()
+
+        super(FronEndTest, self).tearDown()
+
+    # Method to automate logging in usign login page form
+    def login_front_end(self, username="test", password="password"):
+        # Go to login page
+        self.browser.get(f"{self.live_server_url}/login")
+
+        # Populate login form with username and password
+        username_el = self.browser.find_element_by_id("id_username")
+        password_el = self.browser.find_element_by_id("id_password")
+        username_el.send_keys(username)
+        password_el.send_keys(password)
+
+        # Log in
+        self.browser.find_element_by_css_selector("input[type='submit']").click()
+
+    # Method to automate logging in using client.login method and cookies
+    def login_quick(self, username="test", password="password"):
+        self.c.login(username=username, password=password)
+        cookie = self.c.cookies['sessionid']
+        self.browser.get(self.live_server_url)
+        self.browser.add_cookie({"name": "sessionid", "value": cookie.value, "secure": False, "path": "/"})
+
+    def test_create_post_from_form(self):
+        """ Create a post using post form -> check if it exists """
+        # Login user
+        self.login_quick()
+        
+        # Get index page
+        self.browser.get(self.live_server_url)
+
+        # Get form element
+        form_el = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".post-form-wrapper form"))
+        )
+        # Populate textarea
+        form_el.find_element_by_id("id_content").send_keys("Sellenium test")
+        # Submit form
+        form_el.submit()
+
+        # Check if the post exists
+        self.assertEqual(Post.objects.filter(content="Sellenium test").count(), 1)

@@ -102,7 +102,7 @@
     * ~~check if redirection works correctly~~
 
 
-### like
+### ~~like~~
 * ~~login-required test~~
 * ~~GET~~
     * ~~check correct like get~~
@@ -155,7 +155,7 @@
 * ~~11 posts -> 2 pages available~~
 * ~~Make sure only followed users posts are visible~~
 
-### follow-unfollow
+### ~~follow-unfollow~~
 * ~~login-required test~~
 * ~~GET~~
     * ~~status_code = 405~~
@@ -174,16 +174,16 @@
 # Frontend
 
 ## post
-**Setup**
-1. create user 
-2. populate user-profile with data
-3. login user
-4. create post
-5. create several comments to this post
+~~**Setup**~~
+1. ~~create a browser handler~~
+2. ~~create a user ~~
+4. ~~populate the user-profile with data~~
+5. ~~create a post~~
+6. ~~create several comments to this post~~
 
 ### index view
-* create post with short text with form and send it -> check if exists
-* check if posts in correct order (from newest to oldest)
+* create a post using post form -> check if it exists
+* check if posts are in correct order (from newest to oldest)
 
 #### index view, following, user_profile
 * Posts
@@ -323,7 +323,7 @@
     5. check if user is unfollowed
 
 ### edit-profile
-    * auto populate form with user data
-        1. add user profile info
-        2. make a request
-        3. check if form has correct info 
+* auto populate form with user data
+    1. add user profile info
+    2. make a request
+    3. check if form has correct info 
