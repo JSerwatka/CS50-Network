@@ -4,3 +4,5 @@ db.sqlite3
 **/__pycache__
 media/profile_pics/*
 !media/profile_pics/default.png
+!media/profile_pics/test.jpg
+!media/profile_pics/test_too_big.jpg

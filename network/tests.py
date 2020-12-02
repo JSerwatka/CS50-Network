@@ -1,13 +1,14 @@
 from django.test import TestCase, Client
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib import auth
 from django.conf import settings
 from django.db import IntegrityError
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from selenium import webdriver
 import json
 import os
 from datetime import datetime
+from selenium import webdriver
 
 from .models import *
 from .forms import CreateUserProfileForm
@@ -44,7 +45,7 @@ class FormsTestCase(TestCase):
     def test_user_profile_form_img_too_big(self):
         """ Check if error occures for too big photo """
         # Get test image path
-        test_img_path = os.path.join(settings.MEDIA_ROOT, 'profile_pics', 'test_too_big.jpg')
+        test_img_path = os.path.join(settings.MEDIA_ROOT, 'tests', 'test_too_big.jpg')
 
         # Open the image
         with open(test_img_path, "rb") as infile:
@@ -56,7 +57,6 @@ class FormsTestCase(TestCase):
         self.assertFalse(form.is_valid())
         # Make sure that the correct error msg is in form's errors
         self.assertIn(f"Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit", form.errors["image"])
-
 
 class ViewsTestCase(TestCase):
     def setUp(self):
@@ -559,7 +559,7 @@ class ViewsTestCase(TestCase):
         self.c.login(username="test", password="test")
 
         # Get test image path
-        test_img_path = os.path.join(settings.MEDIA_ROOT, 'profile_pics', 'test.jpg')
+        test_img_path = os.path.join(settings.MEDIA_ROOT, 'tests', 'test.jpg')
 
         # Open the image
         with open(test_img_path, "rb") as infile:
@@ -582,8 +582,7 @@ class ViewsTestCase(TestCase):
         # 1. Normalize it
         new_img_path = os.path.normpath(new_user_profile.image.path)
         # 2. Get the last part of the path and discard django's additional chars
-        img_name = os.path.basename(new_img_path).split("_")[0]
-
+        img_name = os.path.basename(new_img_path)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f'/user-profile/{self.user.id}')
@@ -591,7 +590,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(new_user_profile.date_of_birth.strftime("%Y-%m-%d"), "2000-12-20")
         self.assertEqual(new_user_profile.about, "My name is Tom")
         self.assertEqual(new_user_profile.country, "PL")
-        self.assertEqual(img_name, "test")
+        self.assertEqual(img_name, "test.jpg")
 
         # Delete new image file
         if os.path.exists(new_img_path):
@@ -1009,3 +1008,7 @@ class ViewsTestCase(TestCase):
         response = self.c.post('/follow-unfollow/9')
 
         self.assertEqual(response.status_code, 404)
+
+# class FronEndTest(StaticLiveServerTestCase):
+#     def test_foo(self):
+#         self.assertEqual(1, 0)
