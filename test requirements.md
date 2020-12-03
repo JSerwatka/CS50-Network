@@ -308,19 +308,21 @@
         4. make sure that emoji (2.) is first in like-data panel
 
 ### user-profile
-* check if following data is correct
-    1. follow user by 5 users
-    2. follow 2 users
-    3. check if user following data is correct
+* ~~check if following data is correct~~
+    1. ~~follow user by 5 users~~
+    2. ~~follow 2 users~~
+    3. ~~check if user following data is correct~~
 
-* check if bio info is correct (force english)
+* ~~check if all bio info is correct (force english)~~
 
-* check if follow/unfollow logic works
-    1. create new user
-    2. follow the user
-    3. check if user followed
-    4. unfollow the user
-    5. check if user is unfollowed
+* ~~check if profile picture has correct src~~
+
+* ~~check if follow/unfollow logic works~~
+    1. ~~create new user~~
+    2. ~~follow the user~~
+    3. ~~check if user followed~~
+    4. ~~unfollow the user~~
+    5. ~~check if user is unfollowed~~
 
 ### edit-profile
 * auto populate form with user data

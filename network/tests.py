@@ -1071,6 +1071,7 @@ class FronEndTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.browser.add_cookie({"name": "sessionid", "value": cookie.value, "secure": False, "path": "/"})
 
+    # Index tests
     def test_frontend_create_post_from_form(self):
         """ Create a post using post form -> check if it exists """
         # Login user
@@ -1120,4 +1121,91 @@ class FronEndTest(StaticLiveServerTestCase):
             post_number = post_content.text.split()[-1]
             self.assertEqual(post_number, str(i))
 
+    # User profile tests
+    def test_frontend_following_data(self):
+        """ Follow user by 5 other users, follow 2 users -> check if data in user profile is correct """
+        users = []
+
+        # Crete users and follow self.user
+        for i in range(5):
+            users.append(User.objects.create_user(username=str(i), password=str(i)))
+            Following.objects.create(user=users[i], user_followed=self.user)
         
+        # Make self.user be followed by 2 users
+        Following.objects.create(user=self.user, user_followed=users[0])
+        Following.objects.create(user=self.user, user_followed=users[1])
+        
+        # Login user
+        self.login_quick()
+        # Get to self.user profile page
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        
+        # Get following data
+        following_info_card = self.browser.find_element_by_class_name("profile-following")
+        followers = following_info_card.find_element_by_css_selector(".followers .follow-count").text
+        following = following_info_card.find_element_by_css_selector(".following .follow-count").text
+        
+        self.assertEqual(followers, str(5))
+        self.assertEqual(following, str(2))
+    
+    def test_frontend_bio_info(self):
+        """ Check if user's bio in user profile is correct """
+        # Login user
+        self.login_quick()
+        # Get to self.user profile page
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+
+        # Get bio info
+        bio_info_card = self.browser.find_element_by_class_name("bio")
+        name = bio_info_card.find_element_by_css_selector(".profile-name span") \
+                            .text.split(":")[-1].strip()
+        birth = bio_info_card.find_element_by_css_selector(".profile-birth span") \
+                            .text.split(":")[-1].strip()
+        about = bio_info_card.find_element_by_css_selector(".profile-about span") \
+                            .text.split(":")[-1].strip()
+        country = bio_info_card.find_element_by_css_selector(".profile-country span") \
+                            .text.split(":")[-1].strip()
+
+        
+        self.assertEqual(name, "Tom")
+        self.assertEqual(birth, "20.12.2000")
+        self.assertEqual(about, "My name is Tom")
+        self.assertEqual(country, "Poland")
+
+    def test_frontend_profile_picture_src(self):
+        """ Check if profile picture is in media/profile_pics folder and is default """
+        # Login user
+        self.login_quick()
+        # Get to self.user profile page
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+
+        # Get full profile picure src
+        profile_picture = self.browser.find_element_by_css_selector(".profile-picture > img").get_attribute("src")                    
+        # Get short src - media/profile_pic/default.png
+        profile_picture_short_src = profile_picture.split("/")[-3:]
+        
+        self.assertEqual(profile_picture_short_src[0], "media")
+        self.assertEqual(profile_picture_short_src[1], "profile_pics")
+        self.assertEqual(profile_picture_short_src[2], "default.png")
+
+    def test_frontend_follow_unfollow_button(self):
+        """ Check if follow/unfollow button works """
+        # Create a user
+        new_user = User.objects.create_user(username="1", password="1")
+    
+        # Login user
+        self.login_quick()
+        # Get to self.user profile page
+        self.browser.get(self.live_server_url + f"/user-profile/{new_user.id}")
+
+        # Try to follow new_user and check if it works
+        follow_button = self.browser.find_element_by_css_selector(".profile-buttons button.follow")
+        follow_button.click()
+        time.sleep(0.1)
+        self.assertEqual(Following.objects.filter(user=self.user, user_followed=new_user).count(), 1)
+
+        # Try to unfollow new_user and check it works
+        unfollow_button = self.browser.find_element_by_css_selector(".profile-buttons button.unfollow")
+        unfollow_button.click()
+        time.sleep(0.1)
+        self.assertEqual(Following.objects.filter(user=self.user, user_followed=new_user).count(), 0)
