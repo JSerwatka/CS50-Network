@@ -181,9 +181,9 @@
 5. ~~create a post~~
 6. ~~create several comments to this post~~
 
-### index view
-* create a post using post form -> check if it exists
-* check if posts are in correct order (from newest to oldest)
+### ~~index view~~
+* ~~create a post using post form -> check if it exists~~
+* ~~check if posts are in correct order (from newest to oldest)~~
 
 #### index view, following, user_profile
 * Posts

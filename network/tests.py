@@ -1041,13 +1041,13 @@ class FronEndTest(StaticLiveServerTestCase):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
         self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
+        self.browser.implicitly_wait(10)
 
         super(FronEndTest, self).setUp()
 
     def tearDown(self):
         # Close browser after testing
         # self.browser.quit()
-
         super(FronEndTest, self).tearDown()
 
     # Method to automate logging in usign login page form
@@ -1071,18 +1071,19 @@ class FronEndTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.browser.add_cookie({"name": "sessionid", "value": cookie.value, "secure": False, "path": "/"})
 
-    def test_create_post_from_form(self):
+    def test_frontend_create_post_from_form(self):
         """ Create a post using post form -> check if it exists """
         # Login user
         self.login_quick()
-        
         # Get index page
         self.browser.get(self.live_server_url)
 
         # Get form element
-        form_el = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, ".post-form-wrapper form"))
-        )
+        form_el = self.browser.find_element_by_css_selector(".post-form-wrapper form")
+        # form_el = WebDriverWait(self.browser, 10).until(
+        #     EC.presence_of_element_located((By.CSS_SELECTOR, ".post-form-wrapper form"))
+        # )
+
         # Populate textarea
         form_el.find_element_by_id("id_content").send_keys("Sellenium test")
         # Submit form
@@ -1090,3 +1091,33 @@ class FronEndTest(StaticLiveServerTestCase):
 
         # Check if the post exists
         self.assertEqual(Post.objects.filter(content="Sellenium test").count(), 1)
+
+    def test_frontend_post_order(self):
+        """ Create 2 posts -> check if they are in correct order (from newest to oldest) """
+        # Create 2 posts
+        post_1 = Post.objects.create(user=self.user, content="post 2")
+        time.sleep(0.1)
+        post_2 = Post.objects.create(user=self.user, content="post 3")
+
+        # Login user
+        self.login_quick()
+        # Get index page
+        self.browser.get(self.live_server_url)
+
+        # Wait for page full load
+        # WebDriverWait(self.browser, 10).until(
+        #     EC.presence_of_element_located((By.CSS_SELECTOR, ".post-comment-element"))
+        # )
+
+        # Get posts
+        posts_el = self.browser.find_elements_by_class_name("post")
+
+        # Check is posts' id are in correct order: 3 -> 2 -> 1
+        for i, post_el in zip(range(3, 0, -1), posts_el):
+            # Get posts inner text
+            post_content = post_el.find_elements_by_class_name("post-content")[0]
+            # Get posts number
+            post_number = post_content.text.split()[-1]
+            self.assertEqual(post_number, str(i))
+
+        
