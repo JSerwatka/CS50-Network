@@ -1713,7 +1713,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Login the user
         self.login_quick()
-        # Get the index view
+        # Get the user-profile view
         self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
 
         # Check if the emoji has data-count = 2
@@ -1739,7 +1739,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Login the user
         self.login_quick()
-        # Get the index view
+        # Get the following view
         self.browser.get(self.live_server_url + "/following")
 
         # Check if the emoji has data-count = 2
@@ -1750,3 +1750,157 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check if the like-counter = 1
         self.assertEqual(like_counter_el.text, "+1")
+
+    def test_frontend_index_emoji_correct_order_post(self):
+        """ Liking one post with the same emoji twice -> check if data-count, like-counter values are correct """
+        # Create a second user
+        second_user = User.objects.create_user(username="1", password="1")
+        # Create a third user
+        third_user = User.objects.create_user(username="2", password="2")
+        # Create likes
+        Like.objects.create(user=self.user, post=self.user.posts.all()[0], emoji_type=1)
+        Like.objects.create(user=second_user, post=self.user.posts.all()[0], emoji_type=3)
+        Like.objects.create(user=third_user, post=self.user.posts.all()[0], emoji_type=3)
+
+        # Login the user
+        self.login_quick()
+        # Get the index view
+        self.browser.get(self.live_server_url)
+
+        # Check if smile emoji is first and like emoji is second
+        emoji_list_el = self.browser.find_elements_by_css_selector(".post ul.emoji-list > i")
+
+        self.assertEqual(emoji_list_el[0].get_attribute("data-name"), "smile")
+        self.assertEqual(emoji_list_el[1].get_attribute("data-name"), "like")
+
+    def test_frontend_user_profile_emoji_correct_order_post(self):
+        """ Liking one post with the same emoji twice -> check if data-count, like-counter values are correct """
+        # Create a second user
+        second_user = User.objects.create_user(username="1", password="1")
+        # Create a third user
+        third_user = User.objects.create_user(username="2", password="2")
+        # Create likes
+        Like.objects.create(user=self.user, post=self.user.posts.all()[0], emoji_type=1)
+        Like.objects.create(user=second_user, post=self.user.posts.all()[0], emoji_type=3)
+        Like.objects.create(user=third_user, post=self.user.posts.all()[0], emoji_type=3)
+
+        # Login the user
+        self.login_quick()
+        # Get the user-profile view
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+
+        # Check if smile emoji is first and like emoji is second
+        emoji_list_el = self.browser.find_elements_by_css_selector(".post ul.emoji-list > i")
+
+        self.assertEqual(emoji_list_el[0].get_attribute("data-name"), "smile")
+        self.assertEqual(emoji_list_el[1].get_attribute("data-name"), "like")
+
+    def test_frontend_following_emoji_correct_order_post(self):
+        """ Liking one post with the same emoji twice -> check if data-count, like-counter values are correct """
+        # Create a second user
+        second_user = User.objects.create_user(username="1", password="1")
+        # Create a third user
+        third_user = User.objects.create_user(username="2", password="2")
+        # Follow the second user
+        Following.objects.create(user=self.user, user_followed=second_user)
+        # Creat a post by the second user
+        new_post = Post.objects.create(user=second_user, content="Lorem ipsum")
+        # Create likes
+        Like.objects.create(user=self.user, post=new_post, emoji_type=3)
+        Like.objects.create(user=second_user, post=new_post, emoji_type=1)
+        Like.objects.create(user=third_user, post=new_post, emoji_type=3)
+
+        # Login the user
+        self.login_quick()
+        # Get the following view
+        self.browser.get(self.live_server_url + "/following")
+
+        # Check if smile emoji is first and like emoji is second
+        emoji_list_el = self.browser.find_elements_by_css_selector(".post ul.emoji-list > i")
+
+        self.assertEqual(emoji_list_el[0].get_attribute("data-name"), "smile")
+        self.assertEqual(emoji_list_el[1].get_attribute("data-name"), "like")
+
+    def test_frontend_comment_data_post(self):
+        """ Check if comment-count == 3 for index and user-profile and 0 for following """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post
+        Post.objects.create(user=new_user, content="Lorem ipsum")
+
+        # Login the user
+        self.login_quick()
+
+        # Get the index view
+        self.browser.get(self.live_server_url)
+        posts_el = self.browser.find_elements_by_css_selector(".post")
+        # Get comment count for self.user's post
+        comment_count_el = posts_el[1].find_element_by_css_selector(".comment-data")
+        comment_count_text = comment_count_el.text.split(":")[-1].strip()
+        self.assertEqual(comment_count_text, str(3))
+
+        # Get the user-profile view
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Get comment count for self.user's post
+        comment_count_el = self.browser.find_element_by_css_selector(".post .comment-data")
+        comment_count_text = comment_count_el.text.split(":")[-1].strip()
+        self.assertEqual(comment_count_text, str(3))
+
+        # Get the following view
+        self.browser.get(self.live_server_url + "/following")
+        # Get comment count for new_user's post
+        comment_count_el = self.browser.find_element_by_css_selector(".post .comment-data")
+        comment_count_text = comment_count_el.text.split(":")[-1].strip()
+        self.assertEqual(comment_count_text, str(0))
+
+    def test_frontend_comment_section_post(self):
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post
+        Post.objects.create(user=new_user, content="Lorem ipsum")
+
+        # Login the user
+        self.login_quick()
+
+        # Get the index view
+        self.browser.get(self.live_server_url)
+        # Get the comment button and click it
+        comment_button = self.browser.find_elements_by_css_selector(".post .comment-button")[0]
+        action = ActionChains(self.browser)
+        action.move_to_element(comment_button).perform()
+        time.sleep(0.5)
+        comment_button.click()
+        time.sleep(0.7)
+        # Get the comment section
+        comment_section_el = self.browser.find_elements_by_css_selector(".post-comment-element .comment-section")[0]
+        self.assertIn("show", comment_section_el.get_attribute("class"))
+
+        # Get the user-profile view
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Get the comment button and click it
+        comment_button = self.browser.find_element_by_css_selector(".post .comment-button")
+        action = ActionChains(self.browser)
+        action.move_to_element(comment_button).perform()
+        time.sleep(0.5)
+        comment_button.click()
+        time.sleep(0.7)
+        # Get the comment section
+        comment_section_el = self.browser.find_elements_by_css_selector(".post-comment-element .comment-section")[0]
+        self.assertIn("show", comment_section_el.get_attribute("class"))
+        
+        # Get the following view
+        self.browser.get(self.live_server_url + "/following")
+        # Get the comment button and click it
+        comment_button = self.browser.find_element_by_css_selector(".post .comment-button")
+        action = ActionChains(self.browser)
+        action.move_to_element(comment_button).perform()
+        time.sleep(0.5)
+        comment_button.click()
+        time.sleep(0.7)
+        # Get the comment section
+        comment_section_el = self.browser.find_elements_by_css_selector(".post-comment-element .comment-section")[0]
+        self.assertIn("show", comment_section_el.get_attribute("class"))

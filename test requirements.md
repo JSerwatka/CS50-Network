@@ -186,7 +186,7 @@
 * ~~check if posts are in correct order (from newest to oldest)~~
 
 #### index view, following, user_profile
-* Posts
+* ~~Posts~~
     * ~~check if post's content is equal to post created~~
 
     * ~~check if post creator's name button redirects correctly to user profile~~
@@ -232,18 +232,18 @@
         3. ~~make sure the emoji has has data-count = 2~~
         4. ~~check if the like-counter = +1~~
     
-    * emoji in correct order
-        1. like post
-        2. like post with different emoji
-        3. like post with the same emoji (2.) 
-        4. make sure that emoji (2.) is first in like-data panel
+    * ~~emoji in correct order~~
+        1. ~~like the post~~
+        2. ~~like the post with the same emoji from a different accout~~
+        3. ~~like the post with a different emoji from the third account~~
+        4. ~~make sure that the first emoji is first in the like-data panel~~
     
-    * comment-data test
-        1. check if comment-count = Comments: 3 (force english)
+    * ~~comment-data test~~
+        1. ~~check if comment-count is correct~~
 
-    * comment button test
-        1. click comment button
-        2. check if comment-section has show class
+    * ~~comment button test~~
+        1. ~~click comment button~~
+        2. ~~check if comment-section has show class~~
 
 * Comments
     * create comment with form -> check if comment exists
