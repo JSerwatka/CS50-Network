@@ -193,7 +193,7 @@
         1. ~~click on post creator's name button~~
         2. ~~check if redirection to correct user profile works~~
 
-    * edit post tests
+    * ~~edit post tests~~
         * ~~post's creator != current user -> check if edit/delete panel doesn't exist~~
         * ~~post's creator == current user -> check if edit/delete panel exists~~
         * ~~post's creator == current user~~
@@ -202,37 +202,35 @@
             3. ~~change the text~~
             4. ~~check if post's content has changed~~
         
-    * delete post test
-        1. check if delete modal is not hidden
-        2. click on delete post
-        3. check if post's content got deleted
+    * ~~delete post test~~
+        1. ~~click on delete-edit-panel icon~~
+        2. ~~click on delete post~~
+        3. ~~check if post's content got deleted~~
 
-    * long text post test
-        1. create second post with long text
-        2. check if short text post's *show more* button is hidden
-        3. check if long text post's *show more* button is not hidden
+    * ~~show more button test~~
+        1. ~~create a second post with long text~~
+        2. ~~check if the short text post's *show more* button is hidden~~
+        3. ~~check if the long text post's *show more* button is not hidden~~
 
-    * one like post test
-        1. like post
-        2. check if new like exists and have correct emoji (database)
-        3. check if new like exists and have correct emoji (like-data)
-        4. check if new like has data-count = 1
-        5. check if like-counter is empty
+    * ~~like a post test~~
+        1. ~~like the post~~
+        2. ~~check if the new like exists and have correct emoji (database)~~
+        3. ~~check if the new like exists and have correct emoji (like-data)~~
+        4. ~~check if the new like has data-count = 1~~
+        5. ~~check if the like-counter is empty~~
     
-    * change like post test
-        1. like post
-        2. change like to different emoji
-        3. check if old like doesn't exist (database)
-        4. check if old like doesn't exist (like-data)
-        5. check if new like exists and have correct emoji (database)
-        6. check if new like exists and have correct emoji (like-data)
-        7. check if new like has data-count = 1
+    * ~~change like post test~~
+        1. ~~like the post~~
+        2. ~~change the like to different emoji~~
+        3. ~~check if the new like exists and have correct emoji (database)~~
+        4. ~~check if the new like exists and have correct emoji (like-data)~~
+        5. ~~check if the new like has data-count = 1~~
 
-    * the same emoji twice test
-        1. like post
-        2. like post with the same emoji from a different accout
-        3. make sure emoji has has data-count = 2
-        4. check if like-counter = +1
+    * ~~the same emoji twice test~~
+        1. ~~like the post~~
+        2. ~~like the post with the same emoji from a different accout~~
+        3. ~~make sure the emoji has has data-count = 2~~
+        4. ~~check if the like-counter = +1~~
     
     * emoji in correct order
         1. like post

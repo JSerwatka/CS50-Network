@@ -10,6 +10,7 @@ class User(AbstractUser):
     """ Model: User """
     pass
 
+
 class UserProfile(models.Model):
     """
     Model: User Profile
@@ -36,6 +37,7 @@ class UserProfile(models.Model):
         super().save(*args, **kwargs)
         resize_image(self.image.path, 600, 600)
 
+
 class Post(models.Model):
     """
     Model: Post - all post info
@@ -59,7 +61,6 @@ class Post(models.Model):
 
     def __str__(self):
         return f"Post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
-
 
 
 class Comment(models.Model):
