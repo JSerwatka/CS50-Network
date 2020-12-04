@@ -187,23 +187,23 @@
 
 #### index view, following, user_profile
 * Posts
-    * check post's content -> equal to post created
+    * ~~check if post's content is equal to post created~~
 
-    * click on post's creator text test
-        1. click on post's creator
-        2. check if redirection to correct user profile works
+    * ~~check if post creator's name button redirects correctly to user profile~~
+        1. ~~click on post creator's name button~~
+        2. ~~check if redirection to correct user profile works~~
 
     * edit post tests
-        * post's creator = current user
-            1. check if edit/delete panel is not hidden
-            2. click on edit post
-            3. change text
-            4. check if post's content has changed
-        * post's creator != current user
-            1. check if edit/delete panel is hidden
+        * ~~post's creator != current user -> check if edit/delete panel doesn't exist~~
+        * ~~post's creator == current user -> check if edit/delete panel exists~~
+        * ~~post's creator == current user~~
+            1. ~~click on delete-edit-panel icon~~
+            2. ~~click on edit post button~~
+            3. ~~change the text~~
+            4. ~~check if post's content has changed~~
         
-    * delete post tests
-        1. check if edit/delete panel is not hidden
+    * delete post test
+        1. check if delete modal is not hidden
         2. click on delete post
         3. check if post's content got deleted
 

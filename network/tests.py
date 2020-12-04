@@ -14,6 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
 # from selenium.webdriver.common.action_chains import ActionChains
 # from selenium.webdriver.common.keys import Keys
 
@@ -1076,6 +1077,15 @@ class FrontEndTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.browser.add_cookie({"name": "sessionid", "value": cookie.value, "secure": False, "path": "/"})
 
+    # Method to check if element exists in HTML
+    def is_element_present(self, element, css_locator):
+        try:
+            element.find_element_by_css_selector(css_locator)
+        except NoSuchElementException:
+            return False
+        else:
+            return True
+
     # Index tests
     def test_frontend_create_post_from_form(self):
         """ Create a post using post form -> check if it exists """
@@ -1263,13 +1273,13 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Clear name input and fill out with new data
         name_el.clear()
-        time.sleep(0.5)
+        time.sleep(0.7)
         name_el.send_keys("John")
         # Change date of birth
         self.browser.execute_script("arguments[0].setAttribute('value', '2020-12-12');", date_of_birth_el)
         # Clear about input and fill out with new data
         about_el.clear()
-        time.sleep(0.5)
+        time.sleep(0.7)
         about_el.send_keys("My name is John")
         # Change country
         country_el.select_by_value("RU")
@@ -1277,7 +1287,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         image_el.send_keys(test_img_path)
         # Submit the form
         form_el.submit()
-        time.sleep(0.5)
+        time.sleep(0.7)
 
         # Get the new user profile data
         new_user_profile = UserProfile.objects.get(user=self.user)
@@ -1297,3 +1307,184 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Delete new image file
         if os.path.exists(new_img_path):
             os.remove(new_img_path)
+
+    # Posts tests
+    def test_frontend_post_content(self):
+        """ Check if post's content is equal to post created (index, user-profile, following) """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post by the second user
+        Post.objects.create(user=new_user, content="new user post")
+
+        # Login user
+        self.login_quick()
+
+        # Check **index view**
+        self.browser.get(self.live_server_url)
+        posts_content_el = self.browser.find_elements_by_css_selector(".post .post-content")
+
+        self.assertEqual(len(posts_content_el), 2)
+        self.assertEqual(posts_content_el[0].text, "new user post")
+        self.assertEqual(posts_content_el[1].text, "post 1")
+
+        # Check **user-profile view**
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        posts_content_el = self.browser.find_elements_by_css_selector(".post .post-content")
+
+        self.assertEqual(len(posts_content_el), 1)
+        self.assertEqual(posts_content_el[0].text, "post 1")
+
+        # Check **following view**
+        self.browser.get(self.live_server_url + "/following")
+        posts_content_el = self.browser.find_elements_by_css_selector(".post .post-content")
+        
+        self.assertEqual(len(posts_content_el), 1)
+        self.assertEqual(posts_content_el[0].text, "new user post")
+
+    def test_frontend_post_creator_button(self):
+        """ Check if post creator's name button redirects correctly to user profile """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post by the second user
+        Post.objects.create(user=new_user, content="new user post")
+
+        # Login user
+        self.login_quick()
+
+        # **Check index view**
+        self.browser.get(self.live_server_url)
+        post_user_link_el = self.browser.find_elements_by_css_selector(".post .post-user > a")
+        # The second post = self.user's post
+        post_user_link_el[1].click()
+        time.sleep(0.1)
+
+        # Get current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+        # **Check user-profile view**
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        post_user_link_el = self.browser.find_elements_by_css_selector(".post .post-user > a")
+        # The only post = self.user's post
+        post_user_link_el[0].click()
+        time.sleep(0.1)
+
+        # Get current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+        # **Check following view**
+        self.browser.get(self.live_server_url + "/following")
+        post_user_link_el = self.browser.find_elements_by_css_selector(".post .post-user > a")
+        # The only post = new_user's post
+        post_user_link_el[0].click()
+        time.sleep(0.1)
+
+        # Get current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if url is .../user-profile/{new_user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(new_user.id))
+
+    def test_frontend_index_delete_edit_panel_exists(self):
+        """ Check if delete-edit-panel exists or doesn't exist for post's creator == current user and post's creator != current user """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Creat a post by the second user
+        Post.objects.create(user=new_user, content="new user post")
+
+        # Login user
+        self.login_quick()
+        # Go to index view
+        self.browser.get(self.live_server_url)
+
+        # Get posts
+        posts_el = self.browser.find_elements_by_css_selector(".post")
+
+        # Check if delete-edit-panel is present or not
+        self.assertFalse(self.is_element_present(posts_el[0], ".delete-edit-panel"))
+        self.assertTrue(self.is_element_present(posts_el[1], ".delete-edit-panel"))
+
+    def test_frontend_user_profile_delete_edit_panel_exists(self):
+        """ Check if delete-edit-panel exists or doesn't exist for post's creator == current user and post's creator != current user """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Creat a post by the second user
+        Post.objects.create(user=new_user, content="new user post")
+
+        # Login user
+        self.login_quick()
+
+        # Go to self.user profile view
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Get delete-edit-panels
+        posts_el = self.browser.find_elements_by_css_selector(".post")
+        # Check if delete-edit-panel is present
+        self.assertTrue(self.is_element_present(posts_el[0], ".delete-edit-panel"))
+
+        # Go to new_user profile view
+        self.browser.get(self.live_server_url + f"/user-profile/{new_user.id}")
+        # Get posts
+        posts_el = self.browser.find_elements_by_css_selector(".post")
+        # Check if delete-edit-panel is present
+        self.assertFalse(self.is_element_present(posts_el[0], ".delete-edit-panel"))
+
+    def test_frontend_following_delete_edit_panel_exists(self):
+        """ Check if delete-edit-panel doesn't exist for and post's creator != current user """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post by the second user
+        Post.objects.create(user=new_user, content="new user post")
+
+        # Login user
+        self.login_quick()
+        # Go to index view
+        self.browser.get(self.live_server_url + f"/following")
+
+        # Get posts
+        posts_el = self.browser.find_elements_by_css_selector(".post")
+        # Check if delete-edit-panel is present
+        self.assertFalse(self.is_element_present(posts_el[0], ".delete-edit-panel"))
+    
+    def test_frontend_edit_post(self):
+        """ Try to edit post using edit button (index and user-profile views) """
+        # Login user
+        self.login_quick()
+
+        for url in ["", f"/user-profile/{self.user.id}"]:
+            # Go to index view
+            self.browser.get(self.live_server_url + url)
+
+            # Get delete-edit-panel
+            delete_edit_panel = self.browser.find_element_by_css_selector(".post .delete-edit-panel")
+            # Click on the icon button
+            delete_edit_panel.find_element_by_class_name("icon-button").click()
+            time.sleep(0.1)
+            # Click on the edit button
+            delete_edit_panel.find_element_by_class_name("dropdown-edit").click()
+            # Get the modal, its textarea and save button
+            modal_el = self.browser.find_element_by_class_name("edit-modal")
+            modal_textarea_el = modal_el.find_element_by_css_selector(".modal-body textarea")
+            modal_save_button = modal_el.find_element_by_css_selector(".modal-footer button.modal-save")
+            # Change model textarea's value
+            modal_textarea_el.clear()
+            time.sleep(0.7)
+            modal_textarea_el.send_keys("Post edited-" + self.browser.current_url)
+            time.sleep(0.1)
+            modal_save_button.click()
+            time.sleep(0.7)
+
+            # Get the post's data
+            edited_post = Post.objects.get(user=self.user)
+
+            self.assertEqual(edited_post.content, "Post edited-" + self.browser.current_url)
