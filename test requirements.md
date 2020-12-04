@@ -307,7 +307,7 @@
         3. like comment with the same emoji (2.) 
         4. make sure that emoji (2.) is first in like-data panel
 
-### user-profile
+### ~~user-profile~~
 * ~~check if following data is correct~~
     1. ~~follow user by 5 users~~
     2. ~~follow 2 users~~
@@ -324,8 +324,12 @@
     4. ~~unfollow the user~~
     5. ~~check if user is unfollowed~~
 
-### edit-profile
-* auto populate form with user data
-    1. add user profile info
-    2. make a request
-    3. check if form has correct info 
+### ~~edit-profile~~
+* ~~auto populate form with user data~~
+    1. ~~open edit-profile page~~
+    2. ~~check if the form has correct info~~
+
+* ~~update profile info test~~
+    1. ~~fill out the edit-profile form~~
+    2. ~~submit it~~
+    3. ~~check if user profile data has changed~~

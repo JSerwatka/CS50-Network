@@ -8,10 +8,15 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 import json
 import os
 from datetime import datetime
+
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
+# from selenium.webdriver.common.action_chains import ActionChains
+# from selenium.webdriver.common.keys import Keys
+
 
 import time
 
@@ -1014,7 +1019,7 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-class FronEndTest(StaticLiveServerTestCase):
+class FrontEndTest(StaticLiveServerTestCase):
     def setUp(self):
         # Create a user
         self.user = User.objects.create_user(username="test", password="password")
@@ -1043,12 +1048,12 @@ class FronEndTest(StaticLiveServerTestCase):
         self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
         self.browser.implicitly_wait(10)
 
-        super(FronEndTest, self).setUp()
+        super(FrontEndTest, self).setUp()
 
     def tearDown(self):
         # Close browser after testing
         # self.browser.quit()
-        super(FronEndTest, self).tearDown()
+        super(FrontEndTest, self).tearDown()
 
     # Method to automate logging in usign login page form
     def login_front_end(self, username="test", password="password"):
@@ -1209,3 +1214,86 @@ class FronEndTest(StaticLiveServerTestCase):
         unfollow_button.click()
         time.sleep(0.1)
         self.assertEqual(Following.objects.filter(user=self.user, user_followed=new_user).count(), 0)
+    
+    # Edit-profile tests
+    def test_frontend_edit_profile_autopopulate_form(self):
+        """ Open edit-profile page and check if form is autopopulated with current user data """
+        # Login user
+        self.login_quick()
+        # Get to self.user profile page
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+
+        # Open edit-profile page
+        edit_profile_button = self.browser.find_element_by_id("edit-profile-btn")
+        edit_profile_button.click()
+        
+        # Get all the form's fields
+        form_el = self.browser.find_element_by_css_selector(".edit-profile-form > form")
+        name_el = form_el.find_element_by_css_selector("input[name='name']")
+        date_of_birth_el = form_el.find_element_by_css_selector("input[name='date_of_birth']")
+        about_el = form_el.find_element_by_css_selector("textarea[name='about']")
+        country_el = Select(form_el.find_element_by_css_selector("select[name='country']"))
+
+        self.assertEqual(name_el.get_attribute("value"), "Tom")
+        self.assertEqual(date_of_birth_el.get_attribute("value"), "2000-12-20")
+        self.assertEqual(about_el.get_attribute("value"), "My name is Tom")
+        self.assertEqual(country_el.first_selected_option.get_attribute("value"), "PL")
+
+    def test_frontend_edit_profile_update_profile(self):
+        """ Try to fill out and submit the edit-profile form and check if user's data has changed """
+        # Get test image path
+        test_img_path = os.path.join(settings.MEDIA_ROOT, 'tests', 'test.jpg')
+        
+        # Login user
+        self.login_quick()
+        # Get to self.user profile page
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+
+        # Open edit-profile page
+        edit_profile_button = self.browser.find_element_by_id("edit-profile-btn")
+        edit_profile_button.click()
+        
+        # Get all the form's fields
+        form_el = self.browser.find_element_by_css_selector(".edit-profile-form > form")
+        name_el = form_el.find_element_by_css_selector("input[name='name']")
+        date_of_birth_el = form_el.find_element_by_css_selector("input[name='date_of_birth']")
+        about_el = form_el.find_element_by_css_selector("textarea[name='about']")
+        country_el = Select(form_el.find_element_by_css_selector("select[name='country']"))
+        image_el = form_el.find_element_by_id("id_image")
+
+        # Clear name input and fill out with new data
+        name_el.clear()
+        time.sleep(0.5)
+        name_el.send_keys("John")
+        # Change date of birth
+        self.browser.execute_script("arguments[0].setAttribute('value', '2020-12-12');", date_of_birth_el)
+        # Clear about input and fill out with new data
+        about_el.clear()
+        time.sleep(0.5)
+        about_el.send_keys("My name is John")
+        # Change country
+        country_el.select_by_value("RU")
+        # Upload a new photo
+        image_el.send_keys(test_img_path)
+        # Submit the form
+        form_el.submit()
+        time.sleep(0.5)
+
+        # Get the new user profile data
+        new_user_profile = UserProfile.objects.get(user=self.user)
+
+        # Prepare image file path to comparison
+        # 1. Normalize it
+        new_img_path = os.path.normpath(new_user_profile.image.path)
+        # 2. Get the last part of the path and discard django's additional chars
+        img_name = os.path.basename(new_img_path)
+        
+        self.assertEqual(new_user_profile.name, "John")
+        self.assertEqual(new_user_profile.date_of_birth.strftime("%Y-%m-%d"), "2020-12-12")
+        self.assertEqual(new_user_profile.about, "My name is John")
+        self.assertEqual(new_user_profile.country, "RU")
+        self.assertEqual(img_name, "test.jpg")
+
+        # Delete new image file
+        if os.path.exists(new_img_path):
+            os.remove(new_img_path)

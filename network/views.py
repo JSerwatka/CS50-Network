@@ -161,6 +161,7 @@ def edit_profile(request):
 
         # Submit edit -> update profile
         form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
+
         if form.is_valid():
             # Get current user's profile
             new_profile = UserProfile.objects.get(user=request.user.id)
