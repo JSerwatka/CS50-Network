@@ -1426,7 +1426,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         self.assertEqual(current_url_list[-2], "user-profile")
         self.assertEqual(current_url_list[-1], str(new_user.id))
 
-    def test_frontend_index_delete_edit_panel_exists(self):
+    def test_frontend_index_delete_edit_panel_exists_post(self):
         """ Check if delete-edit-panel exists or doesn't exist for post's creator == current user and post's creator != current user """
         # Create a second user
         new_user = User.objects.create_user(username="1", password="1")
@@ -1445,7 +1445,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         self.assertFalse(self.is_element_present(posts_el[0], ".delete-edit-panel"))
         self.assertTrue(self.is_element_present(posts_el[1], ".delete-edit-panel"))
 
-    def test_frontend_user_profile_delete_edit_panel_exists(self):
+    def test_frontend_user_profile_delete_edit_panel_exists_post(self):
         """ Check if delete-edit-panel exists or doesn't exist for post's creator == current user and post's creator != current user """
         # Create a second user
         new_user = User.objects.create_user(username="1", password="1")
@@ -1455,7 +1455,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Login user
         self.login_quick()
 
-        # Go to self.user profile view
+        # Go to the self.user profile view
         self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
         # Get delete-edit-panels
         posts_el = self.browser.find_elements_by_css_selector(".post")
@@ -1469,7 +1469,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Check if delete-edit-panel is present
         self.assertFalse(self.is_element_present(posts_el[0], ".delete-edit-panel"))
 
-    def test_frontend_following_delete_edit_panel_exists(self):
+    def test_frontend_following_delete_edit_panel_exists_post(self):
         """ Check if delete-edit-panel doesn't exist for and post's creator != current user """
         # Create a second user
         new_user = User.objects.create_user(username="1", password="1")
@@ -1480,7 +1480,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Login the user
         self.login_quick()
-        # Go to the index view
+        # Go to the following view
         self.browser.get(self.live_server_url + "/following")
 
         # Get the posts
@@ -1489,12 +1489,11 @@ class FrontEndTest(StaticLiveServerTestCase):
         self.assertFalse(self.is_element_present(posts_el[0], ".delete-edit-panel"))
     
     def test_frontend_edit_post(self):
-        """ Try to edit post using edit button (index and user-profile views) """
+        """ Try to edit a post using edit button (index and user-profile views) """
         # Login the user
         self.login_quick()
 
         for url in ["", f"/user-profile/{self.user.id}"]:
-            # Go to the index view
             self.browser.get(self.live_server_url + url)
 
             # Get the delete-edit-panel
@@ -1505,7 +1504,7 @@ class FrontEndTest(StaticLiveServerTestCase):
             # Click on the edit button
             delete_edit_panel.find_element_by_class_name("dropdown-edit").click()
             # Get the modal, its textarea and save button
-            modal_el = self.browser.find_element_by_class_name("edit-modal")
+            modal_el = self.browser.find_element_by_css_selector(".post .edit-modal")
             modal_textarea_el = modal_el.find_element_by_css_selector(".modal-body textarea")
             modal_save_button = modal_el.find_element_by_css_selector(".modal-footer button.modal-save")
             # Change the modal textarea's value
@@ -1536,7 +1535,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Click on the delete button
         delete_edit_panel.find_element_by_class_name("dropdown-delete").click()
         # Get the modal and click delete
-        modal_el = self.browser.find_element_by_class_name("delete-modal")
+        modal_el = self.browser.find_element_by_css_selector(".post .delete-modal")
         modal_el.find_element_by_css_selector(".modal-footer button.modal-delete").click()
         time.sleep(0.7)
 
@@ -1985,7 +1984,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check **index view**
         self.browser.get(self.live_server_url)
-        # Get the new-user post-comment element
+        # Get the post-comment element
         post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
         # Open comment section
         comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
@@ -2003,7 +2002,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check **user-profile view**
         self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
-        # Get the new-user post-comment element
+        # Get the post-comment element
         post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
         # Open comment section
         comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
@@ -2021,7 +2020,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check **following view**
         self.browser.get(self.live_server_url + "/following")
-        # Get the new-user post-comment element
+        # Get the post-comment element
         post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
         # Open comment section
         comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
@@ -2053,7 +2052,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check **index view**
         self.browser.get(self.live_server_url)
-        # Get the new-user post-comment element
+        # Get the post-comment element
         post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
         # Open comment section
         comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
@@ -2071,7 +2070,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check **user-profile view**
         self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
-        # Get the new-user post-comment element
+        # Get the post-comment element
         post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
         # Open comment section
         comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
@@ -2089,7 +2088,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
         # Check **following view**
         self.browser.get(self.live_server_url + "/following")
-        # Get the new-user post-comment element
+        # Get the post-comment element
         post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
         # Open comment section
         comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
@@ -2104,3 +2103,123 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Check if the url is .../user-profile/{self.user.id}
         self.assertEqual(current_url_list[-2], "user-profile")
         self.assertEqual(current_url_list[-1], str(self.user.id))
+
+    def test_frontend_index_delete_edit_panel_exists_comment(self):
+        """ Check if delete-edit-panel exists or doesn't exist for comment's creator == current user and comment's creator != current user """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Create a comment by the second user
+        Comment.objects.create(user=new_user, post=self.user.posts.all()[0], content="new user comment")
+
+        # Login the user
+        self.login_quick()
+        # Go to the index view
+        self.browser.get(self.live_server_url)
+        # Get the post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+
+        # Get the comments
+        comments_el = post_comment_el.find_elements_by_css_selector(".comment")
+
+        # Check if delete-edit-panel is present or not
+        self.assertTrue(self.is_element_present(comments_el[0], ".delete-edit-panel"))
+        self.assertTrue(self.is_element_present(comments_el[1], ".delete-edit-panel"))
+        self.assertTrue(self.is_element_present(comments_el[2], ".delete-edit-panel"))
+        self.assertFalse(self.is_element_present(comments_el[3], ".delete-edit-panel"))
+
+    def test_frontend_user_profile_delete_edit_panel_exists_comment(self):
+        """ Check if delete-edit-panel exists or doesn't exist for comment's creator == current user and comment's creator != current user """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Create a comment by the second user
+        Comment.objects.create(user=new_user, post=self.user.posts.all()[0], content="new user comment")
+
+        # Login the user
+        self.login_quick()
+        # Go to the self.user profile view
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Get the post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+
+        # Get the comments
+        comments_el = post_comment_el.find_elements_by_css_selector(".comment")
+
+        # Check if delete-edit-panel is present or not
+        self.assertTrue(self.is_element_present(comments_el[0], ".delete-edit-panel"))
+        self.assertTrue(self.is_element_present(comments_el[1], ".delete-edit-panel"))
+        self.assertTrue(self.is_element_present(comments_el[2], ".delete-edit-panel"))
+        self.assertFalse(self.is_element_present(comments_el[3], ".delete-edit-panel"))
+
+    def test_frontend_following_delete_edit_panel_exists_comment(self):
+        """ Check if delete-edit-panel exists or doesn't exist for comment's creator == current user and comment's creator != current user """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post by the second user
+        post = Post.objects.create(user=new_user, content="new user post")
+        # Create comments by the second user adn by self.user
+        Comment.objects.create(user=new_user, post=post, content="new user comment")
+        Comment.objects.create(user=self.user, post=post, content="self.user comment")
+
+        # Login the user
+        self.login_quick()
+        # Go to the following view
+        self.browser.get(self.live_server_url + "/following")
+        # Get the post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+
+        # Get the comments
+        comments_el = post_comment_el.find_elements_by_css_selector(".comment")
+
+        # Check if delete-edit-panel is present or not
+        self.assertFalse(self.is_element_present(comments_el[0], ".delete-edit-panel"))
+        self.assertTrue(self.is_element_present(comments_el[1], ".delete-edit-panel"))
+
+    def test_frontend_edit_comment(self):
+        """ Try to edit a comment using edit button (index and user-profile views) """
+        # Get the oldest comment
+        comment = Comment.objects.get(content="comment 0")
+        # Login the user
+        self.login_quick()
+
+        for url in ["", f"/user-profile/{self.user.id}"]:
+            self.browser.get(self.live_server_url + url)
+            # Get the new-user post-comment element
+            post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+            # Open comment section
+            comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+            comment_button[0].click()
+
+            # Get the delete-edit-panel
+            delete_edit_panel = self.browser.find_elements_by_css_selector(".comment .delete-edit-panel")[0]
+            # Click on the icon button
+            delete_edit_panel.find_element_by_class_name("icon-button").click()
+            time.sleep(0.1)
+            # Click on the edit button
+            delete_edit_panel.find_element_by_class_name("dropdown-edit").click()
+            # Get the modal, its textarea and save button
+            modal_el = self.browser.find_element_by_css_selector(".comment .edit-modal")
+            modal_textarea_el = modal_el.find_element_by_css_selector(".modal-body textarea")
+            modal_save_button = modal_el.find_element_by_css_selector(".modal-footer button.modal-save")
+            # Change the modal textarea's value
+            modal_textarea_el.clear()
+            time.sleep(0.7)
+            modal_textarea_el.send_keys("Comment edited-" + self.browser.current_url)
+            time.sleep(0.5)
+            modal_save_button.click()
+            time.sleep(1)
+
+            # Get the comment's  new data
+            edited_comment_content = Comment.objects.get(pk=comment.id).content
+
+            self.assertEqual(edited_comment_content, "Comment edited-" + self.browser.current_url)

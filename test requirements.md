@@ -258,16 +258,16 @@
         2. ~~check if redirection to correct user profile works~~
 
     * edit comment tests
-        * comment's creator = current user
-            1. check if edit/delete panel is not hidden
-            2. click on edit comment
-            3. change text
-            4. check if comment's content has changed
-        * comment's creator != current user
-            1. check if edit/delete panel is hidden
+        * ~~comment's creator != current user -> check if edit/delete panel doesn't exist~~
+        * ~~comment's creator == current user -> check if edit/delete panel exists~~
+        * ~~comment's creator == current user~~
+            1. ~~click on delete-edit-panel icon~~
+            2. ~~click on edit comment button~~
+            3. ~~change the text~~
+            4. ~~check if comment's content has changed~~
         
-    * delete comment tests
-        1. check if edit/delete panel is not hidden
+    * delete comment test
+        1. click on delete-edit-panel icon
         2. click on delete comment
         3. check if comment's content got deleted
 
