@@ -1904,3 +1904,203 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Get the comment section
         comment_section_el = self.browser.find_elements_by_css_selector(".post-comment-element .comment-section")[0]
         self.assertIn("show", comment_section_el.get_attribute("class"))
+
+    # Comments tests
+    def test_frontend_index_post_comment(self):
+        """ Create a comment using form -> check if it exists """
+
+        # Login the user
+        self.login_quick()
+
+        self.browser.get(self.live_server_url)
+        # Open comment section
+        comment_button = self.browser.find_element_by_css_selector(".post .comment-button")
+        comment_button.click()
+        
+        # Get the form and create a new comment
+        comment_form_el = self.browser.find_element_by_css_selector(".comment-form-wrapper form")
+        comment_form_el.find_element_by_css_selector("textarea").send_keys("Sellenium test")
+        comment_form_el.submit()
+
+        # Check if the new comment exists
+        self.assertEqual(Comment.objects.filter(content="Sellenium test").count(), 1)
+
+    def test_frontend_user_profile_post_comment(self):
+        """ Create a comment using form -> check if it exists """
+
+        # Login the user
+        self.login_quick()
+
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Open comment section
+        comment_button = self.browser.find_element_by_css_selector(".post .comment-button")
+        comment_button.click()
+        
+        # Get the form and create a new comment
+        comment_form_el = self.browser.find_element_by_css_selector(".comment-form-wrapper form")
+        comment_form_el.find_element_by_css_selector("textarea").send_keys("Sellenium test")
+        comment_form_el.submit()
+
+        # Check if the new comment exists
+        self.assertEqual(Comment.objects.filter(content="Sellenium test").count(), 1)
+
+    def test_frontend_following_post_comment(self):
+        """ Create a comment using form -> check if it exists """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a long text post
+        Post.objects.create(user=new_user, content="Lorem ipsum")
+
+        # Login the user
+        self.login_quick()
+
+        self.browser.get(self.live_server_url + "/following")
+        # Open comment section
+        comment_button = self.browser.find_element_by_css_selector(".post .comment-button")
+        comment_button.click()
+        
+        # Get the form and create a new comment
+        comment_form_el = self.browser.find_element_by_css_selector(".comment-form-wrapper form")
+        comment_form_el.find_element_by_css_selector("textarea").send_keys("Sellenium test")
+        comment_form_el.submit()
+
+        # Check if the new comment exists
+        self.assertEqual(Comment.objects.filter(content="Sellenium test").count(), 1)
+
+    def test_frontend_comment_creator_button_text(self):
+        """ Check if comment creator's name button redirects correctly to user profile  """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post by the second user
+        post = Post.objects.create(user=new_user, content="new user post")
+        # Creat a comment to this post
+        Comment.objects.create(user=self.user, post=post, content="comment")
+
+        # Login the user
+        self.login_quick()
+
+        # Check **index view**
+        self.browser.get(self.live_server_url)
+        # Get the new-user post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+        
+        comment_user_link_text_el = post_comment_el.find_element_by_css_selector(".comment-main > a")
+        comment_user_link_text_el.click()
+        time.sleep(0.1)
+
+        # Get the current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if the url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+        # Check **user-profile view**
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Get the new-user post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+        
+        comment_user_link_text_el = post_comment_el.find_elements_by_css_selector(".comment-main > a")
+        comment_user_link_text_el[0].click()
+        time.sleep(0.1)
+
+        # Get the current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if the url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+        # Check **following view**
+        self.browser.get(self.live_server_url + "/following")
+        # Get the new-user post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+        
+        comment_user_link_text_el = post_comment_el.find_elements_by_css_selector(".comment-main > a")
+        comment_user_link_text_el[0].click()
+        time.sleep(0.1)
+
+        # Get the current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if the url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+    def test_frontend_comment_creator_button_picture(self):
+        """ Check if comment creator's picture button redirects correctly to user profile  """
+        # Create a second user
+        new_user = User.objects.create_user(username="1", password="1")
+        # Follow the user
+        Following.objects.create(user=self.user, user_followed=new_user)
+        # Creat a post by the second user
+        post = Post.objects.create(user=new_user, content="new user post")
+        # Creat a comment to this post
+        Comment.objects.create(user=self.user, post=post, content="comment")
+
+        # Login the user
+        self.login_quick()
+
+        # Check **index view**
+        self.browser.get(self.live_server_url)
+        # Get the new-user post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+        
+        comment_user_link_text_el = post_comment_el.find_element_by_css_selector(".comment-user-image > a")
+        comment_user_link_text_el.click()
+        time.sleep(0.1)
+
+        # Get the current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if the url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+        # Check **user-profile view**
+        self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
+        # Get the new-user post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+        
+        comment_user_link_text_el = post_comment_el.find_elements_by_css_selector(".comment-user-image > a")
+        comment_user_link_text_el[0].click()
+        time.sleep(0.1)
+
+        # Get the current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if the url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))
+
+        # Check **following view**
+        self.browser.get(self.live_server_url + "/following")
+        # Get the new-user post-comment element
+        post_comment_el =  self.browser.find_elements_by_css_selector(".post-comment-element")[0]
+        # Open comment section
+        comment_button = post_comment_el.find_elements_by_css_selector(".post .comment-button")
+        comment_button[0].click()
+        
+        comment_user_link_text_el = post_comment_el.find_elements_by_css_selector(".comment-user-image > a")
+        comment_user_link_text_el[0].click()
+        time.sleep(0.1)
+
+        # Get the current url
+        current_url_list = self.browser.current_url.split("/")
+        # Check if the url is .../user-profile/{self.user.id}
+        self.assertEqual(current_url_list[-2], "user-profile")
+        self.assertEqual(current_url_list[-1], str(self.user.id))

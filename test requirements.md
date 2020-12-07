@@ -173,7 +173,6 @@
 
 # Frontend
 
-## post
 ~~**Setup**~~
 1. ~~create a browser handler~~
 2. ~~create a user ~~
@@ -185,7 +184,7 @@
 * ~~create a post using post form -> check if it exists~~
 * ~~check if posts are in correct order (from newest to oldest)~~
 
-#### index view, following, user_profile
+#### index, following, user_profile view
 * ~~Posts~~
     * ~~check if post's content is equal to post created~~
 
@@ -246,17 +245,17 @@
         2. ~~check if comment-section has show class~~
 
 * Comments
-    * create comment with form -> check if comment exists
+    * ~~create a comment with form~~
+        * ~~check if the comment exists~~
+        * ~~check if its content equal to comment created~~
 
-    * check comment's content -> equal to comment created
+    * ~~click on comment's creator name test~~
+        1. ~~click on comment's creator name~~
+        2. ~~check if redirection to correct user profile works~~
 
-    * click on comment's creator text test
-        1. click on comment's creator
-        2. check if redirection to correct user profile works
-
-    * click on comment's creator image test
-        1. click on comment's creator
-        2. check if redirection to correct user profile works
+    * ~~click on comment's creator picture test~~
+        1. ~~click on comment's creator picture~~
+        2. ~~check if redirection to correct user profile works~~
 
     * edit comment tests
         * comment's creator = current user
