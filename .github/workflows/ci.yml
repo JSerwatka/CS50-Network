@@ -6,14 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: nanasess/setup-chromedriver@master
-      #   with:
-          # Optional: do not specify to match Chrome's version
-      #     chromedriver-version: '77.0.3865.40'
-      # - run: |
-      #     export DISPLAY=:99
-      #     chromedriver --url-base=/wd/hub &
-      #     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
       - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:

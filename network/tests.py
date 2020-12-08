@@ -1034,9 +1034,6 @@ class FrontEndTest(StaticLiveServerTestCase):
         for i in range(3):
             Comment.objects.create(user=self.user, post=post, content=f"comment {i}")
 
-        # Create chromedirver path
-        project_dir = os.path.abspath(os.getcwd())
-        chromedriver_dir = os.path.join(project_dir, "chromedriver", "chromedriver.exe")
         options = webdriver.ChromeOptions()
         # Set language to english
         options.add_experimental_option('prefs', {'intl.accept_languages': 'en_US'})
@@ -1044,8 +1041,14 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Set chrome to be invisible
         options.add_argument("--headless")
         options.add_argument("--window-size=1920,1080")
+        # For GitHub actions
         self.browser = webdriver.Chrome(chrome_options=options)
-        # self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
+        ''' For VS
+        # Create chromedirver path
+        project_dir = os.path.abspath(os.getcwd())
+        chromedriver_dir = os.path.join(project_dir, "chromedriver", "chromedriver.exe")
+        self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
+        '''
         self.browser.implicitly_wait(10)
 
         super(FrontEndTest, self).setUp()
