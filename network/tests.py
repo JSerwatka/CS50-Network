@@ -1044,7 +1044,8 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Set chrome to be invisible
         options.add_argument("--headless")
         options.add_argument("--window-size=1920,1080")
-        self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
+        self.browser = webdriver.Chrome(chrome_options=options)
+        # self.browser = webdriver.Chrome(chromedriver_dir, chrome_options=options)
         self.browser.implicitly_wait(10)
 
         super(FrontEndTest, self).setUp()
