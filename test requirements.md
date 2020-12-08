@@ -171,7 +171,7 @@
         * ~~check status_code~~
     * ~~follow a user that doesn't exist -> 404 response~~
 
-# Frontend
+# ~~Frontend~~
 
 ~~**Setup**~~
 1. ~~create a browser handler~~
@@ -184,7 +184,7 @@
 * ~~create a post using post form -> check if it exists~~
 * ~~check if posts are in correct order (from newest to oldest)~~
 
-#### index, following, user_profile view
+#### ~~index, following, user_profile view~~
 * ~~Posts~~
     * ~~check if post's content is equal to post created~~
 
@@ -244,7 +244,7 @@
         1. ~~click comment button~~
         2. ~~check if comment-section has show class~~
 
-* Comments
+* ~~Comments~~
     * ~~create a comment with form~~
         * ~~check if the comment exists~~
         * ~~check if its content equal to comment created~~
@@ -257,7 +257,7 @@
         1. ~~click on comment's creator picture~~
         2. ~~check if redirection to correct user profile works~~
 
-    * edit comment tests
+    * ~~edit comment tests~~
         * ~~comment's creator != current user -> check if edit/delete panel doesn't exist~~
         * ~~comment's creator == current user -> check if edit/delete panel exists~~
         * ~~comment's creator == current user~~
@@ -266,43 +266,41 @@
             3. ~~change the text~~
             4. ~~check if comment's content has changed~~
         
-    * delete comment test
-        1. click on delete-edit-panel icon
-        2. click on delete comment
-        3. check if comment's content got deleted
+    * ~~delete comment test~~
+        1. ~~click on delete-edit-panel icon~~
+        2. ~~click on delete comment~~
+        3. ~~check if comment's content got deleted~~
 
-    * long text comment test
-        1. create second comment with long text
-        2. check if short text comment's *show more* button is hidden
-        3. check if long text comment's *show more* button is not hidden
+    * ~~show more button test~~
+        1. ~~create a comment with long text~~
+        2. ~~check if the short text comment's *show more* button is hidden~~
+        3. ~~check if the long text comment's *show more* button is not hidden~~
 
-    * one like comment test
-        1. like comment
-        2. check if new like exists and have correct emoji (database)
-        3. check if new like exists and have correct emoji (like-data)
-        4. check if new like has data-count = 1
-        5. check if like-counter is empty
+    * ~~like a comment test~~
+        1. ~~like a comment~~
+        2. ~~check if the new like exists and have correct emoji (database)~~
+        3. ~~check if the new like exists and have correct emoji (like-data)~~
+        4. ~~check if the new like has data-count = 1~~
+        5. ~~check if the like-counter is empty~~
     
-    * change like comment test
-        1. like comment
-        2. change like to different emoji
-        3. check if old like doesn't exist (database)
-        4. check if old like doesn't exist (like-data)
-        5. check if new like exists and have correct emoji (database)
-        6. check if new like exists and have correct emoji (like-data)
-        7. check if new like has data-count = 1
+    * ~~change like comment test~~
+        1. ~~like a comment~~
+        2. ~~change the like to different emoji~~
+        3. ~~check if the new like exists and have correct emoji (database)~~
+        4. ~~check if the new like exists and have correct emoji (like-data)~~
+        5. ~~check if the new like has data-count = 1~~
 
-    * the same emoji twice test
-        1. like comment
-        2. like comment with the same emoji from a different accout
-        3. make sure emoji has has data-count = 2
-        4. check if like-counter = +1
+    * ~~the same emoji twice test~~
+        1. ~~like a comment~~
+        2. ~~like the comment with the same emoji from a different accout~~
+        3. ~~make sure the emoji has has data-count = 2~~
+        4. ~~check if the like-counter = +1~~
     
-    * emoji in correct order
-        1. like comment
-        2. like comment with different emoji
-        3. like comment with the same emoji (2.) 
-        4. make sure that emoji (2.) is first in like-data panel
+    * ~~emoji in correct order~~
+        1. ~~like a comment~~
+        2. ~~like the comment with the same emoji from a different accout~~
+        3. ~~like the comment with a different emoji from the third account~~
+        4. ~~make sure that the first emoji is first in the like-data panel~~
 
 ### ~~user-profile~~
 * ~~check if following data is correct~~
