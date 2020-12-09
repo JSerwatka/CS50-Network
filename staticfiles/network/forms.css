@@ -1,0 +1,62 @@
+/* ------ Login/Register styles ------ */
+.login-wrapper, .register-wrapper {
+    margin: 50px auto 0px auto;
+    padding: 30px;
+    max-width: 600px;
+}
+
+.login-wrapper h2, .register-wrapper h2 {
+    margin-bottom: 1em;
+}
+
+.login-wrapper form, .register-wrapper form {
+    margin-bottom: 15px;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Edit profile styles ------ */
+.edit-profile {
+    margin: 20px auto 0px auto;
+    max-width: 60%;
+}
+
+.edit-profile-form {
+    margin-top: 40px;
+    padding: 30px;
+    max-width: 100% !important;
+}
+
+/* country-field */
+.country-field {
+    position: relative;
+    padding-right: 40px;
+}
+
+.edit-profile-form .country-select-flag {
+    width: 1.3em;
+    height: 0.8em;
+    position: absolute;
+    right: 3px;
+    top: 7px;
+}
+
+/* submit button */
+.edit-profile-form input[type="submit"] {
+    float: right;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Media queries ------ */
+@media screen and (max-width: 950px) {
+    .edit-profile {
+        max-width: 70%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .edit-profile {
+        max-width: 100%;
+    }
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
