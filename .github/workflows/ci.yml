@@ -18,10 +18,10 @@ jobs:
         run: python manage.py migrate
         env: 
           SECRET_KEY: '13kl@xtukpwe&xj2xoysxe9_6=tf@f8ewxer5n&ifnd46+6$%8'
-          DEBUG: True
+          DEBUG: "True"
       - name: Run Django tests
         run: |
             python manage.py test
         env: 
           SECRET_KEY: '13kl@xtukpwe&xj2xoysxe9_6=tf@f8ewxer5n&ifnd46+6$%8'
-          DEBUG: True
+          DEBUG: "True"
