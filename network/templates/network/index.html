@@ -18,7 +18,9 @@
     {% for post in page_obj.object_list %}
         {% include "network/posts.html"%}
     {% empty %}
-        {% trans "No posts yet" %}
+        <div class="no-posts">
+            {% trans "No posts yet" %}
+        </div>
     {% endfor %}
         {% include "network/paginator.html"%}
 {% endblock %}
