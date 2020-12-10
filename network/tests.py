@@ -1300,7 +1300,7 @@ class FrontEndTest(StaticLiveServerTestCase):
         self.assertEqual(new_user_profile.date_of_birth.strftime("%Y-%m-%d"), "2020-12-12")
         self.assertEqual(new_user_profile.about, "My name is John")
         self.assertEqual(new_user_profile.country, "RU")
-        self.assertEqual(img_name, "https://previews.123rf.com/images/kho/kho1310/kho131000269/22675121-beauty-portrait-of-young-mulatto-fresh-fashion-woman-in-profile.jpg")
+        self.assertEqual(new_user_profile.image, "https://previews.123rf.com/images/kho/kho1310/kho131000269/22675121-beauty-portrait-of-young-mulatto-fresh-fashion-woman-in-profile.jpg")
 
     # Posts tests
     def test_frontend_post_content(self):
