@@ -1,0 +1,596 @@
+/* ------ Post and comment wrapper styles ------ */
+.post-comment-element {
+    margin: 30px auto;
+    max-width: 40%;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #cac7c785;
+    background-color: white;
+    box-shadow: 0px 0px 12px -2px rgba(173,173,173,0.8);
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Block styles ------ */
+ /*** Post ***/
+ .post {
+    margin: 0px auto;
+    padding: 25px 20px 15px 20px;
+}
+
+/*** Comment ***/
+.comment-section {
+    margin: 0px auto;
+}
+
+.comment {
+    padding: 25px 10px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Form styles ------ */
+/* Post */
+.post-form-wrapper {
+    margin: 40px auto 60px auto;
+    max-width: 40%;
+    background-color: #F0F2F5;
+}
+
+ /* Comment */
+ .comment-form-wrapper {
+    margin: 30px auto;
+    max-width: 90%;
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+.comment-form-wrapper a {
+    justify-self: center;
+    align-self: top;
+}
+
+.comment-form-content {
+    position: relative;
+}
+
+.comment-form-content textarea {
+    min-height: 30px;
+    border-radius: 25px;
+    padding-right: 30px;
+}
+
+.comment-form-content svg {
+    fill:  #282c318a;
+}
+
+.comment-form-content button[type="submit"] {
+    position: absolute;
+    padding: 3px 7px 6px 7px;
+    border-radius: 20px;
+    bottom: 2px;
+    right: 10px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Grid structure styles ------ */
+/*** Post ***/
+.post {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, minmax(40px, auto)) minmax(0px, auto) minmax(40px, auto) minmax(0px, auto);
+}
+
+.post-user {
+    grid-column: 1/12;
+    grid-row: 1/2;
+}
+
+.post .delete-edit-panel {
+    grid-column: 12/13;
+    grid-row: 1/2; 
+}
+
+.post-date {
+    grid-column: 1/13;
+    grid-row: 2/3;
+}
+
+.post-content {
+    grid-column: 1/13;
+    grid-row: 3/4;
+}
+
+.post .show-more {
+    grid-column: 1/13;
+    grid-row: 4/5;
+}
+
+.post .like-data {
+    grid-column: 1/7;
+    grid-row: 5/6;
+}
+
+.comment-data {
+    grid-column: 7/13;
+    grid-row: 5/6;
+}
+
+.post .like-comment-control {
+    grid-column: 1/13;
+    grid-row: 6/7;
+    display: grid;
+}
+
+.post .like-panel {
+    grid-column: 1/7;
+    grid-row: 1/2;
+}
+
+.post .comment-button {
+    grid-column: 7/13;
+    grid-row: 1/2;
+}
+
+/*** Comment ***/
+.comment {
+    display: grid;
+    grid-template-columns: minmax(50px, 0.7fr) repeat(11, 1fr);
+    grid-template-rows: repeat(2, auto) minmax(25px, auto) auto;
+}
+
+.comment-user-image {
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+.delete-edit-panel {
+    grid-column: 12/13;
+    grid-row: 1/3;
+}
+
+.comment-main {
+    grid-column: 2/12;
+    grid-row: 1/3;
+}
+
+.comment .show-more {
+    grid-column: 2/12;
+    grid-row: 3/4;
+}
+
+.comment .like-comment-control {
+    grid-column: 2/5;
+    grid-row: 4/5;
+}
+
+.comment .like-data {
+    grid-column: 5/8;
+    grid-row: 4/5;
+}
+
+.comment-date {
+    grid-column: 8/12;
+    grid-row: 4/5;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Post/comment user styles ------ */
+/*** Post ***/
+.post-profile-picture {
+    height: 40px;
+    width: 40px;
+}
+
+.post-user a {
+    padding-left: 10px;
+    font-weight: 500;
+    color: black;
+}
+
+/*** Comment ***/
+.comment-user-image {
+    justify-self: center;
+}
+
+.comment-profile-picture {
+    height: 30px;
+    width: 30px;
+}
+
+.comment-main a {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: black;
+}
+
+/*** Both ***/
+.post-profile-picture:hover, .comment-profile-picture:hover {
+    opacity: 0.9;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Delete-edit-panel styles ------ */
+/*** Post ***/
+.post .delete-edit-panel {
+    justify-self: center;
+    align-self: center;
+}
+
+.post .icon-button {
+    padding: 5px 6px;
+    border-radius: 20px;
+}
+
+/*** Comment ***/
+.comment .delete-edit-panel {
+    justify-self: center;
+    align-self: center;
+}
+
+/*** Both ***/
+.modal textarea.new-content {
+    max-width: 100%;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Date styles ------ */
+/*** Post ***/
+.post-date {
+    align-self: top;
+    font-family: var(--secondary-text-family);
+    font-size: 0.8em;
+    font-weight: 350;
+    padding-top: 8px;
+    color: var(--secondary-text)
+}
+
+/*** Comment ***/
+.comment-date {
+    font-size: 0.8rem;
+    font-weight: 300;
+    justify-self: end;
+ }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Content styles ------ */
+/*** Post ***/
+.post-content {
+    padding-bottom: 30px;
+    font-size: 1.4em;
+}
+
+/*** Comment ***/
+.comment-main {
+    padding: 10px;
+    border-radius: 18px;
+    background-color: rgb(240, 242, 245);
+    font-family: var(---secondary-text-family);
+}
+
+.comment-content {
+    max-height: none;
+    line-height: 1.5em;
+    overflow-wrap: break-word;
+    overflow: hidden;
+}
+
+.comment-content.short {
+    max-height: 6em;
+}
+
+/*** Both ***/
+.content {
+    max-height: none;
+    line-height: 1.5em;
+    overflow-wrap: break-word;
+    overflow: hidden;
+}
+
+.content.short {
+    max-height: 120px;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Show-more styles ------ */
+/*** Both ***/
+.show-more {
+    padding: 10px 0px;
+    justify-self: center;
+    align-self: center;
+    font-family: var(--secondary-text-family);
+    font-size: 0.82em;
+    font-weight: 600;
+    color: black;
+    cursor: pointer;
+}
+
+.show-more:hover {
+    text-decoration: underline;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Like-data styles ------ */
+/*** Post ***/
+.post .like-data {
+    align-self: top;
+}
+
+/*** Comment ***/
+.comment .like-data {
+    justify-self: center;
+    white-space: nowrap;
+}
+
+.comment .like-data .em {
+    height: 1.3em;
+    width: 1.3em;
+}
+
+.comment .like-counter {
+    font-size: 0.9em;
+}
+
+/*** Both ***/
+.emoji-list {
+    display: inline;   
+}
+
+.emoji-list > i {
+    position: relative;
+    margin-right: 3px;
+}
+
+.like-counter {
+    margin-left: 2px;
+    font-size: 0.9em;
+    font-weight: 380;
+    color: var(--secondary-text);
+}
+
+.likes-indicator {
+    display: inline;
+    position: absolute;
+    top: -30px;
+    left: 2px;
+    padding: 0px 8px 0px 7px;
+    background: rgba(190, 214, 233, 0.5);
+    border-radius: 20px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Post comment-data styles ------ */
+ /*** Post ***/
+ .comment-data {
+     align-self: top;
+     justify-self: end;
+     font-size: 0.9em;
+     font-weight: 380;
+     color: var(--secondary-text);
+ }
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+/* ------ Like-comment-control styles ------ */
+/* Like-comment-control */
+/*** Post ***/
+.post .like-comment-control {
+    border-top: 1px solid  rgba(128, 128, 128, 0.438);
+    border-bottom: 1px solid  rgba(128, 128, 128, 0.438);
+}
+
+.post .like-comment-control button:hover {
+    background: var(--hover-color);
+}
+
+/*** Both ***/
+.like-comment-control {
+    position: relative;
+}
+
+.like-comment-control button {
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    padding: 5.5px 0px;
+}
+
+/* Like panel */
+/*** Post ***/
+.post .like-button {
+    width: 100%;
+    height: 100%;
+}
+
+.post .like-button.liked {
+    color: rgba(236, 45, 45, 0.774);
+    font-weight: 500;
+}
+
+.post .like-button > i {
+    margin-right: 15px;
+}
+
+/*** Comment ***/
+.comment .like-panel {
+    display: inline;
+}
+
+.comment .like-button {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(---secondary-text);
+}
+
+.comment .like-panel:hover .like-button {
+    text-decoration: underline;
+}
+
+.comment .like-button.liked {
+    color: rgba(236, 45, 45, 0.774);
+}
+
+.comment .like-button > i {
+    margin-right: 10px;
+}
+
+.comment .like-button .em {
+    height: 1.3em;
+    width: 1.3em;
+}
+
+/*** Both ***/
+.like-comment-control ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.emoji-choice {
+    padding: 8px 10px;
+    border-radius: 20px;
+    position: absolute;
+    white-space: nowrap;
+}
+
+.emoji-choice i {
+    margin-left: 3px;
+}
+
+.like-panel-in {
+    animation: like-panel-in 0.5s ease-out forwards;
+    
+}
+
+/* Emoji */
+/*** Both ***/
+.emoji-choice i.em:hover {
+    transform: scale(1.4);
+    transition: transform 0.4s;
+}
+
+/* Animations */
+/*** Both ***/
+ @keyframes like-panel-in {
+     0% {
+        background: transparent;
+        opacity: 0;
+        top: 0px;
+     }
+
+     100% {
+        background: rgba(128, 128, 128, 0.671);
+        opacity: 1;
+        top: -43px;
+     }
+ }
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Comment separator styles ------ */
+/*** Comment ***/
+.comment-separation {
+    margin: 0px auto;
+    width: 80%;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Icon button styles ------ */
+/*** Comment ***/
+.comment .icon-button {
+    padding: 1px 6px 4px 6px;
+    border-radius: 20px;
+}
+
+/*** Both ***/
+.icon-button {
+    background: transparent;
+    border: transparent;
+    transition: background 0.2s;
+}
+
+.icon-button:hover {
+    background: var(--hover-color);
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ 
+/* ------ Media queries ------ */
+@media screen and (max-width: 1500px) {
+    .post-comment-element, .post-form-wrapper {
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .post-comment-element, .post-form-wrapper {
+        max-width: 60%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .post-comment-element, .post-form-wrapper {
+        max-width: 70%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .post-comment-element {
+        font-size: 0.95em;
+        line-height: 0.95em;
+    }
+
+    .post-comment-element, .post-form-wrapper {
+        max-width: 85%;
+    }
+
+    .comment-form-content button[type="submit"] {
+        padding: 5px 7px 8px 7px;
+    }
+
+    @keyframes like-panel-in {
+        0% {
+           background: transparent;
+           opacity: 0;
+           top: 0px;
+        }
+   
+        100% {
+           background: rgba(128, 128, 128, 0.671);
+           opacity: 1;
+           top: -40px;
+        }
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .post-comment-element {
+        max-width: 95%;
+    }
+
+    .post-form-wrapper {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .post-comment-element {
+        max-width: 100%;
+        font-size: 0.93em;
+        line-height: 0.93em;
+    }
+
+    @keyframes like-panel-in {
+        0% {
+           background: transparent;
+           opacity: 0;
+           top: 0px;
+        }
+   
+        100% {
+           background: rgba(128, 128, 128, 0.671);
+           opacity: 1;
+           top: -39px;
+        }
+    }
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

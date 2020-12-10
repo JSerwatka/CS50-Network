@@ -1,0 +1,110 @@
+:root {
+    --secondary-text: rgb(101, 103, 107);
+    --secondary-text-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    --hover-color: rgba(128, 128, 128, 0.15);
+}
+
+/* ------ Main styles ------ */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: #F0F2F5;
+    margin: 0 0 180px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Additional classes ------ */
+.hidden {
+    display: none;
+}
+
+.round-picture {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info-card {
+    padding: 15px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 12px -2px rgba(173,173,173,0.8);
+    max-width: 430px;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Navbar styles ------ */
+/* Main grid */
+.nav-grid {
+    display:grid!important;
+    grid-template-columns: 100px 5fr 90px;
+    grid-auto-rows: minmax(56px, auto);
+}
+
+/* Network link */
+.nav-grid .network-link{
+    padding-top: 11px;
+    justify-self: end;
+    font-size: 1.3em;
+    font-weight: 1.3em;
+    color: rgba(0,0,0, 0.5);
+}
+
+.nav-grid .network-link:hover {
+    color: rgba(0,0,0,.7)
+}
+
+/* Navbar */
+.nav-grid .navbar-toggler {
+    margin: 0px auto;
+}
+
+.nav-grid .navbar-collapse li {
+    text-align: center;
+}
+
+/* Language buttons */
+.choose-lang {
+    padding-top: 11px;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ------ Language buttons styles ------ */
+.lang-button {
+    border: none;
+    background: transparent;
+}
+
+.lang-button:hover {
+    opacity: 0.6;
+}
+
+.grey-out {
+    opacity: 0.35;
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+ /* ------ Paginator styles ------ */
+.page-nav {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    bottom: 0px;
+}
+
+.page-nav .pagination {
+    padding-top: 15px;
+    margin-bottom: 0px;
+}
+
+.page-nav .current-page {
+    padding: 10px 0px;
+    text-align: center;
+    color: var(--secondary-text)
+}
+ /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
