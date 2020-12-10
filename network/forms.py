@@ -67,15 +67,6 @@ class CreateUserProfileForm(forms.ModelForm):
         },
     ))
 
-    # def clean_image(self):
-    #     """ Check if image doesn't exceed max file size """
-    #     image = self.cleaned_data.get('image')
-
-    #     if "default.png" not in image:
-    #         if image.size > settings.MAX_UPLOAD_SIZE * 1024 * 1024:
-    #             raise ValidationError(_(f"Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"))
-    #     return image
-
     class Meta:
         model = UserProfile
         fields = ["name", "date_of_birth", "about", "country", "image"]

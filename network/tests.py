@@ -34,8 +34,8 @@ class ModelsTestCase(TestCase):
 
     def test_default_image_create(self):
         """ New profile created -> create default image test """
-        image_path = UserProfile.objects.first().image.path[-11:]
-        self.assertEqual(image_path, "default.png")
+        image_url = UserProfile.objects.first().image
+        self.assertEqual(image_url, "https://s3.amazonaws.com/37assets/svn/765-default-avatar.png")
 
     def test_multiple_likes(self):
         """ Multiple likes on one post by the same user test """
@@ -44,23 +44,6 @@ class ModelsTestCase(TestCase):
         # Check if IntegrityError raised
         with self.assertRaises(IntegrityError):
             Like.objects.create(user=self.user, post=self.post, emoji_type=2)
-
-class FormsTestCase(TestCase):
-    def test_user_profile_form_img_too_big(self):
-        """ Check if error occures for too big photo """
-        # Get test image path
-        test_img_path = os.path.join(settings.MEDIA_ROOT, 'tests', 'test_too_big.jpg')
-
-        # Open the image
-        with open(test_img_path, "rb") as infile:
-            # create SimpleUploadedFile object from the image
-            img_file = SimpleUploadedFile("test_too_big.jpg", infile.read())
-
-            form = CreateUserProfileForm(files={"image": img_file})
-
-        self.assertFalse(form.is_valid())
-        # Make sure that the correct error msg is in form's errors
-        self.assertIn(f"Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit", form.errors["image"])
 
 class ViewsTestCase(TestCase):
     """ Backend test of every view """
@@ -563,31 +546,17 @@ class ViewsTestCase(TestCase):
         # Login user
         self.c.login(username="test", password="test")
 
-        # Get test image path
-        test_img_path = os.path.join(settings.MEDIA_ROOT, 'tests', 'test.jpg')
-
-        # Open the image
-        with open(test_img_path, "rb") as infile:
-            # create SimpleUploadedFile object from the image
-            img_file = SimpleUploadedFile("test.jpg", infile.read())
-
-            # Send the POST request
-            response = self.c.post('/edit-profile', {
-                "name": "Tom",
-                "date_of_birth": "2000-12-20",
-                "about": "My name is Tom",
-                "country": "PL",
-                "image": img_file
-            })
+        # Send the POST request
+        response = self.c.post('/edit-profile', {
+            "name": "Tom",
+            "date_of_birth": "2000-12-20",
+            "about": "My name is Tom",
+            "country": "PL",
+            "image": "https://previews.123rf.com/images/kho/kho1310/kho131000269/22675121-beauty-portrait-of-young-mulatto-fresh-fashion-woman-in-profile.jpg"
+        })
 
         # Get the new user profile data
         new_user_profile = UserProfile.objects.get(user=self.user)
-
-        # Prepare image file path to comparison
-        # 1. Normalize it
-        new_img_path = os.path.normpath(new_user_profile.image.path)
-        # 2. Get the last part of the path and discard django's additional chars
-        img_name = os.path.basename(new_img_path)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f'/user-profile/{self.user.id}')
@@ -595,12 +564,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(new_user_profile.date_of_birth.strftime("%Y-%m-%d"), "2000-12-20")
         self.assertEqual(new_user_profile.about, "My name is Tom")
         self.assertEqual(new_user_profile.country, "PL")
-        self.assertEqual(img_name, "test.jpg")
-
-        # Delete new image file
-        if os.path.exists(new_img_path):
-            os.remove(new_img_path)
-
+        self.assertEqual(new_user_profile.image, "https://previews.123rf.com/images/kho/kho1310/kho131000269/22675121-beauty-portrait-of-young-mulatto-fresh-fashion-woman-in-profile.jpg")
 
     # Like view
     def test_like_login_required(self):
@@ -1237,13 +1201,10 @@ class FrontEndTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
 
         # Get full profile picure src
-        profile_picture = self.browser.find_element_by_css_selector(".profile-picture > img").get_attribute("src")
-        # Get short src - media/profile_pic/default.png
-        profile_picture_short_src = profile_picture.split("/")[-3:]
+        profile_picture_src = self.browser.find_element_by_css_selector(".profile-picture > img").get_attribute("src")
 
-        self.assertEqual(profile_picture_short_src[0], "media")
-        self.assertEqual(profile_picture_short_src[1], "profile_pics")
-        self.assertEqual(profile_picture_short_src[2], "default.png")
+        self.assertEqual(profile_picture_src, "https://s3.amazonaws.com/37assets/svn/765-default-avatar.png")
+
 
     def test_frontend_follow_unfollow_button(self):
         """ Check if follow/unfollow button works """
@@ -1293,10 +1254,7 @@ class FrontEndTest(StaticLiveServerTestCase):
 
     def test_frontend_edit_profile_update_profile(self):
         """ Try to fill out and submit the edit-profile form and check if user's data has changed """
-        # Get test image path
-        test_img_path = os.path.join(settings.MEDIA_ROOT, 'tests', 'test.jpg')
-
-        # Login user
+         # Login user
         self.login_quick()
         # Get to self.user profile page
         self.browser.get(self.live_server_url + f"/user-profile/{self.user.id}")
@@ -1327,7 +1285,9 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Change country
         country_el.select_by_value("RU")
         # Upload a new photo
-        image_el.send_keys(test_img_path)
+        image_el.clear()
+        time.sleep(1)
+        image_el.send_keys("https://previews.123rf.com/images/kho/kho1310/kho131000269/22675121-beauty-portrait-of-young-mulatto-fresh-fashion-woman-in-profile.jpg")
         time.sleep(0.7)
         # Submit the form
         form_el.submit()
@@ -1336,21 +1296,11 @@ class FrontEndTest(StaticLiveServerTestCase):
         # Get the new user profile data
         new_user_profile = UserProfile.objects.get(user=self.user)
 
-        # Prepare image file path to comparison
-        # 1. Normalize it
-        new_img_path = os.path.normpath(new_user_profile.image.path)
-        # 2. Get the last part of the path and discard django's additional chars
-        img_name = os.path.basename(new_img_path)
-
         self.assertEqual(new_user_profile.name, "John")
         self.assertEqual(new_user_profile.date_of_birth.strftime("%Y-%m-%d"), "2020-12-12")
         self.assertEqual(new_user_profile.about, "My name is John")
         self.assertEqual(new_user_profile.country, "RU")
-        self.assertEqual(img_name, "test.jpg")
-
-        # Delete new image file
-        if os.path.exists(new_img_path):
-            os.remove(new_img_path)
+        self.assertEqual(img_name, "https://previews.123rf.com/images/kho/kho1310/kho131000269/22675121-beauty-portrait-of-young-mulatto-fresh-fashion-woman-in-profile.jpg")
 
     # Posts tests
     def test_frontend_post_content(self):
