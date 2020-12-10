@@ -3,8 +3,6 @@ from django_countries.fields import CountryField
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from .util import resize_image
-
 
 class User(AbstractUser):
     """ Model: User """
@@ -28,15 +26,11 @@ class UserProfile(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     about = models.TextField(blank=True, null=True)
     country = CountryField(blank=True, null=True)
-    image = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")
+    image = models.CharField(max_length=4000, null=False, blank=True,
+                             default="https://s3.amazonaws.com/37assets/svn/765-default-avatar.png")
 
     def __str__(self):
         return f"{self.user.username}"
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        resize_image(self.image.path, 600, 600)
-
 
 class Post(models.Model):
     """

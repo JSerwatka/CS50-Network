@@ -4,7 +4,7 @@
 <div class="comment" id='comment_{{ comment.id }}'>
     <div class="comment-user-image">
         <a href="{% url 'network:user-profile' user_id=comment.user.id %}">
-            <img class="round-picture comment-profile-picture" src="{{ comment.user.profile.image.url }}" title={{ comment.user }} alt="profile picture">
+            <img class="round-picture comment-profile-picture" src="{{ comment.user.profile.image }}" title={{ comment.user }} alt="profile picture">
         </a>
     </div>
     <div class="comment-main">

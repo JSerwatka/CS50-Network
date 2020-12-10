@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-24 10:22+0100\n"
+"POT-Creation-Date: 2020-12-10 12:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,74 +20,78 @@ msgstr ""
 "%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
 "%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: .\forms.py:11
+#: .\forms.py:20
 msgid "What are you thinking about?"
 msgstr "O czym myślisz?"
 
-#: .\forms.py:15
+#: .\forms.py:24
 msgid "post content"
 msgstr "zawartość posta"
 
-#: .\forms.py:24
+#: .\forms.py:40
 msgid "Write a comment..."
 msgstr "Napisz komentarz..."
 
-#: .\forms.py:27
+#: .\forms.py:43
 msgid "comment content"
 msgstr "zawartość komentarza"
 
-#: .\forms.py:35
+#: .\forms.py:62
 msgid "Date of birth: "
 msgstr "Data urodzenia: "
 
-#: .\forms.py:49
-#, fuzzy, python-brace-format
-#| msgid "Image file exceeds %(max_file_size)s MB size limit"
-msgid "Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"
-msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
-
-#: .\forms.py:56
+#: .\forms.py:83
 msgid "Name: "
 msgstr "Imię: "
 
-#: .\forms.py:57
+#: .\forms.py:84
 msgid "About: "
 msgstr "O mnie: "
 
-#: .\forms.py:58
+#: .\forms.py:85
 msgid "Country: "
 msgstr "Państwo: "
 
-#: .\forms.py:59
+#: .\forms.py:86
 msgid "Image: "
 msgstr "Zdjęcie: "
 
-#: .\forms.py:63
+#: .\forms.py:90
 msgid "Your name..."
 msgstr "Twoje imię..."
 
-#: .\forms.py:64
+#: .\forms.py:91
 msgid "your name"
 msgstr "twoje imię"
 
-#: .\forms.py:68
+#: .\forms.py:95
 msgid "Tell about yourself..."
 msgstr "Opowiedz o sobie..."
 
-#: .\forms.py:69
+#: .\forms.py:96
 msgid "tell about yourself"
 msgstr "opowiedz o sobie"
 
-#: .\templates\network\comments.html:16 .\templates\network\posts.html:73
+#: .\forms.py:103
+#, fuzzy
+#| msgid "Picture's url..."
+msgid "Picture's URL..."
+msgstr "URL zdjęcia..."
+
+#: .\forms.py:104
+msgid "picutre's url"
+msgstr "url zdjęcia"
+
+#: .\templates\network\comments.html:16 .\templates\network\posts.html:72
 msgid "Show more"
 msgstr "Pokaż więcej"
 
-#: .\templates\network\comments.html:27 .\templates\network\posts.html:21
+#: .\templates\network\comments.html:27 .\templates\network\posts.html:20
 msgid "Edit"
 msgstr "Edytuj"
 
 #: .\templates\network\comments.html:28 .\templates\network\comments.html:48
-#: .\templates\network\posts.html:22 .\templates\network\posts.html:42
+#: .\templates\network\posts.html:21 .\templates\network\posts.html:41
 msgid "Delete"
 msgstr "Usuń"
 
@@ -99,203 +103,212 @@ msgstr ""
 "nieodwracalna!"
 
 #: .\templates\network\comments.html:47 .\templates\network\comments.html:66
-#: .\templates\network\posts.html:41 .\templates\network\posts.html:60
+#: .\templates\network\posts.html:40 .\templates\network\posts.html:59
 msgid "Close"
 msgstr "Anuluj"
 
-#: .\templates\network\comments.html:58 .\templates\network\posts.html:52
+#: .\templates\network\comments.html:58 .\templates\network\posts.html:51
 msgid "What did you really want to say?"
 msgstr "Co naprawdę chciałeś/chciałaś powiedzieć?"
 
-#: .\templates\network\comments.html:67 .\templates\network\posts.html:61
+#: .\templates\network\comments.html:67 .\templates\network\posts.html:60
 msgid "Save"
 msgstr "Zapisz"
 
-#: .\templates\network\comments.html:74 .\templates\network\posts.html:68
+#: .\templates\network\comments.html:74 .\templates\network\posts.html:67
 msgid "ago"
 msgstr "temu"
 
-#: .\templates\network\comments.html:99 .\templates\network\posts.html:100
+#: .\templates\network\comments.html:99 .\templates\network\posts.html:99
 msgid "Like"
 msgstr "Lubię to"
 
-#: .\templates\network\edit_profile.html:26
+#: .\templates\network\edit_profile.html:28
 #, python-format
 msgid "Image file exceeds %(max_file_size)s MB size limit"
 msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"
 
-#: .\templates\network\edit_profile.html:29
+#: .\templates\network\edit_profile.html:31
 msgid "File must be type image"
 msgstr "Plik musi być typu zdjęcie"
 
-#: .\templates\network\edit_profile.html:63
-msgid "Submit"
-msgstr "Prześlij"
-
-#: .\templates\network\edit_profile.html:64
+#: .\templates\network\edit_profile.html:60
 msgid "Cancel"
 msgstr "Anuluj"
+
+#: .\templates\network\edit_profile.html:61
+msgid "Submit"
+msgstr "Prześlij"
 
 #: .\templates\network\index.html:13
 msgid "Post"
 msgstr "Wyślij"
 
-#: .\templates\network\index.html:21 .\templates\network\user_profile.html:66
+#: .\templates\network\index.html:21 .\templates\network\user_profile.html:137
 msgid "No posts yet"
 msgstr "Brak postów"
 
-#: .\templates\network\layout.html:28
+#: .\templates\network\layout.html:33
 msgid "All Posts"
 msgstr "Wszystkie posty"
 
-#: .\templates\network\layout.html:32
+#: .\templates\network\layout.html:37
 msgid "Following"
 msgstr "Osoby followowane"
 
-#: .\templates\network\layout.html:35
+#: .\templates\network\layout.html:40
 msgid "Log Out"
 msgstr "Wyloguj się"
 
-#: .\templates\network\layout.html:39
+#: .\templates\network\layout.html:44
 msgid "Log In"
 msgstr "Zaloguj się"
 
-#: .\templates\network\layout.html:42 .\templates\network\register.html:7
-#: .\templates\network\register.html:27
+#: .\templates\network\layout.html:47 .\templates\network\register.html:12
+#: .\templates\network\register.html:32
 msgid "Register"
 msgstr "Utwórz nowe konto"
 
-#: .\templates\network\login.html:6 .\templates\network\login.html:23
+#: .\templates\network\login.html:12 .\templates\network\login.html:29
 msgid "Login"
 msgstr "Zaloguj się"
 
-#: .\templates\network\login.html:15 .\templates\network\register.html:16
+#: .\templates\network\login.html:21 .\templates\network\register.html:21
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: .\templates\network\login.html:18 .\templates\network\register.html:22
+#: .\templates\network\login.html:24 .\templates\network\register.html:27
 msgid "Password"
 msgstr "Hasło"
 
-#: .\templates\network\login.html:26
+#: .\templates\network\login.html:31
 msgid "Don't have an account?"
 msgstr "Nie masz jeszcze konta?"
 
-#: .\templates\network\login.html:26
+#: .\templates\network\login.html:31
 msgid "Register here."
 msgstr "Utwórz nowe konto tutaj"
 
-#: .\templates\network\paginator.html:8 .\templates\network\paginator.html:15
+#: .\templates\network\paginator.html:7 .\templates\network\paginator.html:14
 msgid "First"
 msgstr "Pierwsza"
 
-#: .\templates\network\paginator.html:11 .\templates\network\paginator.html:18
+#: .\templates\network\paginator.html:10 .\templates\network\paginator.html:17
 msgid "Previous"
 msgstr "Poprzednia"
 
-#: .\templates\network\paginator.html:23 .\templates\network\paginator.html:30
+#: .\templates\network\paginator.html:22 .\templates\network\paginator.html:29
 msgid "Next"
 msgstr "Następna"
 
-#: .\templates\network\paginator.html:26 .\templates\network\paginator.html:33
+#: .\templates\network\paginator.html:25 .\templates\network\paginator.html:32
 msgid "Last"
 msgstr "Ostatnia"
 
-#: .\templates\network\paginator.html:38
+#: .\templates\network\paginator.html:37
 msgid "Page"
 msgstr "Strona"
 
-#: .\templates\network\paginator.html:38
+#: .\templates\network\paginator.html:37
 msgid "of"
 msgstr "z"
 
-#: .\templates\network\posts.html:32
+#: .\templates\network\posts.html:31
 msgid "Are you sure?"
 msgstr "Jesteś pewien?"
 
-#: .\templates\network\posts.html:38
+#: .\templates\network\posts.html:37
 msgid ""
 "Are you sure you want to delete this post? This procedure is irreversible!"
 msgstr ""
 "Jesteś pewien, że chcesz usunąć ten post? Ta procedura jest nieodwracalna!"
 
-#: .\templates\network\posts.html:68
+#: .\templates\network\posts.html:67
 msgid "Posted: "
 msgstr "Opublikowano: "
 
-#: .\templates\network\posts.html:95
+#: .\templates\network\posts.html:94
 msgid "Comments:"
 msgstr "Komentarzy:"
 
-#: .\templates\network\posts.html:111
+#: .\templates\network\posts.html:110
 msgid "Comments"
 msgstr "Komentarze"
 
-#: .\templates\network\register.html:19
+#: .\templates\network\register.html:24
 msgid "Email Address"
 msgstr "Adres email"
 
-#: .\templates\network\register.html:25
+#: .\templates\network\register.html:30
 msgid "Confirm Password"
 msgstr "Potwierdź hasło"
 
-#: .\templates\network\register.html:30
+#: .\templates\network\register.html:35
 msgid "Already have an account?"
 msgstr "Masz już konto?"
 
-#: .\templates\network\register.html:30
+#: .\templates\network\register.html:35
 msgid "Log In here."
 msgstr "Zaloguj się tutaj"
 
-#: .\templates\network\user_profile.html:14
+#: .\templates\network\user_profile.html:35
 msgid "Unfollow"
 msgstr "Przestań obserwować"
 
-#: .\templates\network\user_profile.html:16
+#: .\templates\network\user_profile.html:42
 msgid "Follow"
 msgstr "Obserwuj"
 
-#: .\templates\network\user_profile.html:20
+#: .\templates\network\user_profile.html:52
 msgid "Edit profile"
 msgstr "Edytuj profil"
 
-#: .\templates\network\user_profile.html:28
+#: .\templates\network\user_profile.html:83
 msgid "Name:"
 msgstr "Imię i nazwisko:"
 
-#: .\templates\network\user_profile.html:36
+#: .\templates\network\user_profile.html:96
 msgid "Birth:"
 msgstr "Data urodzenia:"
 
-#: .\templates\network\user_profile.html:44
+#: .\templates\network\user_profile.html:110
 msgid "About:"
 msgstr "O mnie:"
 
-#: .\templates\network\user_profile.html:52
+#: .\templates\network\user_profile.html:123
 msgid "Country:"
 msgstr "Państwo:"
 
-#: .\views.py:90 .\views.py:111 .\views.py:210 .\views.py:240 .\views.py:262
+#: .\views.py:95 .\views.py:116 .\views.py:216 .\views.py:246 .\views.py:268
 msgid "Post or Comment does not exist"
 msgstr "Post lub komentarz nie istnieje"
 
-#: .\views.py:202 .\views.py:236 .\views.py:258
+#: .\views.py:208 .\views.py:242 .\views.py:264
 msgid "Unknown action - you can only like post or comment"
 msgstr "Nieznana akcja - polajkować możesz tylko post lub komentarz"
 
-#: .\views.py:220
+#: .\views.py:226
 #, python-brace-format
 msgid "Unknown error during GET {action} like "
 msgstr "Nieznany błąd podczas GET {action} like"
 
-#: .\views.py:332
+#: .\views.py:347
 msgid "Invalid username and/or password."
 msgstr "Nieprawidłowa nazwa użytkownika i/lub hasło"
 
-#: .\views.py:353
+#: .\views.py:376
+msgid "You must fill out all fields."
+msgstr "Musisz uzupełnić wszystkie pola"
+
+#: .\views.py:381
 msgid "Passwords must match."
 msgstr "Hasła muszą się zgadzać"
 
-#: .\views.py:362
+#: .\views.py:390
 msgid "Username already taken."
 msgstr "Nazwa użytkownika już zajęta"
+
+#, fuzzy
+#~| msgid "Image file exceeds %(max_file_size)s MB size limit"
+#~ msgid "Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"
+#~ msgstr "Zdjęcie przekracza limit %(max_file_size)s MB"

@@ -160,7 +160,7 @@ def edit_profile(request):
                 ))
 
         # Submit edit -> update profile
-        form = CreateUserProfileForm(request.POST, request.FILES, instance=request.user)
+        form = CreateUserProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
             # Get current user's profile
@@ -171,10 +171,7 @@ def edit_profile(request):
             new_profile.date_of_birth = form.cleaned_data.get("date_of_birth")
             new_profile.about = form.cleaned_data.get("about")
             new_profile.country = form.cleaned_data.get("country")
-            # Update image only if any file was uploaded
-            if len(request.FILES) == 1:
-                new_profile.image = request.FILES['image']
-
+            new_profile.image = form.cleaned_data.get("image")
             # Save changes
             new_profile.save()
 
@@ -186,13 +183,11 @@ def edit_profile(request):
         else:
             # If form invalid - load edit-profile with error info
             return render(request, "network/edit_profile.html", {
-                "form": form,
-                "max_file_size": settings.MAX_UPLOAD_SIZE
+                "form": form
             })
 
     return render(request, "network/edit_profile.html", {
-        "form": CreateUserProfileForm(instance=request.user.profile),
-        "max_file_size": settings.MAX_UPLOAD_SIZE
+        "form": CreateUserProfileForm(instance=request.user.profile)
     })
 
 @login_required(login_url="network:login")

@@ -4,7 +4,7 @@
 <div class="post-comment-element">
     <div class="post" id='post_{{ post.id }}'>
         <div class="post-user">
-            <img class="round-picture post-profile-picture" src="{{ post.user.profile.image.url }}" title={{ post.user }} alt="profile picture">
+            <img class="round-picture post-profile-picture" src="{{ post.user.profile.image }}" title={{ post.user }} alt="profile picture">
             <a href="{% url 'network:user-profile' user_id=post.user.id %}">{{ post.user }}</a>
         </div>
         {% if user.id == post.user.id %}
@@ -119,7 +119,7 @@
         {% endfor %}
         <div class="comment-form-wrapper">
             <a href="{% url 'network:user-profile' user_id=user.id %}">
-                <img class="round-picture comment-profile-picture" src="{{ user.profile.image.url }}" title={{ user }} alt="profile picture">
+                <img class="round-picture comment-profile-picture" src="{{ user.profile.image }}" title={{ user }} alt="profile picture">
             </a>
             <form action="{% url 'network:post-comment' action='comment' %}" method="post">
                 {% csrf_token %}

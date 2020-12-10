@@ -55,14 +55,7 @@
             </div>
             <div class="form-group">
                 {{ form.image.label }}
-                <div class="custom-file">
-                    <input type="file" name="image" class="custom-file-input" accept="image/*" id="id_image">
-                    {% if LANGUAGE_CODE == "pl" %}
-                        <label class="custom-file-label" data-browse="Wybierz" for="id_image" data-default="Wybierz plik">Wybierz plik</label>
-                    {% else %}
-                        <label class="custom-file-label" data-browse="Browse" for="id_image" data-default="Choose file">Choose file</label>
-                    {% endif %}
-                </div>
+                {{ form.image }}
             </div>
             <button class="btn btn-secondary" name="cancel" value="clicked">{% trans "Cancel" %}</button></a>  
             <input class="btn btn-success" type="submit" value={% trans "Submit" %}>
@@ -73,6 +66,5 @@
 
 {% block script %}
     {{ form.media.js }}
-    <script src="{% static 'network/edit_profile_functions.js' %}"></script>
 {% endblock %}
         

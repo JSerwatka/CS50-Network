@@ -67,14 +67,14 @@ class CreateUserProfileForm(forms.ModelForm):
         },
     ))
 
-    def clean_image(self):
-        """ Check if image doesn't exceed max file size """
-        image = self.cleaned_data.get('image')
+    # def clean_image(self):
+    #     """ Check if image doesn't exceed max file size """
+    #     image = self.cleaned_data.get('image')
 
-        if "default.png" not in image:
-            if image.size > settings.MAX_UPLOAD_SIZE * 1024 * 1024:
-                raise ValidationError(_(f"Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"))
-        return image
+    #     if "default.png" not in image:
+    #         if image.size > settings.MAX_UPLOAD_SIZE * 1024 * 1024:
+    #             raise ValidationError(_(f"Image file exceeds {settings.MAX_UPLOAD_SIZE} MB size limit"))
+    #     return image
 
     class Meta:
         model = UserProfile
@@ -99,4 +99,9 @@ class CreateUserProfileForm(forms.ModelForm):
             'country': CountrySelectWidget(
                  attrs={"class": "form-control"}
             ),
+            "image": forms.TextInput(attrs={
+                "placeholder": _("Picture's URL..."),
+                "aria-label": _("picutre's url"),
+                "class": "form-control"
+            }),
         }

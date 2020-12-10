@@ -13,9 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import sys
 
-# App's consts
-MAX_UPLOAD_SIZE = 5
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -129,7 +126,3 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 STATIC_URL = '/static/'
 # ------ dev/prod ---------
 
-# URL to go to, to find media
-MEDIA_URL = '/media/'
-# Folder in app where the media re stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
