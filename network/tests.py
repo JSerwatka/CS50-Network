@@ -1014,7 +1014,7 @@ class ViewsTestCase(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-class FrontEndTest(StaticLiveServerTestCase):
+class FrontEndTestCase(StaticLiveServerTestCase):
     def setUp(self):
         # Create a user
         self.user = User.objects.create_user(username="test", password="password")

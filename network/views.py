@@ -367,7 +367,7 @@ def logout_view(request):
 
 
 def register(request):
-    """ View: Controls registering """
+    """ View: Controls registration """
 
     if request.method == "POST":
         username = request.POST["username"]
