@@ -184,4 +184,4 @@ There are 4 main test cases:
 Test requirements can be viewed in [test requirents.md](https://github.com/serwatka-w-proszku/CS50-Network/blob/master/test%20requirements.md)
 
 ---
-Special thanks Brian and the entire CS50 team for making learning easy, engaging, and free.
+Special thanks to Brian and the entire CS50 team for making learning easy, engaging, and free.
