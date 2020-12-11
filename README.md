@@ -183,4 +183,4 @@ There are 3 main test cases:
 Test requirements can be viewed in [test requirents.md](https://github.com/serwatka-w-proszku/CS50-Network/blob/live-server-version/test%20requirements.md)
 
 ---
-Thank you Brian and the entire CS50 team for making learning easy, engaging, and free.
+Special thanks to Brian and the entire CS50 team for making learning easy, engaging, and free.
