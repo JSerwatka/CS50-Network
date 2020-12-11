@@ -1051,13 +1051,13 @@ class FrontEndTestCase(StaticLiveServerTestCase):
         '''
         self.browser.implicitly_wait(10)
 
-        super(FrontEndTest, self).setUp()
+        super(FrontEndTestCase, self).setUp()
 
     def tearDown(self):
         time.sleep(2)
         # Close browser after testing
         self.browser.quit()
-        super(FrontEndTest, self).tearDown()
+        super(FrontEndTestCase, self).tearDown()
 
     def login_front_end(self, username="test", password="password"):
         """ Method to automate logging in usign login page form """
