@@ -177,7 +177,7 @@ Controls registration.
 ## Tests
 There are 4 main test cases:
 * ModelsTestCase - checks database integrity
-* FormsTestCase - makes sure that forms are working correctly
+* FormsTestCase - makes sure that forms work correctly
 * ViewsTestCase - makes sure that all views work correctly and give proper responses
 * FrontEndTestCase - uses Selenium to simulate user interaction with every element on the page
 
