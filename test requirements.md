@@ -13,7 +13,7 @@
 
 ## ~~Forms~~
 ### ~~CreateUserProfileForm~~
-* ~~try to upload too big photo to the form ~~
+* ~~try to upload too big photo to the form~~
     * ~~check if the form is invalid~~
     * ~~check if the correct message is rendered~~
 
@@ -107,7 +107,7 @@
 * ~~GET~~
     * ~~check correct like get~~
         1. ~~create a post/comment~~
-        2. ~~create a like ~~
+        2. ~~create a like~~
         3. ~~send GET request~~
         4. ~~check if:~~
             * ~~status_code = 200~~

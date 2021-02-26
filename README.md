@@ -169,19 +169,19 @@ Controls following/unfollowing users (only POST method allowed).
 Controls logging in.
 
 ### logout_view
-Controls logging out
+Controls logging out.
 
 ### register
-Controls registration
+Controls registration.
 
 ## Tests
 There are 4 main test cases:
 * ModelsTestCase - checks database integrity
-* FormsTestCase - makes sure that forms are working correctly
+* FormsTestCase - makes sure that forms work correctly
 * ViewsTestCase - makes sure that all views work correctly and give proper responses
 * FrontEndTestCase - uses Selenium to simulate user interaction with every element on the page
 
-Test requirements can be viewed in *test requirents.md*
+Test requirements can be viewed in [test requirents.md](https://github.com/serwatka-w-proszku/CS50-Network/blob/master/test%20requirements.md)
 
 ---
-Thank you Brian and the entire CS50 team for making learning easy, engaging, and free.
+Special thanks to Brian and the entire CS50 team for making learning easy, engaging, and free.
