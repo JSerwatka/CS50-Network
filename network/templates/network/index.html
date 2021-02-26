@@ -15,7 +15,7 @@
         </div>
     {% endif %}
 
-    {% for post in page_obj.object_list %}
+    {% for post in page_obj.object_list.all %}
         {% include "network/posts.html"%}
     {% empty %}
         <div class="no-posts">
