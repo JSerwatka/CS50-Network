@@ -1,5 +1,5 @@
 import json
-import numpy as np
+from itertools import chain
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -283,8 +283,9 @@ def following(request):
 
     # Get all posts from users that current user follows
     posts = [users.get_user_followed_posts() for users in current_user.following.all()]
+
     # Flatten 2d array to 1d array
-    posts = np.array(posts).flatten()
+    posts = list(chain(*posts))
 
     # Create page controll
     paginator = Paginator(posts, 10)
