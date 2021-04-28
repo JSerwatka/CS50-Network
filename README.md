@@ -30,7 +30,9 @@ Using Python, JavaScript, HTML, and CSS, complete the implementation of a social
 
 All requirements can be viewed here: https://cs50.harvard.edu/web/2020/projects/4/network/
 
-Live version can be viewed here: https://cs-50-network.herokuapp.com/
+Live version can be viewed here: https://cs-50-network.herokuapp.com/ (it might take a second to load 😉)
+
+You must be registered to use options such as commenting, profile picture, following and so on.
 
 ## Versions
 On this repository you can find 2 versions of this project:
