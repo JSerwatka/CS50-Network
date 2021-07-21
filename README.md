@@ -215,13 +215,12 @@ Controls logging out.
 Controls registration.
 
 ## Tests
-There are 4 main test cases:
+There are 3 main test cases:
 * ModelsTestCase - checks database integrity
-* FormsTestCase - makes sure that forms work correctly
 * ViewsTestCase - makes sure that all views work correctly and give proper responses
 * FrontEndTestCase - uses Selenium to simulate user interaction with every element on the page
 
-Test requirements can be viewed in [test requirents.md](https://github.com/serwatka-w-proszku/CS50-Network/blob/master/test%20requirements.md)
+Test requirements can be viewed in [test requirents.md](https://github.com/serwatka-w-proszku/CS50-Network/blob/live-server-version/test%20requirements.md)
 
 ---
 Special thanks to Brian and the entire CS50 team for making learning easy, engaging, and free.
