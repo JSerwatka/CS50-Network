@@ -7,8 +7,7 @@ services:
     env: docker # valid values: https://render.com/docs/yaml-spec#environment
     dockerfilePath: Dockerfile.render
     plan: free # optional; defaults to starter
-    numInstances: 0
+    numInstances: 1
     envVars:
       - key: DJANGO_SETTINGS_MODULE # Imported from Heroku app
         value: project4.settings.prod
-
